@@ -17,9 +17,9 @@ Route::group(['middleware' => ['guest']], function () {
       return redirect('/login');
     });
     Route::get('/login', [App\Http\Controllers\AuthController::class, 'index'])->name('login');
-    Route::get('/register', [App\Http\Controllers\AuthController::class, 'register'])->name('register');
-
     Route::post('/login', [App\Http\Controllers\AuthController::class, 'login'])->name('login');
+
+    Route::get('/register', [App\Http\Controllers\AuthController::class, 'register'])->name('register');
     Route::post('/register', [App\Http\Controllers\AuthController::class, 'store'])->name('register');
 
 
@@ -29,12 +29,18 @@ Route::group(['middleware' => ['guest']], function () {
 
 
 Route::group(['middleware' => ['auth']], function () {
-    Route::get('/', [ App\Http\Controllers\DashboardController::class, 'index' ])->name('dashboard');
+    Route::get('/', [ App\Http\Controllers\DashboardController::class, 'index' ])
+    ->middleware('permission:dashboard.index')->name('dashboard');
 
-    Route::resource('/jobs', \App\Http\Controllers\JobController::class, [ 'except' => ['show'] ]);
-    Route::resource('/shifts', \App\Http\Controllers\ShiftController::class, [ 'except' => ['show'] ]);
+    Route::resource('/jobs', \App\Http\Controllers\JobController::class, [ 'except' => ['show'] ])
+    ->middleware('permission:jobs.index|jobs.create|jobs.edit|jobs.delete');
 
-    Route::resource('/registrations', \App\Http\Controllers\RegistrationController::class, [ 'only' => ['index', 'store'] ]);
+    Route::resource('/shifts', \App\Http\Controllers\ShiftController::class, [ 'except' => ['show'] ])
+    ->middleware('permission:shifts.index|shifts.create|shifts.edit|shifts.delete');
+
+    Route::resource('/registrations', \App\Http\Controllers\RegistrationController::class, [ 'only' => ['index', 'store'] ])
+    ->middleware('permission:regisrations.index');
+
     Route::get('/qr-code/download', [ \App\Http\Controllers\QrCodeController::class, 'download' ]);
 
     Route::post('/logout', [App\Http\Controllers\AuthController::class, 'logout'])->name('logout');

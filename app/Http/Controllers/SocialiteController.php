@@ -2,10 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\SocialAccount;
-use App\Models\User;
 use Laravel\Socialite\Facades\Socialite;
 use Illuminate\Http\Request;
+use Spatie\Permission\Models\Role;
+use Spatie\Permission\Models\Permission;
+
+use App\Models\SocialAccount;
+use App\Models\User;
 
 class SocialiteController extends Controller
 {
@@ -43,6 +46,11 @@ class SocialiteController extends Controller
                     'email' => $socialUser->getEmail(),
                     'password' => '-'
                 ]);
+
+                $permissions = Permission::all();
+                $role = Role::where('name', 'user')->first();
+                $role->syncPermissions($permissions);
+                $user->assignRole($role);
             }
 
             $user->socialAccounts()->create([

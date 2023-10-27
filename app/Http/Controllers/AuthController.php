@@ -2,11 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\SocialAccount;
-use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Spatie\Permission\Models\Role;
+use Spatie\Permission\Models\Permission;
+
+use App\Models\SocialAccount;
+use App\Models\User;
 
 class AuthController extends Controller
 {
@@ -49,11 +52,16 @@ class AuthController extends Controller
                 'password' => 'required'
             ]);
 
-            User::create([
+            $user = User::create([
                 'email'     => $request->email,
                 'name'      => $request->name,
                 'password'  => Hash::make($request->password)
             ]);
+
+            $permissions = Permission::all();
+            $role = Role::where('name', 'user')->first();
+            $role->syncPermissions($permissions);
+            $user->assignRole($role);
 
             return redirect()->route('login')->with('login-info', 'Register Berhasil, Silahkan Login');
         } catch (\Exception $e) {
