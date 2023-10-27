@@ -24,6 +24,7 @@ class CreateRegistrationsTable extends Migration
             $table->unsignedBigInteger('job_id');
             $table->unsignedBigInteger('shift_id');
             $table->unsignedBigInteger('user_id');
+            $table->string('token');
             $table->timestamps();
 
             $table->foreign('job_id')->references('id')->on('jobs');

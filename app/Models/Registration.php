@@ -16,7 +16,8 @@ class Registration extends Model
         'license_plate',
         'job_id',
         'shift_id',
-        'user_id'
+        'user_id',
+        'token'
     ];
 
     public function shift()
@@ -26,7 +27,7 @@ class Registration extends Model
 
     public function job()
     {
-        return $this->belongsTo(Shift::class);
+        return $this->belongsTo(Job::class);
     }
 
     public function user()

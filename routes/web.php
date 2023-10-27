@@ -31,8 +31,11 @@ Route::group(['middleware' => ['guest']], function () {
 Route::group(['middleware' => ['auth']], function () {
     Route::get('/', [ App\Http\Controllers\DashboardController::class, 'index' ])->name('dashboard');
 
-    Route::resource('/jobs', \App\Http\Controllers\JobController::class);
-    Route::resource('/shifts', \App\Http\Controllers\ShiftController::class);
+    Route::resource('/jobs', \App\Http\Controllers\JobController::class, [ 'except' => ['show'] ]);
+    Route::resource('/shifts', \App\Http\Controllers\ShiftController::class, [ 'except' => ['show'] ]);
+
+    Route::resource('/registrations', \App\Http\Controllers\RegistrationController::class, [ 'only' => ['index', 'store'] ]);
+    Route::get('/qr-code/download', [ \App\Http\Controllers\QrCodeController::class, 'download' ]);
 
     Route::post('/logout', [App\Http\Controllers\AuthController::class, 'logout'])->name('logout');
 });
