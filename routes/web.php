@@ -43,5 +43,8 @@ Route::group(['middleware' => ['auth']], function () {
 
     Route::get('/qr-code/download', [ \App\Http\Controllers\QrCodeController::class, 'download' ]);
 
+    Route::get('/report/registrations', [ \App\Http\Controllers\Report\RegistrationController::class, 'index' ])
+    ->middleware('permission:report_registrations.index');
+
     Route::post('/logout', [App\Http\Controllers\AuthController::class, 'logout'])->name('logout');
 });

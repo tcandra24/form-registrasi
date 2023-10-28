@@ -1,5 +1,9 @@
 @extends('layouts/dashboard')
 
+@section('title')
+Buat Pekerjaan Baru
+@endsection
+
 @section('content')
 <div class="card">
     <div class="card-body">

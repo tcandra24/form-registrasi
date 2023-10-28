@@ -31,7 +31,7 @@
                     <li class="sidebar-item">
                         <a class="sidebar-link" href="/jobs" aria-expanded="false">
                         <span>
-                            <i class="ti ti-article"></i>
+                            <i class="ti ti-briefcase"></i>
                         </span>
                         <span class="hide-menu">Pekerjaan</span>
                         </a>
@@ -39,7 +39,7 @@
                     <li class="sidebar-item">
                         <a class="sidebar-link" href="/shifts" aria-expanded="false">
                         <span>
-                            <i class="ti ti-alert-circle"></i>
+                            <i class="ti ti-alarm"></i>
                         </span>
                         <span class="hide-menu">Shift</span>
                         </a>
@@ -49,9 +49,9 @@
                         <span class="hide-menu">Laporan</span>
                     </li>
                     <li class="sidebar-item">
-                        <a class="sidebar-link" href="./authentication-login.html" aria-expanded="false">
+                        <a class="sidebar-link" href="/report/registrations" aria-expanded="false">
                         <span>
-                            <i class="ti ti-login"></i>
+                            <i class="ti ti-file"></i>
                         </span>
                         <span class="hide-menu">Registrasi</span>
                         </a>
@@ -64,7 +64,7 @@
                     <li class="sidebar-item">
                         <a class="sidebar-link" href="/registrations" aria-expanded="false">
                         <span>
-                            <i class="ti ti-article"></i>
+                            <i class="ti ti-forms"></i>
                         </span>
                         <span class="hide-menu">Pendaftaran</span>
                         </a>

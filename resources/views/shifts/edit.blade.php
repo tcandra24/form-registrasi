@@ -1,5 +1,9 @@
 @extends('layouts/dashboard')
 
+@section('title')
+Edit shift
+@endsection
+
 @section('page-style')
     <link href="{{ asset('assets/vendor/bootstrap-material-datetimepicker/css/bootstrap-material-datetimepicker.css') }}" rel="stylesheet">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">

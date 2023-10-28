@@ -1,5 +1,9 @@
 @extends('layouts/dashboard')
 
+@section('title')
+Dashboard
+@endsection
+
 @section('content')
 <div class="row">
     <div class="col-lg-12 d-flex align-items-strech">
@@ -13,6 +17,93 @@
         </div>
     </div>
 </div>
+@hasrole('admin')
+    <div class="row">
+        <div class="col-lg-4">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="row align-items-start">
+                                <div class="col-8">
+                                    <h5 class="card-title mb-9 fw-semibold"> Jumlah Pendaftar </h5>
+                                    <h4 class="fw-semibold mb-3">{{ $count_registration }}</h4>
+                                </div>
+                                <div class="col-4">
+                                    <div class="d-flex justify-content-end">
+                                        <div class="text-white bg-secondary rounded-circle p-6 d-flex align-items-center justify-content-center">
+                                            <i class="ti ti-article fs-6"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-4">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="row align-items-start">
+                                <div class="col-8">
+                                    <h5 class="card-title mb-9 fw-semibold"> Jumlah Pengguna </h5>
+                                    <h4 class="fw-semibold mb-3">{{ $count_user }}</h4>
+                                </div>
+                                <div class="col-4">
+                                    <div class="d-flex justify-content-end">
+                                        <div class="text-white bg-primary rounded-circle p-6 d-flex align-items-center justify-content-center">
+                                            <i class="ti ti-user fs-6"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-4">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="row align-items-start">
+                                <div class="col-8">
+                                    <h5 class="card-title mb-9 fw-semibold"> Jumlah Shift </h5>
+                                    <h4 class="fw-semibold mb-3">{{ $count_shift }}</h4>
+                                </div>
+                                <div class="col-4">
+                                    <div class="d-flex justify-content-end">
+                                        <div class="text-white bg-danger rounded-circle p-6 d-flex align-items-center justify-content-center">
+                                            <i class="ti ti-alarm fs-6"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+@else
+    @if($is_registered)
+    <div class="row">
+        <div class="col-lg-4">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Selamat!</h5>
+                    <p class="card-text">Anda Terdaftar Dalam Acara Fuboru</p>
+                    <a href="/registrations" class="btn btn-primary">Lihat Qrcode</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    @endif
+@endhasrole
 @endsection
 
 @section('script')
@@ -20,7 +111,5 @@
 <script src="{{ asset('assets/libs/bootstrap/dist/js/bootstrap.bundle.min.js') }}"></script>
 <script src="{{ asset('assets/js/sidebarmenu.js') }}"></script>
 <script src="{{ asset('assets/js/app.min.js') }}"></script>
-<script src="{{ asset('assets/libs/apexcharts/dist/apexcharts.min.js') }}"></script>
 <script src="{{ asset('assets/libs/simplebar/dist/simplebar.js') }}"></script>
-<script src="{{ asset('assets/js/dashboard.js') }}"></script>
 @endsection

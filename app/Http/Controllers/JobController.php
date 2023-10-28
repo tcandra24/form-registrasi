@@ -7,6 +7,11 @@ use App\Models\Job;
 
 class JobController extends Controller
 {
+    // public function __construct()
+    // {
+    //     $this->middleware(['permission:jobs.index']);
+    // }
+
     public function index()
     {
         $jobs = Job::all();

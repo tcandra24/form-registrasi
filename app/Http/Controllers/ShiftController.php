@@ -8,6 +8,11 @@ use App\Models\Shift;
 
 class ShiftController extends Controller
 {
+    // public function __construct()
+    // {
+    //     $this->middleware(['permission:shifts.index']);
+    // }
+
     public function index()
     {
         $shifts = Shift::all();

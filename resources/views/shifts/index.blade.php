@@ -1,5 +1,9 @@
 @extends('layouts/dashboard')
 
+@section('title')
+Daftar Shift
+@endsection
+
 @section('content')
 <div class="row">
     <div class="col-lg-12 d-flex align-items-stretch">

@@ -1,5 +1,9 @@
 @extends('layouts/dashboard')
 
+@section('title')
+Registrasi
+@endsection
+
 @section('content')
 <div class="card">
     <div class="card-body">
@@ -7,16 +11,58 @@
             <h5 class="card-title fw-semibold mb-4">Data Anda</h5>
             <div class="alert alert-success alert-dismissible fade show m-2">
                 <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round" class="me-2"><polyline points="9 11 12 14 22 4"></polyline><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"></path></svg>
-                <strong>Success!</strong> Anda Terdaftar Dalam Acara Fuboru
+                <strong>Selamat!</strong> Anda Terdaftar Dalam Acara Fuboru
             </div>
-            {!! QrCode::size(200)->style('round')->eye('circle')->generate($registration->token) !!}
-            <a href="/qr-code/download" target="_blank" rel=”nofollow” class="btn btn-primary">Download</a>
-            <h1>FullName: {{ $registration->fullname }}</h1>
-            <h1>No HP: {{ $registration->no_hp }}</h1>
-            <h1>Tipe Kendaraan: {{ $registration->vehicle_type  }}</h1>
-            <h1>Plat Nomor: {{ $registration->license_plate  }}</h1>
-            <h1>Pekerjaan: {{ $registration->job->name }}</h1>
-            <h1>Shift: {{ $registration->shift->name }}</h1>
+            <div class="d-block w-100 my-4">
+                <div class="d-flex justify-content-center">
+                    <div class="d-flex flex-column">
+                        <img src="{{ asset('/storage/qr-codes/qr-code-' . $registration->token . '.svg') }}" width="300" height="300" alt="">
+                        <a href="/qr-code/download" target="_blank" rel=”nofollow” class="btn btn-primary mt-3">Download</a>
+                    </div>
+                </div>
+            </div>
+            <div class="d-block w-100">
+                <div class="d-flex flex-row justify-content-center">
+                    <div class="d-flex flex-column">
+                        <div class="p-2">
+                            <h4>Nama Lengkap: </h4>
+                            <p>{{ $registration->fullname }}</p>
+                        </div>
+                        <div class="p-2">
+                            <h4>No HP: </h4>
+                            <p>{{ $registration->no_hp }}</p>
+                        </div>
+                        <div class="p-2">
+                            <h4>Tipe Kendaraan: </h4>
+                            <p>{{ $registration->vehicle_type  }}</p>
+                        </div>
+                    </div>
+                    <div class="d-flex flex-column">
+                        <div class="p-2">
+                            <h4>Plat Nomor: </h4>
+                            <p>{{ $registration->license_plate  }}</p>
+                        </div>
+                        <div class="p-2">
+                            <h4>Pekerjaan: </h4>
+                            <p>{{ $registration->job->name  }}</p>
+                        </div>
+                        <div class="p-2">
+                            <h4>Shift: </h4>
+                            <p>{{ $registration->shift->name  }}</p>
+                            <div class="d-flex flex-column">
+                                <div class="d-flex flex-column">
+                                    <p class="mb-0">{{ \Carbon\Carbon::parse($registration->shift->start)->locale('id')->translatedFormat('l, d F Y') }}</p>
+                                    <p>{{ \Carbon\Carbon::parse($registration->shift->start)->locale('id')->translatedFormat('H:m') }}</p>
+                                </div>
+                                <div class="d-flex flex-column">
+                                    <p class="mb-0">{{ \Carbon\Carbon::parse($registration->shift->end)->locale('id')->translatedFormat('l, d F Y')  }}</p>
+                                    <p>{{ \Carbon\Carbon::parse($registration->shift->end)->locale('id')->translatedFormat('H:m')  }}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         @else
             <h5 class="card-title fw-semibold mb-4">Input Data</h5>
             @if(Session::has('error'))
@@ -62,7 +108,7 @@
                     <select name="shift" class="form-control" id="shift" aria-describedby="shift">
                         <option value="">Pilih Shift</option>
                         @foreach($shifts AS $shift)
-                            <option value="{{ $shift->id }}">{{ $shift->name }}</option>
+                            <option value="{{ $shift->id }}">{{ $shift->name }} (Sisa Kuota: {{ $shift->quota - $shift->registration_count }})</option>
                         @endforeach
                     </select>
                 </div>
