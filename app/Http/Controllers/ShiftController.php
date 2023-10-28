@@ -26,13 +26,19 @@ class ShiftController extends Controller
 
     public function store(Request $request)
     {
+        $request->validate([
+            'name' => 'required',
+            'start' => 'required',
+            'end' => 'required',
+            'quota' => 'required'
+        ], [
+            'name.required' => 'Nama wajib diisi',
+            'start.required' => 'Awal wajib diisi',
+            'end.required' => 'Akhir wajib diisi',
+            'quota.required' => 'Kuota wajib diisi',
+        ]);
+
         try {
-            $request->validate([
-                'name' => 'required',
-                'start' => 'required',
-                'end' => 'required',
-                'quota' => 'required'
-            ]);
 
             Shift::create([
                 'name' => $request->name,
@@ -58,11 +64,19 @@ class ShiftController extends Controller
 
     public function update(Request $request, Shift $shift)
     {
-        try {
-            $request->validate([
-                'name' => 'required'
-            ]);
+        $request->validate([
+            'name' => 'required',
+            'start' => 'required',
+            'end' => 'required',
+            'quota' => 'required'
+        ], [
+            'name.required' => 'Nama wajib diisi',
+            'start.required' => 'Awal wajib diisi',
+            'end.required' => 'Akhir wajib diisi',
+            'quota.required' => 'Kuota wajib diisi',
+        ]);
 
+        try {
             $shift->update([
                 'name' => $request->name,
                 'start' => $request->start,

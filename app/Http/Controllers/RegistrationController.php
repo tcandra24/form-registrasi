@@ -36,15 +36,23 @@ class RegistrationController extends Controller
     }
 
     public function store(Request $request) {
+        $request->validate([
+            'fullname' => 'required',
+            'no_hp' => 'required',
+            'vehicle_type' => 'required',
+            'license_plate' => 'required',
+            'job' => 'required',
+            'shift' => 'required',
+        ], [
+            'fullname.required' => 'Nama Lengkap wajib diisi',
+            'no_hp.required' => 'Nomer HP wajib diisi',
+            'vehicle_type.required' => 'Tipe Kendaraan wajib diisi',
+            'license_plate.required' => 'Plat Nomor wajib diisi',
+            'job.required' => 'Pekerjaan wajib diisi',
+            'shift.required' => 'Shift wajib diisi',
+        ]);
+
         try {
-            $request->validate([
-                'fullname' => 'required',
-                'no_hp' => 'required',
-                'vehicle_type' => 'required',
-                'license_plate' => 'required',
-                'job' => 'required',
-                'shift' => 'required',
-            ]);
 
             $shift = Shift::select('quota')->withCount('registration')->where('id', $request->shift)->first();
             if(($shift->quota - $shift->registration_count) === 0){
@@ -53,7 +61,7 @@ class RegistrationController extends Controller
 
             $token = hash_hmac('sha256', Crypt::encryptString(Str::uuid() . Carbon::now()->getTimestampMs() . Auth::user()->name), Auth::user()->id . Auth::user()->name);
 
-            QrCode::size(200)->style('round')->eye('circle')->generate($token, Storage::path('/public/qr-codes/') . 'qr-code-' . $token . '.svg');
+            QrCode::size(200)->style('round')->eye('circle')->generate($token, Storage::path('public/qr-codes/') . 'qr-code-' . $token . '.svg');
 
             RegistrationModel::create([
                 'fullname' => $request->fullname,

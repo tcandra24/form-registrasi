@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Job;
+use Illuminate\Validation\ValidationException;
 
 class JobController extends Controller
 {
@@ -25,11 +26,13 @@ class JobController extends Controller
 
     public function store(Request $request)
     {
-        try {
-            $request->validate([
-                'name' => 'required'
-            ]);
+        $request->validate([
+            'name' => 'required'
+        ], [
+            'name.required' => 'Nama wajib diisi'
+        ]);
 
+        try {
             Job::create([
                 'name' => $request->name
             ]);
@@ -51,11 +54,13 @@ class JobController extends Controller
 
     public function update(Request $request, Job $job)
     {
-        try {
-            $request->validate([
-                'name' => 'required'
-            ]);
+        $request->validate([
+            'name' => 'required'
+        ], [
+            'name.required' => 'Nama wajib diisi'
+        ]);
 
+        try {
             $job->update([
                 'name' => $request->name
             ]);

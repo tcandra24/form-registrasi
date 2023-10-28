@@ -34,4 +34,24 @@ class Registration extends Model
     {
         return $this->belongsTo(User::class);
     }
+
+    public function getFullnameAttribute($value)
+    {
+        return ucwords($value);
+    }
+
+    public function setFullnameAttribute($value)
+    {
+        $this->attributes['fullname'] = strtolower($value);
+    }
+
+    public function getVehicleTypeAttribute($value)
+    {
+        return ucwords($value);
+    }
+
+    public function setVehicleTypeAttribute($value)
+    {
+        $this->attributes['vehicle_type'] = strtolower($value);
+    }
 }

@@ -55,11 +55,11 @@ Daftar Pekerjaan
                             <td class="border-bottom-0">
                                 <div class="d-flex align-items-center gap-2">
                                     <a href="/jobs/{{ $job->id }}/edit" class="btn btn-success m-1">Edit</a>
+                                    <button class="btn btn-danger m-1 btn-delete" data-id="{{ $job->id }}" data-name="{{ $job->name }}">Delete</button>
 
-                                    <form method="POST" action=" {{ url('/jobs/' . $job->id) }}">
+                                    <form id="form-delete-job-{{ $job->id }}" method="POST" action=" {{ url('/jobs/' . $job->id) }}">
                                         @csrf
                                         @method('DELETE')
-                                        <button type="submit" class="btn btn-danger m-1">Delete</button>
                                     </form>
                                 </div>
                             </td>
@@ -88,4 +88,27 @@ Daftar Pekerjaan
 <script src="{{ asset('assets/libs/bootstrap/dist/js/bootstrap.bundle.min.js') }}"></script>
 <script src="{{ asset('assets/js/sidebarmenu.js') }}"></script>
 <script src="{{ asset('assets/js/app.min.js') }}"></script>
+
+<script src="{{ asset('assets/vendor/sweetalert2/sweetalert2.min.js') }}"></script>
+<script>
+    $('.btn-delete').on('click', function(){
+      const id = $(this).attr('data-id')
+      const name = $(this).attr('data-name')
+
+      Swal.fire({
+        title: "Yakin Hapus Pekerjaan ?",
+        text: name,
+        type: "warning",
+        showCancelButton: !0,
+        confirmButtonColor: "#DD6B55",
+        confirmButtonText: "Yes",
+        closeOnConfirm: !1
+      }).then((result) => {
+        if (result.isConfirmed) {
+          $('#form-delete-job-' + id).submit()
+        }
+      })
+
+    })
+</script>
 @endsection

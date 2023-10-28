@@ -20,4 +20,14 @@ class Shift extends Model
     {
         return $this->hasMany(Registration::class);
     }
+
+    public function getNameAttribute($value)
+    {
+        return ucwords($value);
+    }
+
+    public function setNameAttribute($value)
+    {
+        $this->attributes['name'] = strtolower($value);
+    }
 }
