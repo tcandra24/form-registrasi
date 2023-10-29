@@ -8,7 +8,6 @@ use Illuminate\Support\Facades\Hash;
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
 
-use App\Models\SocialAccount;
 use App\Models\User;
 
 class AuthController extends Controller
@@ -20,12 +19,15 @@ class AuthController extends Controller
 
     public function login(Request $request)
     {
-        try {
-            $request->validate([
-                'email' => 'required',
-                'password' => 'required'
-            ]);
+        $request->validate([
+            'email' => 'required',
+            'password' => 'required'
+        ], [
+            'email.required' => 'Email wajib diisi',
+            'password.required' => 'Password wajib diisi',
+        ]);
 
+        try {
             $credentials = $request->only('email', 'password');
             if (!Auth::attempt($credentials, $request->remember)) {
                 throw new \Exception('Login Gagal, Username/Password salah');
@@ -45,12 +47,17 @@ class AuthController extends Controller
 
     public function store(Request $request)
     {
+        $request->validate([
+            'email' => 'required',
+            'name' => 'required',
+            'password' => 'required'
+        ], [
+            'email.required' => 'Email wajib diisi',
+            'name.required' => 'Nama wajib diisi',
+            'password.required' => 'Password wajib diisi',
+        ]);
+
         try {
-            $request->validate([
-                'email' => 'required',
-                'name' => 'required',
-                'password' => 'required'
-            ]);
 
             $user = User::create([
                 'email'     => $request->email,

@@ -1,6 +1,8 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\SendEmailFromRegistration;
 
 /*
 |--------------------------------------------------------------------------
@@ -48,3 +50,14 @@ Route::group(['middleware' => ['auth']], function () {
 
     Route::post('/logout', [App\Http\Controllers\AuthController::class, 'logout'])->name('logout');
 });
+
+// Route::get('/send-email',function(){
+//     $data = [
+//         'name' => 'Syahrizal As',
+//         'body' => 'Testing Kirim Email di Santri Koding'
+//     ];
+
+//     Mail::to('tcandra007@gmail.com')->send(new SendEmailFromRegistration($data));
+
+//     dd("Email Berhasil dikirim.");
+// });

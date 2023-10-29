@@ -13,16 +13,25 @@
             </div>
         @endif
         <div class="mb-3">
-            <label for="exampleInputtext1" class="form-label">Name</label>
-            <input type="text" name="name" class="form-control" id="exampleInputtext1" aria-describedby="textHelp">
+            <label for="name" class="form-label">Nama</label>
+            <input type="text" name="name" class="form-control {{ $errors->has('name') ? 'border border-danger' : '' }}" value="{{ old('name') }}" id="name" aria-describedby="nama">
+            @error('name')
+                <span class="text-danger">{{ $message }}</span>
+            @enderror
         </div>
         <div class="mb-3">
-            <label for="exampleInputEmail1" class="form-label">Email Address</label>
-            <input type="email" name="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+            <label for="name" class="form-label">Email</label>
+            <input type="email" name="email" class="form-control {{ $errors->has('email') ? 'border border-danger' : '' }}" value="{{ old('email') }}" id="email" aria-describedby="email">
+            @error('email')
+                <span class="text-danger">{{ $message }}</span>
+            @enderror
         </div>
         <div class="mb-4">
-            <label for="exampleInputPassword1" class="form-label">Password</label>
-            <input type="password" name="password" class="form-control" id="exampleInputPassword1">
+            <label for="password" class="form-label">Password</label>
+            <input type="password" name="password" class="form-control {{ $errors->has('password') ? 'border border-danger' : '' }}" id="password">
+            @error('password')
+                <span class="text-danger">{{ $message }}</span>
+            @enderror
         </div>
         <button type="submit" class="btn btn-primary w-100 py-8 fs-4 mb-4 rounded-2">Register</button>
         <div class="d-flex align-items-center justify-content-center">
