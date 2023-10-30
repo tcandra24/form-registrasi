@@ -14,6 +14,8 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
+Route::get('/scan-qr/{token}', [\App\Http\Controllers\Api\ScanController::class, 'scan']);
+
+Route::fallback(function() {
+    abort(404, 'API Resource Not Found.');
 });

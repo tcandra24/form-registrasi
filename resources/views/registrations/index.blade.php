@@ -104,6 +104,7 @@ Registrasi
                             @error('vehicle_type')
                                 <span class="text-danger">{{ $message }}</span>
                             @enderror
+                            <span class="text-muted"><i>Contoh: Vario, Mio, Beat dll.</i></span>
                         </div>
                     </div>
                     <div class="col-lg-6 d-flex align-items-stretch">
@@ -116,18 +117,20 @@ Registrasi
                         </div>
                     </div>
                 </div>
-                <div class="row">
+                <div class="row mb-3">
                     <div class="col-lg-6 d-flex align-items-stretch">
                         <div class="mb-3 w-100">
                             <label for="job" class="form-label">Pekerjaan</label>
-                            @foreach($jobs AS $job)
-                            <div class="form-check">
-                                <input class="form-check-input" name="job" type="radio" value="{{ $job->id }}" id="job" aria-describedby="job" {{ (int)old('job') === $job->id ? 'checked' : '' }}>
-                                <label class="form-check-label" for="job">
-                                    {{ $job->name }}
-                                </label>
+                            <div class="d-flex">
+                                @foreach($jobs AS $job)
+                                <div class="form-check">
+                                    <input class="form-check-input" name="job" type="radio" value="{{ $job->id }}" id="job" aria-describedby="job" {{ (int)old('job') === $job->id ? 'checked' : '' }}>
+                                    <label class="form-check-label" for="job">
+                                        {{ $job->name }}
+                                    </label>
+                                </div>
+                                @endforeach
                             </div>
-                            @endforeach
                             @error('job')
                                 <span class="text-danger">{{ $message }}</span>
                             @enderror
@@ -148,8 +151,18 @@ Registrasi
                         </div>
                     </div>
                 </div>
+                <div class="row">
+                    <div class="col-lg-6 d-flex align-items-stretch">
+                        <div class="mb-3 w-100">
+                            <div class="form-check">
+                                <input class="form-check-input" name="term-condition" type="checkbox" id="term-condition" aria-describedby="term-condition">
+                                <label for="term-condition" class="form-label">Saya telah menyetujui <a href="/term-condition" class="text-primary">Syarat & Ketentuan</a></label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
-                <button type="submit" class="btn btn-primary">Submit</button>
+                <button type="submit" class="btn btn-primary btn-submit">Submit</button>
                 <button type="reset" class="btn btn-danger">Reset</button>
             </form>
         @endif
@@ -162,4 +175,15 @@ Registrasi
 <script src="{{ asset('assets/libs/bootstrap/dist/js/bootstrap.bundle.min.js') }}"></script>
 <script src="{{ asset('assets/js/sidebarmenu.js') }}"></script>
 <script src="{{ asset('assets/js/app.min.js') }}"></script>
+
+<script>
+    $('.btn-submit').attr('disabled', true)
+    $('#term-condition').on('change', function() {
+        if ($(this).is(':checked')) {
+            $('.btn-submit').attr('disabled', false)
+        } else {
+            $('.btn-submit').attr('disabled', true)
+        }
+    })
+</script>
 @endsection

@@ -44,6 +44,7 @@ Route::group(['middleware' => ['auth']], function () {
     ->middleware('permission:regisrations.index');
 
     Route::get('/qr-code/download', [ \App\Http\Controllers\QrCodeController::class, 'download' ]);
+    Route::get('/term-condition', [ \App\Http\Controllers\TermConditionController::class, 'index']);
 
     Route::get('/report/registrations', [ \App\Http\Controllers\Report\RegistrationController::class, 'index' ])
     ->middleware('permission:report_registrations.index');
