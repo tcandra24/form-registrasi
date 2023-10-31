@@ -15,7 +15,7 @@ use App\Mail\SendEmailFromRegistration;
 |
 */
 Route::group(['middleware' => ['guest']], function () {
-    Route::get('/', function(){
+    Route::get('/dashboard', function(){
       return redirect('/login');
     });
     Route::get('/login', [App\Http\Controllers\AuthController::class, 'index'])->name('login');
@@ -31,7 +31,7 @@ Route::group(['middleware' => ['guest']], function () {
 
 
 Route::group(['middleware' => ['auth']], function () {
-    Route::get('/', [ App\Http\Controllers\DashboardController::class, 'index' ])
+    Route::get('/dashboard', [ App\Http\Controllers\DashboardController::class, 'index' ])
     ->middleware('permission:dashboard.index')->name('dashboard');
 
     Route::resource('/jobs', \App\Http\Controllers\JobController::class, [ 'except' => ['show'] ])

@@ -1,7 +1,7 @@
 <aside class="left-sidebar">
     <div>
         <div class="brand-logo d-flex align-items-center justify-content-between">
-            <a href="/" class="text-nowrap logo-img">
+            <a href="/dashboard" class="text-nowrap logo-img">
                 <img src="{{ asset('assets/images/logo.png') }}" width="180" alt="" />
             </a>
             <div class="close-btn d-xl-none d-block sidebartoggler cursor-pointer" id="sidebarCollapse">
@@ -16,7 +16,7 @@
                     <span class="hide-menu">Home</span>
                 </li>
                 <li class="sidebar-item">
-                    <a class="sidebar-link" href="/" aria-expanded="false">
+                    <a class="sidebar-link" href="/dashboard" aria-expanded="false">
                         <span>
                             <i class="ti ti-layout-dashboard"></i>
                         </span>

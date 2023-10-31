@@ -34,7 +34,7 @@ class AuthController extends Controller
             }
 
             $request->session()->regenerate();
-            return redirect()->intended('/');
+            return redirect()->intended('/dashboard');
         } catch (\Exception $e) {
             return back()->with('login-error', $e->getMessage());
         }
