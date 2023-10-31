@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Job;
-use Illuminate\Validation\ValidationException;
 
 class JobController extends Controller
 {

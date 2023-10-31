@@ -40,6 +40,9 @@ Route::group(['middleware' => ['auth']], function () {
     Route::resource('/shifts', \App\Http\Controllers\ShiftController::class, [ 'except' => ['show'] ])
     ->middleware('permission:shifts.index|shifts.create|shifts.edit|shifts.delete');
 
+    Route::resource('/manufactures', \App\Http\Controllers\ManufactureController::class, [ 'except' => ['show'] ])
+    ->middleware('permission:manufactures.index|manufactures.create|manufactures.edit|manufactures.delete');
+
     Route::resource('/registrations', \App\Http\Controllers\RegistrationController::class, [ 'only' => ['index', 'store'] ])
     ->middleware('permission:regisrations.index');
 

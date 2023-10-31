@@ -37,6 +37,14 @@
                         </a>
                     </li>
                     <li class="sidebar-item">
+                        <a class="sidebar-link" href="/manufactures" aria-expanded="false">
+                            <span>
+                                <i class="ti ti-building-factory-2"></i>
+                            </span>
+                            <span class="hide-menu">Pabrikan Motor</span>
+                        </a>
+                    </li>
+                    <li class="sidebar-item">
                         <a class="sidebar-link" href="/shifts" aria-expanded="false">
                             <span>
                                 <i class="ti ti-alarm"></i>

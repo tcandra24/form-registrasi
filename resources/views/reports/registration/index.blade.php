@@ -29,97 +29,108 @@ Laporan Registrasi
                         </button>
                     </div>
                 @endif
-                <div class="table-responsive">
-                    <table class="table text-nowrap mb-0 align-middle">
-                        <thead class="text-dark fs-4">
-                            <tr>
-                                <th class="border-bottom-0">
-                                    <h6 class="fw-semibold mb-0">No</h6>
-                                </th>
-                                <th class="border-bottom-0">
-                                    <h6 class="fw-semibold mb-0">Email</h6>
-                                </th>
-                                <th class="border-bottom-0">
-                                    <h6 class="fw-semibold mb-0">Nama Lengkap</h6>
-                                </th>
-                                <th class="border-bottom-0">
-                                    <h6 class="fw-semibold mb-0">Shift</h6>
-                                </th>
-                                <th class="border-bottom-0">
-                                    <h6 class="fw-semibold mb-0">No Handphone</h6>
-                                </th>
-                                <th class="border-bottom-0">
-                                    <h6 class="fw-semibold mb-0">Jenis Kendaraan</h6>
-                                </th>
-                                <th class="border-bottom-0">
-                                    <h6 class="fw-semibold mb-0">Plat Nomor</h6>
-                                </th>
-                                <th class="border-bottom-0">
-                                    <h6 class="fw-semibold mb-0">Status Scan</h6>
-                                </th>
-                                <th class="border-bottom-0">
-                                    <h6 class="fw-semibold mb-0">Tanggal Scan</h6>
-                                </th>
-                                <th class="border-bottom-0">
-                                    <h6 class="fw-semibold mb-0">Pekerjaan</h6>
-                                </th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @if(count($registrations) > 0)
-                                @foreach($registrations AS $registration)
+                <div class="row">
+                    <div class="table-responsive">
+                        <table class="table text-nowrap mb-0 align-middle">
+                            <thead class="text-dark fs-4">
+                                <tr>
+                                    <th class="border-bottom-0">
+                                        <h6 class="fw-semibold mb-0">No</h6>
+                                    </th>
+                                    <th class="border-bottom-0">
+                                        <h6 class="fw-semibold mb-0">Email</h6>
+                                    </th>
+                                    <th class="border-bottom-0">
+                                        <h6 class="fw-semibold mb-0">Nama Lengkap</h6>
+                                    </th>
+                                    <th class="border-bottom-0">
+                                        <h6 class="fw-semibold mb-0">Shift</h6>
+                                    </th>
+                                    <th class="border-bottom-0">
+                                        <h6 class="fw-semibold mb-0">No Handphone</h6>
+                                    </th>
+                                    <th class="border-bottom-0">
+                                        <h6 class="fw-semibold mb-0">Jenis Kendaraan</h6>
+                                    </th>
+                                    <th class="border-bottom-0">
+                                        <h6 class="fw-semibold mb-0">Pabrikan Motor</h6>
+                                    </th>
+                                    <th class="border-bottom-0">
+                                        <h6 class="fw-semibold mb-0">Plat Nomor</h6>
+                                    </th>
+                                    <th class="border-bottom-0">
+                                        <h6 class="fw-semibold mb-0">Status Scan</h6>
+                                    </th>
+                                    <th class="border-bottom-0">
+                                        <h6 class="fw-semibold mb-0">Tanggal Scan</h6>
+                                    </th>
+                                    <th class="border-bottom-0">
+                                        <h6 class="fw-semibold mb-0">Pekerjaan</h6>
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @if(count($registrations) > 0)
+                                    @foreach($registrations AS $registration)
+                                        <tr>
+                                            <td class="border-bottom-0">
+                                                <h6 class="fw-semibold mb-0">{{ $loop->iteration }}</h6>
+                                            </td>
+                                            <td class="border-bottom-0">
+                                                <p class="mb-0 fw-normal">{{ $registration->user->email }}</p>
+                                            </td>
+                                            <td class="border-bottom-0">
+                                                <p class="mb-0 fw-normal">{{ $registration->fullname }}</p>
+                                            </td>
+                                            <td class="border-bottom-0">
+                                                <div class="d-flex flex-column">
+                                                    <p class="mb-0">{{ \Carbon\Carbon::parse($registration->shift->start)->locale('id')->translatedFormat('l, d F Y') }}</p>
+                                                    <p>{{ \Carbon\Carbon::parse($registration->shift->start)->locale('id')->translatedFormat('H:m') }} - {{ \Carbon\Carbon::parse($registration->shift->end)->locale('id')->translatedFormat('H:m') }}</p>
+                                                </div>
+                                            </td>
+                                            <td class="border-bottom-0">
+                                                <p class="mb-0 fw-normal">{{ $registration->no_hp }}</p>
+                                            </td>
+                                            <td class="border-bottom-0">
+                                                <p class="mb-0 fw-normal">{{ $registration->vehicle_type }}</p>
+                                            </td>
+                                            <td class="border-bottom-0">
+                                                <p class="mb-0 fw-normal">{{ $registration->manufacture->name }}</p>
+                                            </td>
+                                            <td class="border-bottom-0">
+                                                <p class="mb-0 fw-normal">{{ $registration->license_plate }}</p>
+                                            </td>
+                                            <td class="border-bottom-0">
+                                                @if($registration->is_scan)
+                                                    <div class="d-flex align-items-center gap-2">
+                                                        <span class="badge bg-primary rounded-3 fw-semibold">Sudah Scan</span>
+                                                    </div>
+                                                @else
+                                                    <div class="d-flex align-items-center gap-2">
+                                                        <span class="badge bg-danger rounded-3 fw-semibold">Belum Scan</span>
+                                                    </div>
+                                                @endif
+                                            </td>
+                                            <td class="border-bottom-0">
+                                                <p class="mb-0 fw-normal">{{ $registration->scan_date ?? '-' }}</p>
+                                            </td>
+                                            <td class="border-bottom-0">
+                                                <p class="mb-0 fw-normal">{{ $registration->job->name }}</p>
+                                            </td>
+                                        </tr>
+                                    @endforeach
+                                @else
                                     <tr>
-                                        <td class="border-bottom-0">
-                                            <h6 class="fw-semibold mb-0">{{ $loop->iteration }}</h6>
-                                        </td>
-                                        <td class="border-bottom-0">
-                                            <p class="mb-0 fw-normal">{{ $registration->user->email }}</p>
-                                        </td>
-                                        <td class="border-bottom-0">
-                                            <p class="mb-0 fw-normal">{{ $registration->fullname }}</p>
-                                        </td>
-                                        <td class="border-bottom-0">
-                                            <p class="mb-0 fw-normal">{{ $registration->shift->name }}</p>
-                                        </td>
-                                        <td class="border-bottom-0">
-                                            <p class="mb-0 fw-normal">{{ $registration->no_hp }}</p>
-                                        </td>
-                                        <td class="border-bottom-0">
-                                            <p class="mb-0 fw-normal">{{ $registration->vehicle_type }}</p>
-                                        </td>
-                                        <td class="border-bottom-0">
-                                            <p class="mb-0 fw-normal">{{ $registration->license_plate }}</p>
-                                        </td>
-                                        <td class="border-bottom-0">
-                                            @if($registration->is_scan)
-                                                <div class="d-flex align-items-center gap-2">
-                                                    <span class="badge bg-primary rounded-3 fw-semibold">Sudah Scan</span>
-                                                </div>
-                                            @else
-                                                <div class="d-flex align-items-center gap-2">
-                                                    <span class="badge bg-danger rounded-3 fw-semibold">Belum Scan</span>
-                                                </div>
-                                            @endif
-                                        </td>
-                                        <td class="border-bottom-0">
-                                            <p class="mb-0 fw-normal">{{ $registration->scan_date ?? '-' }}</p>
-                                        </td>
-                                        <td class="border-bottom-0">
-                                            <p class="mb-0 fw-normal">{{ $registration->job->name }}</p>
+                                        <td colspan="10">
+                                            <div class="alert alert-info text-center" role="alert">
+                                                Registrasi Masih Kosong
+                                            </div>
                                         </td>
                                     </tr>
-                                @endforeach
-                            @else
-                                <tr>
-                                    <td colspan="10">
-                                        <div class="alert alert-info text-center" role="alert">
-                                            Registrasi Masih Kosong
-                                        </div>
-                                    </td>
-                                </tr>
-                            @endif
-                        </tbody>
-                    </table>
+                                @endif
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
         </div>

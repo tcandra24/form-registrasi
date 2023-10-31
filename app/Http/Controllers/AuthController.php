@@ -48,13 +48,14 @@ class AuthController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'email' => 'required',
+            'email' => 'required|unique:users,email',
             'name' => 'required',
-            'password' => 'required'
+            'password' => 'required',
         ], [
             'email.required' => 'Email wajib diisi',
             'name.required' => 'Nama wajib diisi',
             'password.required' => 'Password wajib diisi',
+            'email.unique' => 'Email sudah digunakan'
         ]);
 
         try {

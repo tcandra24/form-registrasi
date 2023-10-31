@@ -17,6 +17,7 @@ class Registration extends Model
         'job_id',
         'shift_id',
         'user_id',
+        'manufacture_id',
         'token'
     ];
 
@@ -28,6 +29,11 @@ class Registration extends Model
     public function job()
     {
         return $this->belongsTo(Job::class);
+    }
+
+    public function manufacture()
+    {
+        return $this->belongsTo(Manufacture::class);
     }
 
     public function user()

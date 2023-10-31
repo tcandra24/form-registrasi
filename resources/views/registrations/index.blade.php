@@ -4,6 +4,10 @@
 Registrasi
 @endsection
 
+@section('page-style')
+    <!-- <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" /> -->
+@endsection
+
 @section('content')
 <div class="card">
     <div class="card-body">
@@ -52,11 +56,7 @@ Registrasi
                             <div class="d-flex flex-column">
                                 <div class="d-flex flex-column">
                                     <p class="mb-0">{{ \Carbon\Carbon::parse($registration->shift->start)->locale('id')->translatedFormat('l, d F Y') }}</p>
-                                    <p>{{ \Carbon\Carbon::parse($registration->shift->start)->locale('id')->translatedFormat('H:m') }}</p>
-                                </div>
-                                <div class="d-flex flex-column">
-                                    <p class="mb-0">{{ \Carbon\Carbon::parse($registration->shift->end)->locale('id')->translatedFormat('l, d F Y')  }}</p>
-                                    <p>{{ \Carbon\Carbon::parse($registration->shift->end)->locale('id')->translatedFormat('H:m')  }}</p>
+                                    <p>{{ \Carbon\Carbon::parse($registration->shift->start)->locale('id')->translatedFormat('H:m') }} - {{ \Carbon\Carbon::parse($registration->shift->end)->locale('id')->translatedFormat('H:m') }}</p>
                                 </div>
                             </div>
                         </div>
@@ -104,7 +104,7 @@ Registrasi
                             @error('vehicle_type')
                                 <span class="text-danger">{{ $message }}</span>
                             @enderror
-                            <span class="text-muted"><i>Contoh: Vario, Mio, Beat dll.</i></span>
+                            <span class="text-muted"><i>Contoh: Vario 150, Vario 125 Mio, Beat dll.</i></span>
                         </div>
                     </div>
                     <div class="col-lg-6 d-flex align-items-stretch">
@@ -112,6 +112,40 @@ Registrasi
                             <label for="licensePlate" class="form-label">Nomor Plat</label>
                             <input type="text" name="license_plate" class="form-control" id="licensePlate" value="{{ old('license_plate') }}" aria-describedby="license_plate">
                             @error('license_plate')
+                                <span class="text-danger">{{ $message }}</span>
+                            @enderror
+                        </div>
+                    </div>
+                </div>
+                <div class="row mb-3">
+                    <div class="col-lg-6 d-flex align-items-stretch">
+                        <div class="mb-3 w-100">
+                            <label for="job" class="form-label">Pabrikan Motor</label>
+                            <select name="manufacture" class="form-control" id="manufacture" aria-describedby="manufacture">
+                                <option value="">Pilih Pabrikan Motor</option>
+                                @foreach($manufactures AS $manufacture)
+                                    <option value="{{ $manufacture->id }}" {{ (int)old('manufacture') === $manufacture->id ? 'selected' : '' }}>
+                                        {{ $manufacture->name }}
+                                    </option>
+                                @endforeach
+                            </select>
+                            @error('manufacture')
+                                <span class="text-danger">{{ $message }}</span>
+                            @enderror
+                        </div>
+                    </div>
+                    <div class="col-lg-6 d-flex align-items-stretch">
+                        <div class="mb-3 w-100">
+                            <label for="shift" class="form-label">Shift</label>
+                            <select name="shift" class="form-control" id="shift" aria-describedby="shift">
+                                <option value="">Pilih Shift</option>
+                                @foreach($shifts AS $shift)
+                                    <option value="{{ $shift->id }}" {{ (int)old('shift') === $shift->id ? 'selected' : '' }}>
+                                        {{ $shift->name }} (Sisa Kuota: {{ $shift->quota - $shift->registration_count }})
+                                    </option>
+                                @endforeach
+                            </select>
+                            @error('shift')
                                 <span class="text-danger">{{ $message }}</span>
                             @enderror
                         </div>
@@ -132,20 +166,6 @@ Registrasi
                                 @endforeach
                             </div>
                             @error('job')
-                                <span class="text-danger">{{ $message }}</span>
-                            @enderror
-                        </div>
-                    </div>
-                    <div class="col-lg-6 d-flex align-items-stretch">
-                        <div class="mb-3 w-100">
-                            <label for="shift" class="form-label">Shift</label>
-                            <select name="shift" class="form-control" id="shift" aria-describedby="shift">
-                                <option value="">Pilih Shift</option>
-                                @foreach($shifts AS $shift)
-                                    <option value="{{ $shift->id }}" {{ (int)old('shift') === $shift->id ? 'selected' : '' }}>{{ $shift->name }} (Sisa Kuota: {{ $shift->quota - $shift->registration_count }})</option>
-                                @endforeach
-                            </select>
-                            @error('shift')
                                 <span class="text-danger">{{ $message }}</span>
                             @enderror
                         </div>
@@ -175,8 +195,11 @@ Registrasi
 <script src="{{ asset('assets/libs/bootstrap/dist/js/bootstrap.bundle.min.js') }}"></script>
 <script src="{{ asset('assets/js/sidebarmenu.js') }}"></script>
 <script src="{{ asset('assets/js/app.min.js') }}"></script>
+<!-- <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script> -->
 
 <script>
+    // $('#shift').select2();
+
     $('.btn-submit').attr('disabled', true)
     $('#term-condition').on('change', function() {
         if ($(this).is(':checked')) {

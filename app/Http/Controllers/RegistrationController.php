@@ -12,6 +12,7 @@ use Carbon\Carbon;
 
 use App\Models\Job;
 use App\Models\Shift;
+use App\Models\Manufacture;
 use App\Models\Registration AS RegistrationModel;
 
 class RegistrationController extends Controller
@@ -31,8 +32,9 @@ class RegistrationController extends Controller
 
         $jobs = Job::all();
         $shifts = Shift::withCount('registration')->get();
+        $manufactures = Manufacture::all();
 
-        return view('registrations.index', [ 'jobs' => $jobs, 'shifts' => $shifts]);
+        return view('registrations.index', [ 'jobs' => $jobs, 'shifts' => $shifts, 'manufactures' => $manufactures]);
     }
 
     public function store(Request $request) {
@@ -43,6 +45,7 @@ class RegistrationController extends Controller
             'license_plate' => 'required',
             'job' => 'required',
             'shift' => 'required',
+            'manufacture' => 'required'
         ], [
             'fullname.required' => 'Nama Lengkap wajib diisi',
             'no_hp.required' => 'Nomer HP wajib diisi',
@@ -50,6 +53,7 @@ class RegistrationController extends Controller
             'license_plate.required' => 'Plat Nomor wajib diisi',
             'job.required' => 'Pekerjaan wajib diisi',
             'shift.required' => 'Shift wajib diisi',
+            'manufacture.required' => 'Pabrikan Motor wajib diisi',
         ]);
 
         try {
@@ -71,6 +75,7 @@ class RegistrationController extends Controller
                 'job_id' => $request->job,
                 'shift_id' => $request->shift,
                 'user_id' => Auth::user()->id,
+                'manufacture_id' => $request->manufacture,
                 'token' => $token
             ]);
 

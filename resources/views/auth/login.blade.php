@@ -35,7 +35,7 @@
             <div class="form-check">
                 <input class="form-check-input primary" type="checkbox" value="" id="flexCheckChecked" name="remember" checked>
                 <label class="form-check-label text-dark" for="flexCheckChecked">
-                Remeber me
+                Remember me
                 </label>
             </div>
             <!-- <a class="text-primary fw-bold" href="#">Lupa Password?</a> -->
