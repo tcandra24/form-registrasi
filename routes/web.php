@@ -15,7 +15,7 @@ use App\Mail\SendEmailFromRegistration;
 |
 */
 Route::group(['middleware' => ['guest']], function () {
-    Route::get('/dashboard', function(){
+    Route::get('/', function(){
       return redirect('/login');
     });
     Route::get('/login', [App\Http\Controllers\AuthController::class, 'index'])->name('login');
