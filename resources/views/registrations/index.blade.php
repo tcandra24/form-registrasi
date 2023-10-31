@@ -155,7 +155,7 @@ Registrasi
                     <div class="col-lg-6 d-flex align-items-stretch">
                         <div class="mb-3 w-100">
                             <label for="job" class="form-label">Pekerjaan</label>
-                            <div class="d-flex">
+                            <div class="d-flex" style="gap: 10px;">
                                 @foreach($jobs AS $job)
                                 <div class="form-check">
                                     <input class="form-check-input" name="job" type="radio" value="{{ $job->id }}" id="job" aria-describedby="job" {{ (int)old('job') === $job->id ? 'checked' : '' }}>

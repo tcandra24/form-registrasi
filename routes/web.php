@@ -18,10 +18,10 @@ Route::group(['middleware' => ['guest']], function () {
     Route::get('/', function(){
       return redirect('/login');
     });
-    Route::get('/login', [App\Http\Controllers\AuthController::class, 'index'])->name('login');
+    Route::get('/login', [App\Http\Controllers\AuthController::class, 'index']);
     Route::post('/login', [App\Http\Controllers\AuthController::class, 'login'])->name('login');
 
-    Route::get('/register', [App\Http\Controllers\AuthController::class, 'register'])->name('register');
+    Route::get('/register', [App\Http\Controllers\AuthController::class, 'register']);
     Route::post('/register', [App\Http\Controllers\AuthController::class, 'store'])->name('register');
 
 
@@ -49,6 +49,8 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('/qr-code/download', [ \App\Http\Controllers\QrCodeController::class, 'download' ]);
     Route::get('/term-condition', [ \App\Http\Controllers\TermConditionController::class, 'index']);
 
+    Route::get('/report/export/registrations', [\App\Http\Controllers\Report\RegistrationController::class, 'export'])
+    ->middleware('permission:report_registrations.index');
     Route::get('/report/registrations', [ \App\Http\Controllers\Report\RegistrationController::class, 'index' ])
     ->middleware('permission:report_registrations.index');
 

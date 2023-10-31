@@ -4,6 +4,10 @@
 Laporan Registrasi
 @endsection
 
+@section('page-style')
+    <!-- <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" /> -->
+@endsection
+
 @section('content')
 <div class="row">
     <div class="col-lg-12 d-flex align-items-stretch">
@@ -29,6 +33,47 @@ Laporan Registrasi
                         </button>
                     </div>
                 @endif
+                <div class="row">
+                    <form action="{{ url('/report/registrations') }}">
+                        <div class="row">
+                            <div class="col-lg-3 d-flex align-items-stretch">
+                                <div class="mb-3 w-100">
+                                    <label for="scan" class="form-label">Status Scan</label>
+                                    <select name="scan" class="form-control" id="scan" aria-describedby="scan">
+                                        <option value="-">Semua Status</option>
+                                        <option value="0" {{ Request::has('scan') && (int)Request::get('scan') === 0 ? 'selected' : '' }}>Belum Scan</option>
+                                        <option value="1" {{ Request::has('scan') && (int)Request::get('scan') === 1 ? 'selected' : '' }}>Sudah Scan</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-lg-3 d-flex align-items-stretch">
+                                <div class="mb-3 w-100">
+                                    <label for="siftEnd" class="form-label">Shift</label>
+                                    <select name="shift" class="form-control" id="shift" aria-describedby="shift">
+                                        <option value="-">Semua Shift</option>
+                                        @foreach($shifts AS $shift)
+                                            <option value="{{ $shift->id }}" {{ (int)$shift->id === (int)Request::get('shift') ? 'selected' : '' }}>{{ $shift->name }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-lg-6 d-flex align-items-stretch">
+                                <div class="mb-3 w-100">
+                                    <div class="d-flex" style="margin-top: 30px;gap: 10px;">
+                                        <button type="submit" class="btn btn-primary">Cari</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="row">
+                    <form action="{{ url('/report/export/registrations') }}">
+                        <input type="hidden" name="is_scan" value="{{ Request::get('scan') }}">
+                        <input type="hidden" name="shift" value="{{ Request::get('shift') }}">
+                        <button type="submit" class="btn btn-success">Export To Excel</button>
+                    </form>
+                </div>
                 <div class="row">
                     <div class="table-responsive">
                         <table class="table text-nowrap mb-0 align-middle">
@@ -139,8 +184,14 @@ Laporan Registrasi
 @endsection
 
 @section('script')
+<!-- <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script> -->
+
 <script src="{{ asset('assets/libs/jquery/dist/jquery.min.js') }}"></script>
 <script src="{{ asset('assets/libs/bootstrap/dist/js/bootstrap.bundle.min.js') }}"></script>
 <script src="{{ asset('assets/js/sidebarmenu.js') }}"></script>
 <script src="{{ asset('assets/js/app.min.js') }}"></script>
+
+<script>
+    // $('#shift').select2()
+</script>
 @endsection
