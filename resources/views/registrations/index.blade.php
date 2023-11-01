@@ -5,7 +5,13 @@ Registrasi
 @endsection
 
 @section('page-style')
-    <!-- <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" /> -->
+    <link rel="stylesheet" href="{{ asset('assets/vendor/select2/css/select2.min.css') }}" />
+    <link rel="stylesheet" href="{{ asset('assets/vendor/select2/css/select2-bootstrap-5-theme.min.css') }}" />
+    <style>
+        .select2-container--bootstrap-5.select2-container--focus .select2-selection,.select2-container--bootstrap-5.select2-container--open .select2-selection {
+            box-shadow: unset !important;
+        }
+    </style>
 @endsection
 
 @section('content')
@@ -104,25 +110,16 @@ Registrasi
                             @error('vehicle_type')
                                 <span class="text-danger">{{ $message }}</span>
                             @enderror
-                            <span class="text-muted"><i>Contoh: Vario 150, Vario 125 Mio, Beat dll.</i></span>
+                            <span class="text-gray fs-2">
+                                <i>*Contoh: Vario 150, Vario 125 Mio, Beat dll.</i>
+                            </span>
                         </div>
                     </div>
                     <div class="col-lg-6 d-flex align-items-stretch">
                         <div class="mb-3 w-100">
-                            <label for="licensePlate" class="form-label">Nomor Plat</label>
-                            <input type="text" name="license_plate" class="form-control" id="licensePlate" value="{{ old('license_plate') }}" aria-describedby="license_plate">
-                            @error('license_plate')
-                                <span class="text-danger">{{ $message }}</span>
-                            @enderror
-                        </div>
-                    </div>
-                </div>
-                <div class="row mb-3">
-                    <div class="col-lg-6 d-flex align-items-stretch">
-                        <div class="mb-3 w-100">
-                            <label for="job" class="form-label">Pabrikan Motor</label>
+                            <label for="job" class="form-label">Merk/Brand Motor</label>
                             <select name="manufacture" class="form-control" id="manufacture" aria-describedby="manufacture">
-                                <option value="">Pilih Pabrikan Motor</option>
+                                <option value="">Pilih Merk/Brand Motor</option>
                                 @foreach($manufactures AS $manufacture)
                                     <option value="{{ $manufacture->id }}" {{ (int)old('manufacture') === $manufacture->id ? 'selected' : '' }}>
                                         {{ $manufacture->name }}
@@ -134,6 +131,17 @@ Registrasi
                             @enderror
                         </div>
                     </div>
+                </div>
+                <div class="row mb-3">
+                    <div class="col-lg-6 d-flex align-items-stretch">
+                        <div class="mb-3 w-100">
+                            <label for="licensePlate" class="form-label">Nomor Plat</label>
+                            <input type="text" name="license_plate" class="form-control" id="licensePlate" value="{{ old('license_plate') }}" aria-describedby="license_plate">
+                            @error('license_plate')
+                                <span class="text-danger">{{ $message }}</span>
+                            @enderror
+                        </div>
+                    </div>
                     <div class="col-lg-6 d-flex align-items-stretch">
                         <div class="mb-3 w-100">
                             <label for="shift" class="form-label">Shift</label>
@@ -141,7 +149,9 @@ Registrasi
                                 <option value="">Pilih Shift</option>
                                 @foreach($shifts AS $shift)
                                     <option value="{{ $shift->id }}" {{ (int)old('shift') === $shift->id ? 'selected' : '' }}>
-                                        {{ $shift->name }} (Sisa Kuota: {{ $shift->quota - $shift->registration_count }})
+                                        {{ \Carbon\Carbon::parse($shift->start)->locale('id')->translatedFormat('l, d F Y') }}
+                                        | {{ \Carbon\Carbon::parse($shift->start)->locale('id')->translatedFormat('H:m') }} - {{ \Carbon\Carbon::parse($shift->end)->locale('id')->translatedFormat('H:m') }}
+                                        (Sisa Kuota: {{ $shift->quota - $shift->registration_count }})
                                     </option>
                                 @endforeach
                             </select>
@@ -152,6 +162,24 @@ Registrasi
                     </div>
                 </div>
                 <div class="row mb-3">
+                    <div class="col-lg-6 d-flex align-items-stretch">
+                        <div class="mb-3 w-100">
+                            <label for="services" class="form-label">Jasa</label>
+                            <select name="services[]" class="form-control" id="services" aria-describedby="services" multiple="multiple">
+                                @foreach($services AS $service)
+                                    <option value="{{ $service->id }}" >
+                                        {{ $service->name }}
+                                    </option>
+                                @endforeach
+                            </select>
+                            @error('services')
+                                <span class="text-danger">{{ $message }}</span>
+                            @enderror
+                            <span class="text-gray fs-2">
+                                <i>*Terdapat potongan harga untuk pembelian product, kecuali Busi Bosch gratis.</i>
+                            </span>
+                        </div>
+                    </div>
                     <div class="col-lg-6 d-flex align-items-stretch">
                         <div class="mb-3 w-100">
                             <label for="job" class="form-label">Pekerjaan</label>
@@ -195,10 +223,18 @@ Registrasi
 <script src="{{ asset('assets/libs/bootstrap/dist/js/bootstrap.bundle.min.js') }}"></script>
 <script src="{{ asset('assets/js/sidebarmenu.js') }}"></script>
 <script src="{{ asset('assets/js/app.min.js') }}"></script>
-<!-- <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script> -->
+<script src="{{ asset('assets/vendor/select2/js/select2.full.min.js') }}"></script>
 
 <script>
-    // $('#shift').select2();
+    $('#shift').select2({
+        theme: 'bootstrap-5'
+    })
+    $('#services').select2({
+        theme: 'bootstrap-5'
+    })
+    $('#manufacture').select2({
+        theme: 'bootstrap-5'
+    })
 
     $('.btn-submit').attr('disabled', true)
     $('#term-condition').on('change', function() {

@@ -24,8 +24,8 @@ class RegistrationExport implements FromView
     {
         $registrations = Registration::where('fullname', '<>', '');
 
-        if(request()->has('scan') && request('scan') !== '-') {
-            $registrations = $registrations->where('is_scan', request('scan'));
+        if(request()->has('is_scan') && request('is_scan') !== '-') {
+            $registrations = $registrations->where('is_scan', request('is_scan'));
         }
 
         if(request()->has('shift') && request('shift') !== '-') {

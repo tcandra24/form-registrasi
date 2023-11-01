@@ -1,7 +1,7 @@
 @extends('layouts/dashboard')
 
 @section('title')
-Daftar Merk/Brand
+Daftar Jasa
 @endsection
 
 @section('content')
@@ -9,8 +9,8 @@ Daftar Merk/Brand
     <div class="col-lg-12 d-flex align-items-stretch">
     <div class="card w-100">
         <div class="card-body p-4">
-        <h5 class="card-title fw-semibold mb-4">Daftar Merk/Brand Motor</h5>
-        <a href="/manufactures/create" class="btn btn-primary m-1">Tambah</a>
+        <h5 class="card-title fw-semibold mb-4">Daftar Jasa</h5>
+        <a href="/services/create" class="btn btn-primary m-1">Tambah</a>
         @if(Session::has('success'))
             <div class="alert alert-success alert-dismissible fade show m-2">
             <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round" class="me-2"><polyline points="9 11 12 14 22 4"></polyline><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"></path></svg>
@@ -40,24 +40,30 @@ Daftar Merk/Brand
                     <h6 class="fw-semibold mb-0">Nama</h6>
                 </th>
                 <th class="border-bottom-0">
+                    <h6 class="fw-semibold mb-0">Keterangan</h6>
+                </th>
+                <th class="border-bottom-0">
                     <h6 class="fw-semibold mb-0">Action</h6>
                 </th>
                 </tr>
             </thead>
             <tbody>
-                @if(count($manufactures) > 0)
-                    @foreach($manufactures AS $manufacture)
+                @if(count($services) > 0)
+                    @foreach($services AS $service)
                         <tr>
                             <td class="border-bottom-0"><h6 class="fw-semibold mb-0">{{ $loop->iteration }}</h6></td>
                             <td class="border-bottom-0">
-                                <p class="mb-0 fw-normal">{{ $manufacture->name }}</p>
+                                <p class="mb-0 fw-normal">{{ $service->name }}</p>
+                            </td>
+                            <td class="border-bottom-0">
+                                <p class="mb-0 fw-normal">{{ $service->description }}</p>
                             </td>
                             <td class="border-bottom-0">
                                 <div class="d-flex align-items-center gap-2">
-                                    <a href="/manufactures/{{ $manufacture->id }}/edit" class="btn btn-success m-1">Edit</a>
-                                    <button class="btn btn-danger m-1 btn-delete" data-id="{{ $manufacture->id }}" data-name="{{ $manufacture->name }}">Delete</button>
+                                    <a href="/services/{{ $service->id }}/edit" class="btn btn-success m-1">Edit</a>
+                                    <button class="btn btn-danger m-1 btn-delete" data-id="{{ $service->id }}" data-name="{{ $service->name }}">Delete</button>
 
-                                    <form id="form-delete-manufacture-{{ $manufacture->id }}" method="POST" action=" {{ url('/manufactures/' . $manufacture->id) }}">
+                                    <form id="form-delete-service-{{ $service->id }}" method="POST" action=" {{ url('/services/' . $service->id) }}">
                                         @csrf
                                         @method('DELETE')
                                     </form>
@@ -67,9 +73,9 @@ Daftar Merk/Brand
                     @endforeach
                 @else
                     <tr>
-                        <td colspan="3">
+                        <td colspan="4">
                             <div class="alert alert-info text-center" role="alert">
-                                Merk/Brand Motor Masih Kosong
+                                Jasa Masih Kosong
                             </div>
                         </td>
                     </tr>
@@ -96,7 +102,7 @@ Daftar Merk/Brand
       const name = $(this).attr('data-name')
 
       Swal.fire({
-        title: "Yakin Hapus Merk/Brand Motor ?",
+        title: "Yakin Hapus Jasa ?",
         text: name,
         type: "warning",
         showCancelButton: !0,
@@ -105,7 +111,7 @@ Daftar Merk/Brand
         closeOnConfirm: !1
       }).then((result) => {
         if (result.isConfirmed) {
-          $('#form-delete-manufacture-' + id).submit()
+          $('#form-delete-service-' + id).submit()
         }
       })
 

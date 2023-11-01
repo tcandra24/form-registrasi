@@ -13,6 +13,7 @@ use Carbon\Carbon;
 use App\Models\Job;
 use App\Models\Shift;
 use App\Models\Manufacture;
+use App\Models\Service;
 use App\Models\Registration AS RegistrationModel;
 
 class RegistrationController extends Controller
@@ -31,10 +32,16 @@ class RegistrationController extends Controller
         }
 
         $jobs = Job::all();
+        $services = Service::all();
         $shifts = Shift::withCount('registration')->get();
         $manufactures = Manufacture::all();
 
-        return view('registrations.index', [ 'jobs' => $jobs, 'shifts' => $shifts, 'manufactures' => $manufactures]);
+        return view('registrations.index', [
+            'jobs' => $jobs,
+            'shifts' => $shifts,
+            'manufactures' => $manufactures,
+            'services' => $services
+        ]);
     }
 
     public function store(Request $request) {
@@ -45,7 +52,8 @@ class RegistrationController extends Controller
             'license_plate' => 'required',
             'job' => 'required',
             'shift' => 'required',
-            'manufacture' => 'required'
+            'manufacture' => 'required',
+            'services' => 'required',
         ], [
             'fullname.required' => 'Nama Lengkap wajib diisi',
             'no_hp.required' => 'Nomer HP wajib diisi',
@@ -54,10 +62,10 @@ class RegistrationController extends Controller
             'job.required' => 'Pekerjaan wajib diisi',
             'shift.required' => 'Shift wajib diisi',
             'manufacture.required' => 'Pabrikan Motor wajib diisi',
+            'services.required' => 'Jasa Motor wajib diisi',
         ]);
 
         try {
-
             $shift = Shift::select('quota')->withCount('registration')->where('id', $request->shift)->first();
             if(($shift->quota - $shift->registration_count) === 0){
                 return redirect()->to('/registrations')->with('error', 'Kuota shift sudah penuh');
@@ -67,7 +75,7 @@ class RegistrationController extends Controller
 
             QrCode::size(200)->style('round')->eye('circle')->generate($token, Storage::path('public/qr-codes/') . 'qr-code-' . $token . '.svg');
 
-            RegistrationModel::create([
+            $registration = RegistrationModel::create([
                 'fullname' => $request->fullname,
                 'no_hp' => $request->no_hp,
                 'vehicle_type' => $request->vehicle_type,
@@ -78,6 +86,10 @@ class RegistrationController extends Controller
                 'manufacture_id' => $request->manufacture,
                 'token' => $token
             ]);
+
+            $services = Service::select('id')->whereIn('id', $request->services)->get();
+
+            $registration->services()->attach($services);
 
             return redirect()->to('/registrations')->with('success', 'Pendaftaran Berhasil Disimpan');
         } catch (\Exception $e) {

@@ -41,6 +41,11 @@ class Registration extends Model
         return $this->belongsTo(User::class);
     }
 
+    public function services()
+    {
+        return $this->belongsToMany(Service::class, 'registration_service');
+    }
+
     public function getFullnameAttribute($value)
     {
         return ucwords($value);

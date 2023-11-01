@@ -40,7 +40,7 @@ class ManufactureController extends Controller
     public function edit(Manufacture $manufacture)
     {
         try {
-            return view('manufacture.edit', ['manufacture' => $manufacture]);
+            return view('manufactures.edit', ['manufacture' => $manufacture]);
         } catch (\Exception $e) {
             return redirect()->to('/manufactures')->with('error', $e->getMessage());
         }

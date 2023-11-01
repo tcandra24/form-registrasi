@@ -43,6 +43,9 @@ Route::group(['middleware' => ['auth']], function () {
     Route::resource('/manufactures', \App\Http\Controllers\ManufactureController::class, [ 'except' => ['show'] ])
     ->middleware('permission:manufactures.index|manufactures.create|manufactures.edit|manufactures.delete');
 
+    Route::resource('/services', \App\Http\Controllers\ServiceController::class, [ 'except' => ['show'] ])
+    ->middleware('permission:services.index|services.create|services.edit|services.delete');
+
     Route::resource('/registrations', \App\Http\Controllers\RegistrationController::class, [ 'only' => ['index', 'store'] ])
     ->middleware('permission:regisrations.index');
 

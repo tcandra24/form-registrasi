@@ -97,7 +97,20 @@ Dashboard
                 <div class="card-body">
                     <h5 class="card-title">Selamat!</h5>
                     <p class="card-text">Anda Terdaftar Dalam Acara Fuboru</p>
+                    <p class="card-text fs-2"><b>*Diharap untuk mematuhi jadwal yang sudah dipilih</b></p>
                     <a href="/registrations" class="btn btn-primary">Lihat Qrcode</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    @else
+    <div class="row">
+        <div class="col-lg-6">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Dapatkan Busi gratis dan Merchandise menarik!</h5>
+                    <p class="card-text">Ayo segera daftarkan diri anda </p>
+                    <a href="/registrations" class="btn btn-primary">Daftar</a>
                 </div>
             </div>
         </div>

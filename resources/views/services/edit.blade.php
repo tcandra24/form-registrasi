@@ -1,13 +1,13 @@
 @extends('layouts/dashboard')
 
 @section('title')
-Buat Pebrikan Motor Baru
+Edit Jasa
 @endsection
 
 @section('content')
 <div class="card">
     <div class="card-body">
-        <h5 class="card-title fw-semibold mb-4">Input Merk/Brand Motor</h5>
+        <h5 class="card-title fw-semibold mb-4">Edit Jasa</h5>
         @if(Session::has('error'))
             <div class="alert alert-danger alert-dismissible fade show m-2">
                 <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round" class="me-2">
@@ -19,15 +19,28 @@ Buat Pebrikan Motor Baru
                 </button>
             </div>
         @endif
-
-        <form method="POST" action="{{ url('/manufactures') }}">
+        <form method="POST" action="{{ url('/services/' . $service->id) }}">
             @csrf
+            @method('PATCH')
             <div class="row">
                 <div class="col-lg-6 d-flex align-items-stretch">
                     <div class="mb-3 w-100">
-                        <label for="manufacturName" class="form-label">Nama Merk/Brand</label>
-                        <input type="text" name="name" class="form-control {{ $errors->has('name') ? 'border border-danger' : '' }}" id="manufacturName" aria-describedby="name">
+                        <label for="serviceName" class="form-label">Nama Jasa</label>
+                        <input type="text" name="name" class="form-control {{ $errors->has('name') ? 'border border-danger' : '' }}" id="serviceName" value="{{ $service->name }}" aria-describedby="name">
                         @error('name')
+                            <span class="text-danger">{{ $message }}</span>
+                        @enderror
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-6 d-flex align-items-stretch">
+                    <div class="mb-3 w-100">
+                        <label for="serviceDesc" class="form-label">Keterangan Jasa</label>
+                        <textarea class="form-control {{ $errors->has('description') ? 'border border-danger' : '' }}" name="description" id="serviceDesc" aria-describedby="description" cols="10" rows="10">
+                            {{ $service->description }}
+                        </textarea>
+                        @error('description')
                             <span class="text-danger">{{ $message }}</span>
                         @enderror
                     </div>

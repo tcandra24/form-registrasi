@@ -5,7 +5,13 @@ Laporan Registrasi
 @endsection
 
 @section('page-style')
-    <!-- <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" /> -->
+    <link rel="stylesheet" href="{{ asset('assets/vendor/select2/css/select2.min.css') }}" />
+    <link rel="stylesheet" href="{{ asset('assets/vendor/select2/css/select2-bootstrap-5-theme.min.css') }}" />
+    <style>
+        .select2-container--bootstrap-5.select2-container--focus .select2-selection,.select2-container--bootstrap-5.select2-container--open .select2-selection {
+            box-shadow: unset !important;
+        }
+    </style>
 @endsection
 
 @section('content')
@@ -52,7 +58,10 @@ Laporan Registrasi
                                     <select name="shift" class="form-control" id="shift" aria-describedby="shift">
                                         <option value="-">Semua Shift</option>
                                         @foreach($shifts AS $shift)
-                                            <option value="{{ $shift->id }}" {{ (int)$shift->id === (int)Request::get('shift') ? 'selected' : '' }}>{{ $shift->name }}</option>
+                                            <option value="{{ $shift->id }}" {{ (int)$shift->id === (int)Request::get('shift') ? 'selected' : '' }}>
+                                                {{ \Carbon\Carbon::parse($shift->start)->locale('id')->translatedFormat('l, d F Y') }}
+                                                | {{ \Carbon\Carbon::parse($shift->start)->locale('id')->translatedFormat('H:m') }} - {{ \Carbon\Carbon::parse($shift->end)->locale('id')->translatedFormat('H:m') }}
+                                            </option>
                                         @endforeach
                                     </select>
                                 </div>
@@ -69,8 +78,8 @@ Laporan Registrasi
                 </div>
                 <div class="row">
                     <form action="{{ url('/report/export/registrations') }}">
-                        <input type="hidden" name="is_scan" value="{{ Request::get('scan') }}">
-                        <input type="hidden" name="shift" value="{{ Request::get('shift') }}">
+                        <input type="hidden" name="is_scan" value="{{ Request::has('scan') ? Request::get('scan') : '-' }}">
+                        <input type="hidden" name="shift" value="{{ Request::has('shift') ? Request::get('shift') : '-' }}">
                         <button type="submit" class="btn btn-success">Export To Excel</button>
                     </form>
                 </div>
@@ -89,6 +98,9 @@ Laporan Registrasi
                                         <h6 class="fw-semibold mb-0">Nama Lengkap</h6>
                                     </th>
                                     <th class="border-bottom-0">
+                                        <h6 class="fw-semibold mb-0">Jasa</h6>
+                                    </th>
+                                    <th class="border-bottom-0">
                                         <h6 class="fw-semibold mb-0">Shift</h6>
                                     </th>
                                     <th class="border-bottom-0">
@@ -98,7 +110,7 @@ Laporan Registrasi
                                         <h6 class="fw-semibold mb-0">Jenis Kendaraan</h6>
                                     </th>
                                     <th class="border-bottom-0">
-                                        <h6 class="fw-semibold mb-0">Pabrikan Motor</h6>
+                                        <h6 class="fw-semibold mb-0">Merk/Brand Motor</h6>
                                     </th>
                                     <th class="border-bottom-0">
                                         <h6 class="fw-semibold mb-0">Plat Nomor</h6>
@@ -128,9 +140,24 @@ Laporan Registrasi
                                                 <p class="mb-0 fw-normal">{{ $registration->fullname }}</p>
                                             </td>
                                             <td class="border-bottom-0">
+                                                <div class="row">
+                                                    <div class="d-flex align-items-center gap-2 flex-wrap" style="width: 200px;">
+                                                        @foreach($registration->services AS $service)
+                                                            <span class="badge bg-success rounded-3 fw-semibold">{{ $service->name }}</span>
+                                                        @endforeach
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <td class="border-bottom-0">
                                                 <div class="d-flex flex-column">
-                                                    <p class="mb-0">{{ \Carbon\Carbon::parse($registration->shift->start)->locale('id')->translatedFormat('l, d F Y') }}</p>
-                                                    <p>{{ \Carbon\Carbon::parse($registration->shift->start)->locale('id')->translatedFormat('H:m') }} - {{ \Carbon\Carbon::parse($registration->shift->end)->locale('id')->translatedFormat('H:m') }}</p>
+                                                    <p class="mb-0">
+                                                        {{$registration->shift->start}}
+                                                        {{ \Carbon\Carbon::parse($registration->shift->start)->locale('id')->translatedFormat('l, d F Y') }}
+                                                    </p>
+                                                    <p>
+                                                       {{ $registration->shift->end}}
+                                                        {{ \Carbon\Carbon::parse($registration->shift->start)->locale('id')->translatedFormat('H:m') }} - {{ \Carbon\Carbon::parse($registration->shift->end)->locale('id')->translatedFormat('H:m') }}
+                                                    </p>
                                                 </div>
                                             </td>
                                             <td class="border-bottom-0">
@@ -184,14 +211,19 @@ Laporan Registrasi
 @endsection
 
 @section('script')
-<!-- <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script> -->
-
+<script src="{{ asset('assets/vendor/select2/js/select2.full.min.js') }}"></script>
 <script src="{{ asset('assets/libs/jquery/dist/jquery.min.js') }}"></script>
 <script src="{{ asset('assets/libs/bootstrap/dist/js/bootstrap.bundle.min.js') }}"></script>
 <script src="{{ asset('assets/js/sidebarmenu.js') }}"></script>
 <script src="{{ asset('assets/js/app.min.js') }}"></script>
+<script src="{{ asset('assets/vendor/select2/js/select2.full.min.js') }}"></script>
 
 <script>
-    // $('#shift').select2()
+    $('#shift').select2({
+        theme: 'bootstrap-5'
+    })
+    $('#scan').select2({
+        theme: 'bootstrap-5'
+    })
 </script>
 @endsection

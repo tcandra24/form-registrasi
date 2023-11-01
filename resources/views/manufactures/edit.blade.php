@@ -7,7 +7,7 @@ Edit Pabrikan Motor
 @section('content')
 <div class="card">
     <div class="card-body">
-        <h5 class="card-title fw-semibold mb-4">Edit Pabrikan Motor</h5>
+        <h5 class="card-title fw-semibold mb-4">Edit Merk/Brand Motor</h5>
         @if(Session::has('error'))
             <div class="alert alert-danger alert-dismissible fade show m-2">
                 <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round" class="me-2">
@@ -25,7 +25,7 @@ Edit Pabrikan Motor
             <div class="row">
                 <div class="col-lg-6 d-flex align-items-stretch">
                     <div class="mb-3 w-100">
-                        <label for="manufacturName" class="form-label">Nama Pabrikan</label>
+                        <label for="manufacturName" class="form-label">Nama Merk/Brand</label>
                         <input type="text" name="name" class="form-control {{ $errors->has('name') ? 'border border-danger' : '' }}" id="manufacturName" value="{{ $manufacture->name }}" aria-describedby="name">
                         @error('name')
                             <span class="text-danger">{{ $message }}</span>
