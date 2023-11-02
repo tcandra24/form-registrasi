@@ -92,6 +92,9 @@ Laporan Registrasi
                                         <h6 class="fw-semibold mb-0">No</h6>
                                     </th>
                                     <th class="border-bottom-0">
+                                        <h6 class="fw-semibold mb-0">Nomer Registrasi</h6>
+                                    </th>
+                                    <th class="border-bottom-0">
                                         <h6 class="fw-semibold mb-0">Email</h6>
                                     </th>
                                     <th class="border-bottom-0">
@@ -132,6 +135,9 @@ Laporan Registrasi
                                         <tr>
                                             <td class="border-bottom-0">
                                                 <h6 class="fw-semibold mb-0">{{ $loop->iteration }}</h6>
+                                            </td>
+                                            <td class="border-bottom-0">
+                                                <p class="mb-0 fw-normal">{{ $registration->registration_number }}</p>
                                             </td>
                                             <td class="border-bottom-0">
                                                 <p class="mb-0 fw-normal">{{ $registration->user->email }}</p>

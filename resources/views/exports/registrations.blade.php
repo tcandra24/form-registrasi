@@ -7,6 +7,7 @@
     <thead>
         <tr style="background-color: #e6e6e7;">
             <th scope="col">No</th>
+            <th scope="col">Nomer Registrasi</th>
             <th scope="col">Email</th>
             <th scope="col">Nama Lengkap</th>
             <th scope="col">Shift</th>
@@ -23,6 +24,7 @@
         @foreach($registrations as $registration)
         <tr>
             <td>{{ $loop->iteration }}</td>
+            <td>{{ $registration->registration_number }}</td>
             <td>{{ $registration->user->email }}</td>
             <td>{{ $registration->fullname }}</td>
             <td>
