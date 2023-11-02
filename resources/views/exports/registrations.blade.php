@@ -10,6 +10,7 @@
             <th scope="col">Nomer Registrasi</th>
             <th scope="col">Email</th>
             <th scope="col">Nama Lengkap</th>
+            <th scope="col">Jasa</th>
             <th scope="col">Shift</th>
             <th scope="col">No Handphone</th>
             <th scope="col">Jenis Kendaraan</th>
@@ -28,8 +29,13 @@
             <td>{{ $registration->user->email }}</td>
             <td>{{ $registration->fullname }}</td>
             <td>
+                @foreach($registration->services AS $service)
+                    <p>{{ $service->name }}</p>
+                @endforeach
+            </td>
+            <td>
                 <p>{{ \Carbon\Carbon::parse($registration->shift->start)->locale('id')->translatedFormat('l, d F Y') }}</p>
-                <p>{{ \Carbon\Carbon::parse($registration->shift->start)->locale('id')->translatedFormat('H:m') }} - {{ \Carbon\Carbon::parse($registration->shift->end)->locale('id')->translatedFormat('H:m') }}</p>
+                <p>{{ substr(substr($registration->shift->start, -8), 0, 5) }} - {{ substr(substr($registration->shift->end, -8), 0, 5) }}</p>
             </td>
             <td>{{ $registration->no_hp }}</td>
             <td>{{ $registration->vehicle_type }}</td>
