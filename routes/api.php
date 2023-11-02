@@ -15,6 +15,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/scan-qr/{token}', [\App\Http\Controllers\Api\ScanController::class, 'scan']);
+Route::get('/manual-check-in/{noRegistration}', [\App\Http\Controllers\Api\ScanController::class, 'manualCheckIn']);
 
 Route::fallback(function() {
     abort(404, 'API Resource Not Found.');

@@ -11,6 +11,7 @@ class Registration extends Model
 
     protected $fillable = [
         'fullname',
+        'registration_number',
         'no_hp',
         'vehicle_type',
         'license_plate',

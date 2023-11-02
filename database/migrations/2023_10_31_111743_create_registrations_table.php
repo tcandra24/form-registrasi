@@ -15,6 +15,7 @@ class CreateRegistrationsTable extends Migration
     {
         Schema::create('registrations', function (Blueprint $table) {
             $table->id();
+            $table->string('registration_number');
             $table->string('fullname');
             $table->string('no_hp');
             $table->string('vehicle_type');

@@ -39,6 +39,10 @@ Registrasi
                             <p>{{ $registration->fullname }}</p>
                         </div>
                         <div class="p-2">
+                            <h4>Nomer Registrasi: </h4>
+                            <p>{{ $registration->registration_number }}</p>
+                        </div>
+                        <div class="p-2">
                             <h4>No HP: </h4>
                             <p>{{ $registration->no_hp }}</p>
                         </div>
@@ -48,6 +52,18 @@ Registrasi
                         </div>
                     </div>
                     <div class="d-flex flex-column">
+                        <div class="p-2">
+                            <h4>Status Scan: </h4>
+                            @if($registration->is_scan)
+                                <div class="d-flex align-items-center gap-2">
+                                    <span class="badge bg-primary rounded-3 fw-semibold">Sudah Scan</span>
+                                </div>
+                            @else
+                                <div class="d-flex align-items-center gap-2">
+                                    <span class="badge bg-danger rounded-3 fw-semibold">Belum Scan</span>
+                                </div>
+                            @endif
+                        </div>
                         <div class="p-2">
                             <h4>Plat Nomor: </h4>
                             <p>{{ $registration->license_plate  }}</p>
@@ -62,7 +78,7 @@ Registrasi
                             <div class="d-flex flex-column">
                                 <div class="d-flex flex-column">
                                     <p class="mb-0">{{ \Carbon\Carbon::parse($registration->shift->start)->locale('id')->translatedFormat('l, d F Y') }}</p>
-                                    <p>{{ \Carbon\Carbon::parse($registration->shift->start)->locale('id')->translatedFormat('H:m') }} - {{ \Carbon\Carbon::parse($registration->shift->end)->locale('id')->translatedFormat('H:m') }}</p>
+                                    <p>{{ substr(substr($registration->shift->start, -8), 0, 5) }} - {{ substr(substr($registration->shift->end, -8), 0, 5) }}</p>
                                 </div>
                             </div>
                         </div>
@@ -150,7 +166,7 @@ Registrasi
                                 @foreach($shifts AS $shift)
                                     <option value="{{ $shift->id }}" {{ (int)old('shift') === $shift->id ? 'selected' : '' }}>
                                         {{ \Carbon\Carbon::parse($shift->start)->locale('id')->translatedFormat('l, d F Y') }}
-                                        | {{ \Carbon\Carbon::parse($shift->start)->locale('id')->translatedFormat('H:m') }} - {{ \Carbon\Carbon::parse($shift->end)->locale('id')->translatedFormat('H:m') }}
+                                        | {{ substr(substr($shift->start, -8), 0, 5) }} - {{ substr(substr($shift->end, -8), 0, 5) }}
                                         (Sisa Kuota: {{ $shift->quota - $shift->registration_count }})
                                     </option>
                                 @endforeach

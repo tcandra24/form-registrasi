@@ -74,9 +74,11 @@ class RegistrationController extends Controller
             $token = hash_hmac('sha256', Crypt::encryptString(Str::uuid() . Carbon::now()->getTimestampMs() . Auth::user()->name), Auth::user()->id . Auth::user()->name);
 
             QrCode::size(200)->style('round')->eye('circle')->generate($token, Storage::path('public/qr-codes/') . 'qr-code-' . $token . '.svg');
+            $registration_number = 'FBR-' . rand(11111, 99999) . '-' . Str::random(5);
 
             $registration = RegistrationModel::create([
                 'fullname' => $request->fullname,
+                'registration_number' => $registration_number,
                 'no_hp' => $request->no_hp,
                 'vehicle_type' => $request->vehicle_type,
                 'license_plate' => $request->license_plate,

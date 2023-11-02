@@ -19,7 +19,7 @@ class TokenVerification
         if (!$request->headers->has('Content-Type')){
             return response()->json([
                 'success' => false,
-                'message' => 'Content Type Header harus application.json'
+                'message' => 'Content Type Header harus application/json'
             ], 400);
         }
 

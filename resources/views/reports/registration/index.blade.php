@@ -60,7 +60,7 @@ Laporan Registrasi
                                         @foreach($shifts AS $shift)
                                             <option value="{{ $shift->id }}" {{ (int)$shift->id === (int)Request::get('shift') ? 'selected' : '' }}>
                                                 {{ \Carbon\Carbon::parse($shift->start)->locale('id')->translatedFormat('l, d F Y') }}
-                                                | {{ \Carbon\Carbon::parse($shift->start)->locale('id')->translatedFormat('H:m') }} - {{ \Carbon\Carbon::parse($shift->end)->locale('id')->translatedFormat('H:m') }}
+                                                | {{ substr(substr($shift->start, -8), 0, 5) }} - {{ substr(substr($shift->end, -8), 0, 5) }}
                                             </option>
                                         @endforeach
                                     </select>
@@ -151,12 +151,10 @@ Laporan Registrasi
                                             <td class="border-bottom-0">
                                                 <div class="d-flex flex-column">
                                                     <p class="mb-0">
-                                                        {{$registration->shift->start}}
                                                         {{ \Carbon\Carbon::parse($registration->shift->start)->locale('id')->translatedFormat('l, d F Y') }}
                                                     </p>
                                                     <p>
-                                                       {{ $registration->shift->end}}
-                                                        {{ \Carbon\Carbon::parse($registration->shift->start)->locale('id')->translatedFormat('H:m') }} - {{ \Carbon\Carbon::parse($registration->shift->end)->locale('id')->translatedFormat('H:m') }}
+                                                        {{ substr(substr($registration->shift->start, -8), 0, 5) }} - {{ substr(substr($registration->shift->end, -8), 0, 5) }}
                                                     </p>
                                                 </div>
                                             </td>
