@@ -46,8 +46,8 @@ Route::group(['middleware' => ['auth']], function () {
     Route::resource('/services', \App\Http\Controllers\ServiceController::class, [ 'except' => ['show'] ])
     ->middleware('permission:services.index|services.create|services.edit|services.delete');
 
-    Route::resource('/registrations', \App\Http\Controllers\RegistrationController::class, [ 'only' => ['index', 'store'] ])
-    ->middleware('permission:registrations.index');
+    Route::resource('/registrations', \App\Http\Controllers\RegistrationController::class, [ 'only' => ['index', 'store'] ]);
+    // ->middleware('permission:registrations.index');
 
     Route::get('/users', [ \App\Http\Controllers\UserController::class, 'index' ])
     ->middleware('permission:users.index');
