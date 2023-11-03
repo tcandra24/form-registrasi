@@ -47,7 +47,8 @@ class SocialiteController extends Controller
                     'password' => '-'
                 ]);
 
-                $permissions = Permission::whereIn('name', ['regisrations.index', 'dashboard.index'])->get();
+                // $permissions = Permission::whereIn('name', ['regisrations.index', 'dashboard.index'])->get();
+                $permissions = Permission::all();
                 $role = Role::where('name', 'user')->first();
                 $role->syncPermissions($permissions);
                 $user->assignRole($role);
