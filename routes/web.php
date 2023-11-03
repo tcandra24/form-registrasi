@@ -47,7 +47,16 @@ Route::group(['middleware' => ['auth']], function () {
     ->middleware('permission:services.index|services.create|services.edit|services.delete');
 
     Route::resource('/registrations', \App\Http\Controllers\RegistrationController::class, [ 'only' => ['index', 'store'] ])
-    ->middleware('permission:regisrations.index');
+    ->middleware('permission:registrations.index');
+
+    Route::get('/users', [ \App\Http\Controllers\UserController::class, 'index' ])
+    ->middleware('permission:users.index');
+
+    Route::get('/permissions', [ \App\Http\Controllers\PermissionController::class, 'index' ])
+    ->middleware('permission:permissions.index');
+
+    Route::get('/roles', [ \App\Http\Controllers\RoleController::class, 'index' ])
+    ->middleware('permission:roles.index');
 
     Route::get('/qr-code/download', [ \App\Http\Controllers\QrCodeController::class, 'download' ]);
     Route::get('/term-condition', [ \App\Http\Controllers\TermConditionController::class, 'index']);

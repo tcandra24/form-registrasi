@@ -30,10 +30,10 @@ class TokenVerification
             ], 400);
         }
 
-        if ($request->header('X-Token')!== env('TOKEN_TRANSACTION')) {
+        if ($request->header('X-Token') !== 'bd78cb96df3de3e068e22643760e85bbd9a66b3b6ec6b9248d580d011e489143') {
             return response()->json([
                 'success' => false,
-                'message' => 'Token Salah'
+                'message' => 'Token Transaksi Salah'
             ], 400);
         }
 

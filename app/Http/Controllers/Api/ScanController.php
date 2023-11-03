@@ -10,9 +10,10 @@ use Carbon\Carbon;
 
 class ScanController extends Controller
 {
-    public function scan($token)
+    public function scan(Request $request)
     {
         try {
+            $token = $request->token;
             $registration = Registration::select('is_scan')->where('token', $token);
             if (!$registration->exists()) {
                 throw new \Exception('Token tidak ditemukan');
@@ -39,12 +40,13 @@ class ScanController extends Controller
         }
     }
 
-    public function manualCheckIn($noRegistration)
+    public function manualCheckIn(Request $request)
     {
         try {
+            $noRegistration = $request->noRegistration;
             $registration = Registration::select('is_scan')->where('registration_number', $noRegistration);
             if (!$registration->exists()) {
-                throw new \Exception('Nomet Registrasi tidak ditemukan');
+                throw new \Exception('Nomer Registrasi tidak ditemukan');
             }
 
             if ($registration->first()->is_scan) {

@@ -197,7 +197,7 @@ Laporan Registrasi
                                     @endforeach
                                 @else
                                     <tr>
-                                        <td colspan="10">
+                                        <td colspan="13">
                                             <div class="alert alert-info text-center" role="alert">
                                                 Registrasi Masih Kosong
                                             </div>

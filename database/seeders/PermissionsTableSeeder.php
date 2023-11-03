@@ -38,6 +38,10 @@ class PermissionsTableSeeder extends Seeder
 
         Permission::create(['name' => 'regisrations.index', 'guard_name' => 'web']);
 
+        Permission::create(['name' => 'users.index', 'guard_name' => 'web']);
+        Permission::create(['name' => 'permissions.index', 'guard_name' => 'web']);
+        Permission::create(['name' => 'roles.index', 'guard_name' => 'web']);
+
         Permission::create(['name' => 'report_registrations.index', 'guard_name' => 'web']);
     }
 }

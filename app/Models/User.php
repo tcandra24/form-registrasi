@@ -52,4 +52,9 @@ class User extends Authenticatable
     {
         return $this->hasMany(Registration::class);
     }
+
+    public function getNameAttribute($value)
+    {
+        return ucwords($value);
+    }
 }
