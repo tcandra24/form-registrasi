@@ -23,8 +23,10 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        $this->app->bind('path.public', function() {
-            return base_path().'/../public_html/event.fuboru.co.id';
-        });
+        if (app()->environment('production')){
+            $this->app->bind('path.public', function() {
+                return base_path().'/../public_html/event.fuboru.co.id';
+            });
+        }
     }
 }
