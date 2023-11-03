@@ -108,7 +108,7 @@ Dashboard
         <div class="col-lg-6">
             <div class="card">
                 <div class="card-body">
-                    <h5 class="card-title">Dapatkan Busi gratis dan Merchandise menarik!</h5>
+                    <h5 class="card-title">Dapatkan Busi Bosch gratis dan Merchandise Exclusive!</h5>
                     <p class="card-text">Ayo segera daftarkan diri anda </p>
                     <a href="/registrations" class="btn btn-primary">Daftar</a>
                 </div>
