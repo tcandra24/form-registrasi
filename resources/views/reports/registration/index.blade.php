@@ -147,7 +147,7 @@ Laporan Registrasi
                                             </td>
                                             <td class="border-bottom-0">
                                                 <div class="row">
-                                                    <div class="d-flex align-items-center gap-2 flex-wrap" style="width: 200px;">
+                                                    <div class="d-flex align-items-center gap-2 flex-wrap" style="min-width: 200px;">
                                                         @foreach($registration->services AS $service)
                                                             <span class="badge bg-success rounded-3 fw-semibold">{{ $service->name }}</span>
                                                         @endforeach
