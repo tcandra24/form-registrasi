@@ -15,7 +15,7 @@ class ShiftController extends Controller
 
     public function index()
     {
-        $shifts = Shift::all();
+        $shifts = Shift::withCount('registration')->get();
         return view('shifts.index', ['shifts' => $shifts]);
     }
 
