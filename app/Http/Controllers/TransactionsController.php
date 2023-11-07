@@ -26,6 +26,12 @@ class TransactionsController extends Controller
         return view('transactions.registration.index', [ 'registrations' => $registrations, 'shifts' => $shifts]);
     }
 
+    public function show($id)
+    {
+        $registration = Registration::where('id', $id)->first();
+        return view('transactions.registration.show', [ 'registration' => $registration]);
+    }
+
     public function destroy($id)
     {
         try {

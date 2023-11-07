@@ -199,7 +199,7 @@ Sampah Transaksi Registrasi
                                     @endforeach
                                 @else
                                     <tr>
-                                        <td colspan="13">
+                                        <td colspan="14">
                                             <div class="alert alert-info text-center" role="alert">
                                                 Sampah Kosong
                                             </div>

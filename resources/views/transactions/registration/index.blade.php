@@ -133,10 +133,14 @@ Transaksi Registrasi
                                                 <h6 class="fw-semibold mb-0">{{ $loop->iteration }}</h6>
                                             </td>
                                             <td class="border-bottom-0">
-                                                <p class="mb-0 fw-normal">{{ $registration->registration_number }}</p>
+                                                <p class="mb-0 fw-normal">
+                                                    {{ $registration->registration_number }}
+                                                </p>
                                             </td>
                                             <td class="border-bottom-0">
-                                                <p class="mb-0 fw-normal">{{ $registration->user->email }}</p>
+                                                <a class="mb-0 fw-normal" href="/transactions/registration/{{ $registration->id }}">
+                                                    {{ $registration->user->email }}
+                                                </a>
                                             </td>
                                             <td class="border-bottom-0">
                                                 <p class="mb-0 fw-normal">{{ $registration->fullname }}</p>
@@ -203,7 +207,7 @@ Transaksi Registrasi
                                     @endforeach
                                 @else
                                     <tr>
-                                        <td colspan="13">
+                                        <td colspan="14">
                                             <div class="alert alert-info text-center" role="alert">
                                                 Registrasi Masih Kosong
                                             </div>
