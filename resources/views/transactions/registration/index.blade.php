@@ -121,6 +121,9 @@ Transaksi Registrasi
                                         <h6 class="fw-semibold mb-0">Pekerjaan</h6>
                                     </th>
                                     <th class="border-bottom-0">
+                                        <h6 class="fw-semibold mb-0">Tgl Buat</h6>
+                                    </th>
+                                    <th class="border-bottom-0">
                                         <h6 class="fw-semibold mb-0">Action</h6>
                                     </th>
                                 </tr>
@@ -192,6 +195,16 @@ Transaksi Registrasi
                                             </td>
                                             <td class="border-bottom-0">
                                                 <p class="mb-0 fw-normal">{{ $registration->job->name }}</p>
+                                            </td>
+                                            <td class="border-bottom-0">
+                                                <div class="d-flex flex-column">
+                                                    <p class="mb-0">
+                                                        {{ \Carbon\Carbon::parse($registration->created_at)->locale('id')->translatedFormat('l, d F Y') }}
+                                                    </p>
+                                                    <p>
+                                                        {{ substr(substr($registration->created_at, -8), 0, 5) }}
+                                                    </p>
+                                                </div>
                                             </td>
                                             <td class="border-bottom-0">
                                                 <div class="d-flex align-items-center gap-2">
