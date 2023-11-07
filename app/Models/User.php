@@ -57,4 +57,9 @@ class User extends Authenticatable
     {
         return ucwords($value);
     }
+
+    public function setNameAttribute($value)
+    {
+        $this->attributes['name'] = strtolower($value);
+    }
 }

@@ -90,6 +90,26 @@
                     </li>
                     <li class="nav-small-cap">
                         <i class="ti ti-dots nav-small-cap-icon fs-4"></i>
+                        <span class="hide-menu">Transaksi</span>
+                    </li>
+                    <li class="sidebar-item">
+                        <a class="sidebar-link" href="/transactions/registration" aria-expanded="false">
+                            <span>
+                                <i class="ti ti-database"></i>
+                            </span>
+                            <span class="hide-menu">Registrasi</span>
+                        </a>
+                    </li>
+                    <li class="sidebar-item">
+                        <a class="sidebar-link" href="/transactions/trash" aria-expanded="false">
+                            <span>
+                                <i class="ti ti-trash"></i>
+                            </span>
+                            <span class="hide-menu">Sampah</span>
+                        </a>
+                    </li>
+                    <li class="nav-small-cap">
+                        <i class="ti ti-dots nav-small-cap-icon fs-4"></i>
                         <span class="hide-menu">Laporan</span>
                     </li>
                     <li class="sidebar-item">

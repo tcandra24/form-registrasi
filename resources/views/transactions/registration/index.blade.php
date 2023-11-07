@@ -1,7 +1,7 @@
 @extends('layouts/dashboard')
 
 @section('title')
-Laporan Registrasi
+Transaksi Registrasi
 @endsection
 
 @section('page-style')
@@ -19,9 +19,9 @@ Laporan Registrasi
     <div class="col-lg-12 d-flex align-items-stretch">
         <div class="card w-100">
             <div class="card-body p-4">
-                <h5 class="card-title fw-semibold mb-4">Report Registrasi</h5>
+                <h5 class="card-title fw-semibold mb-4">Transaksi Registrasi</h5>
                 <div class="row">
-                    <form action="{{ url('/report/registrations') }}">
+                    <form action="{{ url('/transactions/registration') }}">
                         <div class="row">
                             <div class="col-lg-3 d-flex align-items-stretch">
                                 <div class="mb-3 w-100">
@@ -58,13 +58,25 @@ Laporan Registrasi
                     </form>
                 </div>
                 <div class="row">
-                    <form action="{{ url('/report/export/registrations') }}">
-                        <input type="hidden" name="is_scan" value="{{ Request::has('scan') ? Request::get('scan') : '-' }}">
-                        <input type="hidden" name="shift" value="{{ Request::has('shift') ? Request::get('shift') : '-' }}">
-                        <button type="submit" class="btn btn-success">Export To Excel</button>
-                    </form>
-                </div>
-                <div class="row">
+                    @if(Session::has('success'))
+                        <div class="alert alert-success alert-dismissible fade show m-2">
+                            <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round" class="me-2"><polyline points="9 11 12 14 22 4"></polyline><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"></path></svg>
+                            <strong>Success!</strong> {{ Session::get('success') }}
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="btn-close">
+                                <span><i class="fa-solid fa-xmark"></i></span>
+                            </button>
+                        </div>
+                    @endif
+
+                    @if(Session::has('error'))
+                        <div class="alert alert-danger alert-dismissible fade show m-2">
+                            <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round" class="me-2"><polygon points="7.86 2 16.14 2 22 7.86 22 16.14 16.14 22 7.86 22 2 16.14 2 7.86 7.86 2"></polygon><line x1="15" y1="9" x2="9" y2="15"></line><line x1="9" y1="9" x2="15" y2="15"></line></svg>
+                            <strong>Error!</strong> {{ Session::get('error') }}
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="btn-close">
+                                <span><i class="fa-solid fa-xmark"></i></span>
+                            </button>
+                        </div>
+                    @endif
                     <div class="table-responsive">
                         <table class="table text-nowrap mb-0 align-middle">
                             <thead class="text-dark fs-4">
@@ -107,6 +119,9 @@ Laporan Registrasi
                                     </th>
                                     <th class="border-bottom-0">
                                         <h6 class="fw-semibold mb-0">Pekerjaan</h6>
+                                    </th>
+                                    <th class="border-bottom-0">
+                                        <h6 class="fw-semibold mb-0">Action</h6>
                                     </th>
                                 </tr>
                             </thead>
@@ -174,6 +189,16 @@ Laporan Registrasi
                                             <td class="border-bottom-0">
                                                 <p class="mb-0 fw-normal">{{ $registration->job->name }}</p>
                                             </td>
+                                            <td class="border-bottom-0">
+                                                <div class="d-flex align-items-center gap-2">
+                                                    <button class="btn btn-danger m-1 btn-delete" data-id="{{ $registration->id }}" data-name="{{ $registration->fullname }}" {{ $registration->is_scan ? 'disabled' : '' }}>Delete</button>
+
+                                                    <form id="form-delete-registration-{{ $registration->id }}" method="POST" action=" {{ url('/transactions/registration/' . $registration->id) }}">
+                                                        @csrf
+                                                        @method('DELETE')
+                                                    </form>
+                                                </div>
+                                            </td>
                                         </tr>
                                     @endforeach
                                 @else
@@ -202,6 +227,7 @@ Laporan Registrasi
 <script src="{{ asset('assets/js/sidebarmenu.js') }}"></script>
 <script src="{{ asset('assets/js/app.min.js') }}"></script>
 <script src="{{ asset('assets/vendor/select2/js/select2.full.min.js') }}"></script>
+<script src="{{ asset('assets/vendor/sweetalert2/sweetalert2.min.js') }}"></script>
 
 <script>
     $('#shift').select2({
@@ -209,6 +235,26 @@ Laporan Registrasi
     })
     $('#scan').select2({
         theme: 'bootstrap-5'
+    })
+
+    $('.btn-delete').on('click', function(){
+      const id = $(this).attr('data-id')
+      const name = $(this).attr('data-name')
+
+      Swal.fire({
+        title: "Yakin Hapus Data Registrasi ?",
+        text: name,
+        type: "warning",
+        showCancelButton: !0,
+        confirmButtonColor: "#DD6B55",
+        confirmButtonText: "Yes",
+        closeOnConfirm: !1
+      }).then((result) => {
+        if (result.isConfirmed) {
+          $('#form-delete-registration-' + id).submit()
+        }
+      })
+
     })
 </script>
 @endsection

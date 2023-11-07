@@ -49,6 +49,12 @@ Route::group(['middleware' => ['auth']], function () {
     Route::resource('/registrations', \App\Http\Controllers\RegistrationController::class, [ 'only' => ['index', 'store'] ]);
     // ->middleware('permission:registrations.index');
 
+    Route::resource('/transactions/registration', \App\Http\Controllers\TransactionsController::class, [ 'only' => ['index', 'destroy'] ]);
+
+    Route::get('/transactions/trash',  [ \App\Http\Controllers\TrashController::class, 'index' ]);
+    Route::get('/transactions/trash/restore/{id}',  [ \App\Http\Controllers\TrashController::class, 'restore' ]);
+    Route::get('/transactions/trash/delete/{id}',  [ \App\Http\Controllers\TrashController::class, 'destroy' ]);
+
     Route::get('/users', [ \App\Http\Controllers\UserController::class, 'index' ])
     ->middleware('permission:users.index');
 
