@@ -62,34 +62,6 @@
                     </li>
                     <li class="nav-small-cap">
                         <i class="ti ti-dots nav-small-cap-icon fs-4"></i>
-                        <span class="hide-menu">Pengaturan Pengguna</span>
-                    </li>
-                    <li class="sidebar-item">
-                        <a class="sidebar-link" href="/users" aria-expanded="false">
-                            <span>
-                                <i class="ti ti-user"></i>
-                            </span>
-                            <span class="hide-menu">Pengguna</span>
-                        </a>
-                    </li>
-                    <li class="sidebar-item">
-                        <a class="sidebar-link" href="/permissions" aria-expanded="false">
-                            <span>
-                                <i class="ti ti-door"></i>
-                            </span>
-                            <span class="hide-menu">Ijin</span>
-                        </a>
-                    </li>
-                    <li class="sidebar-item">
-                        <a class="sidebar-link" href="/roles" aria-expanded="false">
-                            <span>
-                                <i class="ti ti-settings"></i>
-                            </span>
-                            <span class="hide-menu">Role</span>
-                        </a>
-                    </li>
-                    <li class="nav-small-cap">
-                        <i class="ti ti-dots nav-small-cap-icon fs-4"></i>
                         <span class="hide-menu">Transaksi</span>
                     </li>
                     <li class="sidebar-item">
@@ -118,6 +90,34 @@
                                 <i class="ti ti-file"></i>
                             </span>
                             <span class="hide-menu">Registrasi</span>
+                        </a>
+                    </li>
+                    <li class="nav-small-cap">
+                        <i class="ti ti-dots nav-small-cap-icon fs-4"></i>
+                        <span class="hide-menu">Pengaturan Pengguna</span>
+                    </li>
+                    <li class="sidebar-item">
+                        <a class="sidebar-link" href="/users" aria-expanded="false">
+                            <span>
+                                <i class="ti ti-user"></i>
+                            </span>
+                            <span class="hide-menu">Pengguna</span>
+                        </a>
+                    </li>
+                    <li class="sidebar-item">
+                        <a class="sidebar-link" href="/permissions" aria-expanded="false">
+                            <span>
+                                <i class="ti ti-door"></i>
+                            </span>
+                            <span class="hide-menu">Ijin</span>
+                        </a>
+                    </li>
+                    <li class="sidebar-item">
+                        <a class="sidebar-link" href="/roles" aria-expanded="false">
+                            <span>
+                                <i class="ti ti-settings"></i>
+                            </span>
+                            <span class="hide-menu">Role</span>
                         </a>
                     </li>
                 @else
