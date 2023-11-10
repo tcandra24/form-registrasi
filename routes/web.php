@@ -49,6 +49,7 @@ Route::group(['middleware' => ['auth']], function () {
     Route::resource('/registrations', \App\Http\Controllers\RegistrationController::class, [ 'only' => ['index', 'store'] ]);
     // ->middleware('permission:registrations.index');
 
+    Route::delete('/transactions/registration/delete-all-not-scan', [\App\Http\Controllers\TransactionsController::class, 'destroyAllNotScan']);
     Route::resource('/transactions/registration', \App\Http\Controllers\TransactionsController::class, [ 'only' => ['index', 'show', 'destroy'] ]);
 
     Route::get('/transactions/trash',  [ \App\Http\Controllers\TrashController::class, 'index' ]);

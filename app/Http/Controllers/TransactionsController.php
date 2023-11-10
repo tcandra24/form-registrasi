@@ -43,4 +43,16 @@ class TransactionsController extends Controller
             return redirect()->to('/transactions/registration')->with('error', $e->getMessage());
         }
     }
+
+    public function destroyAllNotScan()
+    {
+        try {
+            $registration = Registration::where('is_scan', false);
+            $registration->delete();
+
+            return redirect()->to('/transactions/registration')->with('success', 'Semua Data Registrasi yang Tidak Scan Berhasil Dihapus');
+        } catch (\Exception $e) {
+            return redirect()->to('/transactions/registration')->with('error', $e->getMessage());
+        }
+    }
 }
