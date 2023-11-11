@@ -19,6 +19,7 @@
             <th scope="col">Status Scan</th>
             <th scope="col">Tanggal Scan</th>
             <th scope="col">Pekerjaan</th>
+            <th scope="col">Token</th>
         </tr>
     </thead>
     <tbody>
@@ -50,6 +51,7 @@
             </td>
             <td>{{ $registration->scan_date ?? '-' }}</td>
             <td>{{ $registration->job->name }}</td>
+            <td>{{ $registration->token }}</td>
         </tr>
         @endforeach
     </tbody>
