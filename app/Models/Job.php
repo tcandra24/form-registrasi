@@ -10,7 +10,8 @@ class Job extends Model
     use HasFactory;
 
     protected $fillable = [
-        'name'
+        'name',
+        'is_active'
     ];
 
     public function registration()

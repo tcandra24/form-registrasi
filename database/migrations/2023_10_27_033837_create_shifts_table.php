@@ -19,6 +19,7 @@ class CreateShiftsTable extends Migration
             $table->dateTime('start');
             $table->dateTime('end');
             $table->integer('quota');
+            $table->boolean('is_active')->default(true);
             $table->timestamps();
         });
     }

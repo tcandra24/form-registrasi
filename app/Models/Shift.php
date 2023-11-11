@@ -13,7 +13,8 @@ class Shift extends Model
         'name',
         'start',
         'end',
-        'quota'
+        'quota',
+        'is_active'
     ];
 
     public function registration()

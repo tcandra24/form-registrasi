@@ -31,9 +31,9 @@ class RegistrationController extends Controller
             return view('registrations.index', [ 'registration' => $registration]);
         }
 
-        $jobs = Job::all();
+        $jobs = Job::where('is_active', 1)->get();
         $services = Service::all();
-        $shifts = Shift::withCount('registration')->get();
+        $shifts = Shift::where('is_active', 1)->withCount('registration')->get();
         $manufactures = Manufacture::all();
 
         return view('registrations.index', [
