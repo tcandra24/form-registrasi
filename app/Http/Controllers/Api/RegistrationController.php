@@ -24,6 +24,7 @@ class RegistrationController extends Controller
             $registrations = $registrations->map(function($registration){
 
                 return [
+                    'id' => $registration->id,
                     'registration_number' => $registration->registration_number,
                     'email' =>  $registration->user->email,
                     'fullname' => $registration->fullname,
@@ -60,6 +61,7 @@ class RegistrationController extends Controller
             $registration = $registration->map(function($registration){
 
                 return [
+                    'id' => $registration->id,
                     'registration_number' => $registration->registration_number,
                     'email' =>  $registration->user->email,
                     'fullname' => $registration->fullname,
