@@ -15,6 +15,7 @@ class DashboardController extends Controller
         $registration = Registration::count();
         $user = User::count();
         $shift = Shift::count();
+        $shiftWithQuota = Shift::where('is_active', 1)->withCount('registration')->get();
 
         $is_registered = Registration::where('user_id', Auth::user()->id)->exists();
 
@@ -22,7 +23,8 @@ class DashboardController extends Controller
             'count_registration' => $registration,
             'count_user' => $user,
             'count_shift' => $shift,
-            'is_registered' => $is_registered
+            'is_registered' => $is_registered,
+            'shifts_with_quota' => $shiftWithQuota
         ]);
     }
 }
