@@ -12,9 +12,9 @@ class RegistrationController extends Controller
     {
         try {
             if(request()->has('is_scan')){
-                $registrations = Registration::where('is_scan', request()->is_scan)->get();
+                $registrations = Registration::with('shift', 'job', 'services', 'user')->where('is_scan', request()->is_scan)->get();
             } else {
-                $registrations = Registration::all();
+                $registrations = Registration::with('shift', 'job', 'services', 'user')->get();
             }
 
             return response()->json([
@@ -32,7 +32,7 @@ class RegistrationController extends Controller
     public function show($id)
     {
         try {
-            $registration = Registration::where('id', $id)->get();
+            $registration = Registration::with('shift', 'job', 'services', 'user')->where('id', $id)->get();
 
             return response()->json([
                 'success' => true,
