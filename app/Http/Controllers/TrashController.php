@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Registration;
+use Maatwebsite\Excel\Facades\Excel;
+use App\Exports\RegistrationTrashExport;
 use App\Models\Shift;
 use Illuminate\Support\Facades\DB;
 
@@ -60,5 +62,10 @@ class TrashController extends Controller
         } catch (\Exception $e) {
             return redirect()->to('/transactions/trash')->with('error', $e->getMessage());
         }
+    }
+
+    public function export(Request $request)
+    {
+        return Excel::download(new RegistrationTrashExport($request->shift, $request->is_scan), 'registrations-deleted.xlsx');
     }
 }
