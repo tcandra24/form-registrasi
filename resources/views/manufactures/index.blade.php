@@ -40,6 +40,9 @@ Daftar Merk/Brand
                     <h6 class="fw-semibold mb-0">Nama</h6>
                 </th>
                 <th class="border-bottom-0">
+                    <h6 class="fw-semibold mb-0">Status</h6>
+                </th>
+                <th class="border-bottom-0">
                     <h6 class="fw-semibold mb-0">Action</h6>
                 </th>
                 </tr>
@@ -51,6 +54,17 @@ Daftar Merk/Brand
                             <td class="border-bottom-0"><h6 class="fw-semibold mb-0">{{ $loop->iteration }}</h6></td>
                             <td class="border-bottom-0">
                                 <p class="mb-0 fw-normal">{{ $manufacture->name }}</p>
+                            </td>
+                            <td class="border-bottom-0">
+                                @if($manufacture->is_active)
+                                    <div class="d-flex align-items-center gap-2">
+                                        <span class="badge bg-primary rounded-3 fw-semibold">Aktif</span>
+                                    </div>
+                                @else
+                                    <div class="d-flex align-items-center gap-2">
+                                        <span class="badge bg-danger rounded-3 fw-semibold">Non Aktif</span>
+                                    </div>
+                                @endif
                             </td>
                             <td class="border-bottom-0">
                                 <div class="d-flex align-items-center gap-2">

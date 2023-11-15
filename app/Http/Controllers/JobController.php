@@ -60,8 +60,11 @@ class JobController extends Controller
         ]);
 
         try {
+            $isActive = $request->active ? true : false;
+
             $job->update([
-                'name' => $request->name
+                'name' => $request->name,
+                'is_active' => $isActive,
             ]);
 
             return redirect()->to('/jobs')->with('success', 'Pekerjaan Berhasil Diupdate');

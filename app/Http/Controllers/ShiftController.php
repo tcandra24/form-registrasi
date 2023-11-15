@@ -77,11 +77,14 @@ class ShiftController extends Controller
         ]);
 
         try {
+            $isActive = $request->active ? true : false;
+
             $shift->update([
                 'name' => $request->name,
                 'start' => $request->start,
                 'end' => $request->end,
                 'quota' => $request->quota,
+                'is_active' => $isActive,
             ]);
 
             return redirect()->to('/shifts')->with('success', 'Shift Berhasil Diupdate');

@@ -55,8 +55,11 @@ class ManufactureController extends Controller
         ]);
 
         try {
+            $isActive = $request->active ? true : false;
+
             $manufacture->update([
-                'name' => $request->name
+                'name' => $request->name,
+                'is_active' => $isActive,
             ]);
 
             return redirect()->to('/manufactures')->with('success', 'Pabrikan Motor Berhasil Diupdate');

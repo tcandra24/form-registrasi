@@ -1,13 +1,23 @@
 @extends('layouts/dashboard')
 
 @section('title')
-Edit Pekerjaan
+Import Data Registrasi
 @endsection
 
 @section('content')
 <div class="card">
     <div class="card-body">
-        <h5 class="card-title fw-semibold mb-4">Edit Pekerjaan</h5>
+        <h5 class="card-title fw-semibold mb-4">Input Data Registrasi</h5>
+        @if(Session::has('success'))
+            <div class="alert alert-success alert-dismissible fade show m-2">
+            <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round" class="me-2"><polyline points="9 11 12 14 22 4"></polyline><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"></path></svg>
+            <strong>Success!</strong> {{ Session::get('success') }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="btn-close"><span><i class="fa-solid fa-xmark"></i></span>
+
+            </button>
+            </div>
+        @endif
+
         @if(Session::has('error'))
             <div class="alert alert-danger alert-dismissible fade show m-2">
                 <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round" class="me-2">
@@ -19,27 +29,17 @@ Edit Pekerjaan
                 </button>
             </div>
         @endif
-        <form method="POST" action="{{ url('/jobs/' . $job->id) }}">
+
+        <form method="POST" action="{{ url('/registrations/import') }}" enctype="multipart/form-data">
             @csrf
-            @method('PATCH')
             <div class="row">
                 <div class="col-lg-6 d-flex align-items-stretch">
                     <div class="mb-3 w-100">
-                        <label for="jobName" class="form-label">Nama Pekerjaan</label>
-                        <input type="text" name="name" class="form-control {{ $errors->has('name') ? 'border border-danger' : '' }}" id="jobName" value="{{ $job->name }}" aria-describedby="name">
-                        @error('name')
+                        <label for="file" class="form-label">File Excel</label>
+                        <input type="file" name="file" class="form-control {{ $errors->has('file') ? 'border border-danger' : '' }}" id="file" aria-describedby="name">
+                        @error('file')
                             <span class="text-danger">{{ $message }}</span>
                         @enderror
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-lg-6 d-flex align-items-stretch">
-                    <div class="mb-3 w-100">
-                        <div class="form-check">
-                            <input class="form-check-input" name="active" type="checkbox" id="active" aria-describedby="term-condition" {{ $job->is_active ? 'checked' : '' }}>
-                            <label for="term-condition" class="form-label">Aktif</label>
-                        </div>
                     </div>
                 </div>
             </div>

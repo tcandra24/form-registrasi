@@ -66,6 +66,16 @@ Edit shift
                 </div>
             </div>
 
+            <div class="row">
+                <div class="col-lg-6 d-flex align-items-stretch">
+                    <div class="mb-3 w-100">
+                        <div class="form-check">
+                            <input class="form-check-input" name="active" type="checkbox" id="active" aria-describedby="term-condition" {{ $shift->is_active ? 'checked' : '' }}>
+                            <label for="term-condition" class="form-label">Aktif</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
             <button type="submit" class="btn btn-primary">Submit</button>
             <button type="reset" class="btn btn-danger">Reset</button>
         </form>

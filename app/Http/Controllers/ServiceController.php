@@ -60,9 +60,12 @@ class ServiceController extends Controller
         ]);
 
         try {
+            $isActive = $request->active ? true : false;
+
             $service->update([
                 'name' => $request->name,
                 'description' => $request->description,
+                'is_active' => $isActive,
             ]);
 
             return redirect()->to('/services')->with('success', 'Jasa Berhasil Diupdate');

@@ -11,7 +11,8 @@ class Service extends Model
 
     protected $fillable = [
         'name',
-        'description'
+        'description',
+        'is_active'
     ];
 
     public function registrations()

@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\Auth;
 use SimpleSoftwareIO\QrCode\Facades\QrCode;
+use Maatwebsite\Excel\Facades\Excel;
+use App\Imports\RegistrationImport;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
@@ -31,10 +33,10 @@ class RegistrationController extends Controller
             return view('registrations.index', [ 'registration' => $registration]);
         }
 
-        $jobs = Job::where('is_active', 1)->get();
-        $services = Service::all();
-        $shifts = Shift::where('is_active', 1)->withCount('registration')->get();
-        $manufactures = Manufacture::all();
+        $jobs = Job::where('is_active', true)->get();
+        $services = Service::where('is_active', true)->get();
+        $shifts = Shift::where('is_active', true)->withCount('registration')->get();
+        $manufactures = Manufacture::where('is_active', true)->get();
 
         return view('registrations.index', [
             'jobs' => $jobs,
@@ -95,6 +97,28 @@ class RegistrationController extends Controller
             $registration->services()->attach($services);
 
             return redirect()->to('/registrations')->with('success', 'Pendaftaran Berhasil Disimpan');
+        } catch (\Exception $e) {
+            return back()->with('error', $e->getMessage());
+        }
+    }
+
+    public function import()
+    {
+        return view('registrations.import');
+    }
+
+    public function saveImport(Request $request)
+    {
+        $request->validate([
+            'file' => 'required|mimes:xlsx,xls',
+        ]);
+
+        try {
+            $file = $request->file('file');
+
+            Excel::import(new RegistrationImport, $file);
+
+            return redirect()->to('/registrations/import')->with('success', 'Import Berhasil Dilakukan');
         } catch (\Exception $e) {
             return back()->with('error', $e->getMessage());
         }
