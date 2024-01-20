@@ -9,25 +9,42 @@ use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
 
 use App\Models\User;
+use App\Models\Event;
+use Illuminate\Support\Facades\Session;
 
 class AuthController extends Controller
 {
     public function index()
     {
-        return view('auth.login');
+        $events = Event::where('is_active', true)->get();
+        return view('auth.login', ['events' => $events]);
     }
 
     public function login(Request $request)
     {
+
         $request->validate([
             'email' => 'required',
-            'password' => 'required'
+            'password' => 'required',
+            'event' => 'required',
         ], [
             'email.required' => 'Email wajib diisi',
             'password.required' => 'Password wajib diisi',
+            'event.required' => 'Event wajib diisi',
         ]);
 
         try {
+            if($request->event === 'manage-event'){
+                if(!User::role('admin')->where('email', $request->email)->first()){
+                    throw new \Exception('Login Gagal, Manage Event Hanya untuk Admin');
+                }
+            } else {
+                $user = User::where('email', $request->email)->first();
+                if($user->event_id !== (int)$request->event){
+                    throw new \Exception('Login Gagal, Event yang dipilih tidak sesuai');
+                }
+            }
+
             $credentials = $request->only('email', 'password');
             if (!Auth::attempt($credentials, $request->remember)) {
                 throw new \Exception('Login Gagal, Username/Password salah');
@@ -42,7 +59,8 @@ class AuthController extends Controller
 
     public function register()
     {
-        return view('auth.register');
+        $events = Event::where('is_active', true)->get();
+        return view('auth.register', ['events' => $events]);
     }
 
     public function store(Request $request)
@@ -51,11 +69,13 @@ class AuthController extends Controller
             'email' => 'required|unique:users,email',
             'name' => 'required',
             'password' => 'required',
+            'event' => 'required',
         ], [
             'email.required' => 'Email wajib diisi',
             'name.required' => 'Nama wajib diisi',
             'password.required' => 'Password wajib diisi',
-            'email.unique' => 'Email sudah digunakan'
+            'email.unique' => 'Email sudah digunakan',
+            'event.required' => 'Event wajib diisi',
         ]);
 
         try {
@@ -63,10 +83,10 @@ class AuthController extends Controller
             $user = User::create([
                 'email'     => $request->email,
                 'name'      => $request->name,
-                'password'  => Hash::make($request->password)
+                'password'  => Hash::make($request->password),
+                'event_id'  => $request->event,
             ]);
 
-            // $permissions = Permission::whereIn('name', ['regisrations.index', 'dashboard.index'])->get();
             $permissions = Permission::all();
             $role = Role::where('name', 'user')->first();
             $role->syncPermissions($permissions);

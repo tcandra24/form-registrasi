@@ -22,6 +22,7 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'event_id',
     ];
 
     /**
@@ -46,6 +47,11 @@ class User extends Authenticatable
     public function socialAccounts()
     {
         return $this->hasMany(SocialAccount::class);
+    }
+
+    public function event()
+    {
+        return $this->belongsTo(Event::class, 'event_id', 'id');
     }
 
     public function registrations()

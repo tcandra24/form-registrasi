@@ -43,6 +43,9 @@ Route::group(['middleware' => ['auth']], function () {
     Route::resource('/manufactures', \App\Http\Controllers\ManufactureController::class, [ 'except' => ['show'] ])
     ->middleware('permission:manufactures.index|manufactures.create|manufactures.edit|manufactures.delete');
 
+    Route::resource('/events', \App\Http\Controllers\EventController::class, [ 'except' => ['show'] ])
+    ->middleware('permission:events.index|events.create|events.edit|events.delete');
+
     Route::resource('/services', \App\Http\Controllers\ServiceController::class, [ 'except' => ['show'] ])
     ->middleware('permission:services.index|services.create|services.edit|services.delete');
 
@@ -50,6 +53,7 @@ Route::group(['middleware' => ['auth']], function () {
     Route::post('/registrations/import', [ \App\Http\Controllers\RegistrationController::class, 'saveImport' ]);
 
     Route::resource('/registrations', \App\Http\Controllers\RegistrationController::class, [ 'only' => ['index', 'store'] ]);
+    Route::resource('/registration-mechanics', \App\Http\Controllers\RegistrationMechanicsController::class, [ 'only' => ['index', 'store'] ]);
     // ->middleware('permission:registrations.index');
 
     Route::delete('/transactions/registration/delete-all-not-scan', [\App\Http\Controllers\TransactionsController::class, 'destroyAllNotScan']);
@@ -76,6 +80,9 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('/report/export/registrations', [\App\Http\Controllers\Report\RegistrationController::class, 'export'])
     ->middleware('permission:report_registrations.index');
     Route::get('/report/registrations', [ \App\Http\Controllers\Report\RegistrationController::class, 'index' ])
+    ->middleware('permission:report_registrations.index');
+
+    Route::get('/report/registration-mechanics', [ \App\Http\Controllers\Report\RegistrationMechanicController::class, 'index' ])
     ->middleware('permission:report_registrations.index');
 
     Route::post('/logout', [App\Http\Controllers\AuthController::class, 'logout'])->name('logout');

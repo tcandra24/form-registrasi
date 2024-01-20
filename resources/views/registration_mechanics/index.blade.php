@@ -56,8 +56,8 @@
                                 <p>{{ $registration->no_hp }}</p>
                             </div>
                             <div class="p-2">
-                                <h4>Tipe Kendaraan: </h4>
-                                <p>{{ $registration->vehicle_type }}</p>
+                                <h4>Nama Bengkel: </h4>
+                                <p>{{ $registration->workshop_name }}</p>
                             </div>
                         </div>
                         <div class="d-flex flex-column">
@@ -74,24 +74,12 @@
                                 @endif
                             </div>
                             <div class="p-2">
-                                <h4>Plat Nomor: </h4>
-                                <p>{{ $registration->license_plate }}</p>
+                                <h4>Alamat: </h4>
+                                <p>{{ $registration->address }}</p>
                             </div>
                             <div class="p-2">
-                                <h4>Pekerjaan: </h4>
-                                <p>{{ $registration->job->name }}</p>
-                            </div>
-                            <div class="p-2">
-                                <h4>Shift: </h4>
-                                <p>{{ $registration->shift->name }}</p>
-                                <div class="d-flex flex-column">
-                                    <div class="d-flex flex-column">
-                                        <p class="mb-0">
-                                            {{ \Carbon\Carbon::parse($registration->shift->start)->locale('id')->translatedFormat('l, d F Y') }}
-                                        </p>
-                                        <!-- <p>{{ substr(substr($registration->shift->start, -8), 0, 5) }} - {{ substr(substr($registration->shift->end, -8), 0, 5) }}</p> -->
-                                    </div>
-                                </div>
+                                <h4>Jumlah Mekanik yang Hadir: </h4>
+                                <p>{{ $registration->mechanics_count }}</p>
                             </div>
                         </div>
                     </div>
@@ -113,7 +101,7 @@
                         </button>
                     </div>
                 @endif
-                <form method="POST" action="{{ url('/registrations') }}">
+                <form method="POST" action="{{ url('/registration-mechanics') }}">
                     @csrf
                     <div class="row">
                         <div class="col-lg-6 d-flex align-items-stretch">
@@ -140,31 +128,19 @@
                     <div class="row">
                         <div class="col-lg-6 d-flex align-items-stretch">
                             <div class="mb-3 w-100">
-                                <label for="vehicleType" class="form-label">Tipe Kendaraan</label>
-                                <input type="text" name="vehicle_type" class="form-control" id="vehicleType"
-                                    value="{{ old('vehicle_type') }}" aria-describedby="vehicle_type">
-                                @error('vehicle_type')
+                                <label for="workshopName" class="form-label">Nama Bengkel</label>
+                                <input type="text" name="workshop_name" class="form-control" id="workshopName"
+                                    value="{{ old('workshop_name') }}" aria-describedby="workshop_name">
+                                @error('workshop_name')
                                     <span class="text-danger">{{ $message }}</span>
                                 @enderror
-                                <span class="text-gray fs-2">
-                                    <i>*Contoh: Vario 150, Vario 125 Mio, Beat dll.</i>
-                                </span>
                             </div>
                         </div>
                         <div class="col-lg-6 d-flex align-items-stretch">
                             <div class="mb-3 w-100">
-                                <label for="job" class="form-label">Merk/Brand Motor</label>
-                                <select name="manufacture" class="form-control" id="manufacture"
-                                    aria-describedby="manufacture">
-                                    <option value="">Pilih Merk/Brand Motor</option>
-                                    @foreach ($manufactures as $manufacture)
-                                        <option value="{{ $manufacture->id }}"
-                                            {{ (int) old('manufacture') === $manufacture->id ? 'selected' : '' }}>
-                                            {{ $manufacture->name }}
-                                        </option>
-                                    @endforeach
-                                </select>
-                                @error('manufacture')
+                                <label for="address" class="form-label">Alamat</label>
+                                <textarea class="form-control" name="address" id="address" cols="30" rows="10"></textarea>
+                                @error('address')
                                     <span class="text-danger">{{ $message }}</span>
                                 @enderror
                             </div>
@@ -173,70 +149,10 @@
                     <div class="row mb-3">
                         <div class="col-lg-6 d-flex align-items-stretch">
                             <div class="mb-3 w-100">
-                                <label for="licensePlate" class="form-label">Nomor Plat</label>
-                                <input type="text" name="license_plate" class="form-control" id="licensePlate"
-                                    value="{{ old('license_plate') }}" aria-describedby="license_plate">
-                                @error('license_plate')
-                                    <span class="text-danger">{{ $message }}</span>
-                                @enderror
-                            </div>
-                        </div>
-                        <div class="col-lg-6 d-flex align-items-stretch">
-                            <div class="mb-3 w-100">
-                                <label for="shift" class="form-label">Shift</label>
-                                <select name="shift" class="form-control" id="shift" aria-describedby="shift">
-                                    <option value="">Pilih Shift</option>
-                                    @foreach ($shifts as $shift)
-                                        <option value="{{ $shift->id }}"
-                                            {{ (int) old('shift') === $shift->id ? 'selected' : '' }}>
-                                            {{ \Carbon\Carbon::parse($shift->start)->locale('id')->translatedFormat('l, d F Y') }}
-                                            <!-- | {{ substr(substr($shift->start, -8), 0, 5) }} - {{ substr(substr($shift->end, -8), 0, 5) }} -->
-                                            (Sisa Kuota: {{ $shift->quota - $shift->registration_count }})
-                                        </option>
-                                    @endforeach
-                                </select>
-                                @error('shift')
-                                    <span class="text-danger">{{ $message }}</span>
-                                @enderror
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row mb-3">
-                        <div class="col-lg-6 d-flex align-items-stretch">
-                            <div class="mb-3 w-100">
-                                <label for="services" class="form-label">Jasa</label>
-                                <select name="services[]" class="form-control" id="services"
-                                    aria-describedby="services" multiple="multiple">
-                                    @foreach ($services as $service)
-                                        <option value="{{ $service->id }}">
-                                            {{ $service->name }}
-                                        </option>
-                                    @endforeach
-                                </select>
-                                @error('services')
-                                    <span class="text-danger">{{ $message }}</span>
-                                @enderror
-                                <span class="text-gray fs-2">
-                                    <i>*Terdapat potongan harga untuk pembelian product, kecuali Busi Bosch gratis.</i>
-                                </span>
-                            </div>
-                        </div>
-                        <div class="col-lg-6 d-flex align-items-stretch">
-                            <div class="mb-3 w-100">
-                                <label for="job" class="form-label">Pekerjaan</label>
-                                <div class="d-flex" style="gap: 10px;">
-                                    @foreach ($jobs as $job)
-                                        <div class="form-check">
-                                            <input class="form-check-input" name="job" type="radio"
-                                                value="{{ $job->id }}" id="job" aria-describedby="job"
-                                                {{ (int) old('job') === $job->id ? 'checked' : '' }}>
-                                            <label class="form-check-label" for="job">
-                                                {{ $job->name }}
-                                            </label>
-                                        </div>
-                                    @endforeach
-                                </div>
-                                @error('job')
+                                <label for="mechanicsCount" class="form-label">Jumlah Mekanik yang Hadir</label>
+                                <input type="number" name="mechanics_count" class="form-control" id="mechanicsCount"
+                                    value="{{ old('mechanics_count') }}" aria-describedby="mechanics_count">
+                                @error('mechanics_count')
                                     <span class="text-danger">{{ $message }}</span>
                                 @enderror
                             </div>

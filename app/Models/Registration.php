@@ -23,6 +23,7 @@ class Registration extends Model
         'shift_id',
         'user_id',
         'manufacture_id',
+        'event_slug',
         'token'
     ];
 

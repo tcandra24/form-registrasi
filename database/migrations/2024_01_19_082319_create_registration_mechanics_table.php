@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateRegistrationsTable extends Migration
+class CreateRegistrationMechanicsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,27 +13,22 @@ class CreateRegistrationsTable extends Migration
      */
     public function up()
     {
-        Schema::create('registrations', function (Blueprint $table) {
+        Schema::create('registration_mechanics', function (Blueprint $table) {
             $table->id();
             $table->string('registration_number');
             $table->string('fullname');
             $table->string('no_hp');
-            $table->string('vehicle_type');
-            $table->string('license_plate');
+            $table->string('workshop_name');
+            $table->text('address');
+            $table->integer('mechanics_count');
+            $table->unsignedBigInteger('user_id');
             $table->boolean('is_scan')->default(false);
             $table->dateTime('scan_date')->nullable();
-            $table->unsignedBigInteger('job_id');
-            $table->unsignedBigInteger('shift_id');
-            $table->unsignedBigInteger('user_id');
-            $table->unsignedBigInteger('manufacture_id');
             $table->string('event_slug');
             $table->string('token');
             $table->timestamps();
 
-            $table->foreign('job_id')->references('id')->on('jobs');
-            $table->foreign('shift_id')->references('id')->on('shifts');
             $table->foreign('user_id')->references('id')->on('users');
-            $table->foreign('manufacture_id')->references('id')->on('manufactures');
         });
     }
 
@@ -44,6 +39,6 @@ class CreateRegistrationsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('registrations');
+        Schema::dropIfExists('registration_mechanics');
     }
 }

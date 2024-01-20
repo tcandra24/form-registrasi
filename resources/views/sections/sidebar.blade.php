@@ -29,6 +29,14 @@
                         <span class="hide-menu">Master</span>
                     </li>
                     <li class="sidebar-item">
+                        <a class="sidebar-link" href="/events" aria-expanded="false">
+                            <span>
+                                <i class="ti ti-calendar-event"></i>
+                            </span>
+                            <span class="hide-menu">Event</span>
+                        </a>
+                    </li>
+                    <li class="sidebar-item">
                         <a class="sidebar-link" href="/jobs" aria-expanded="false">
                             <span>
                                 <i class="ti ti-briefcase"></i>
@@ -100,6 +108,14 @@
                             <span class="hide-menu">Registrasi</span>
                         </a>
                     </li>
+                    <li class="sidebar-item">
+                        <a class="sidebar-link" href="/report/registration-mechanics" aria-expanded="false">
+                            <span>
+                                <i class="ti ti-file"></i>
+                            </span>
+                            <span class="hide-menu">Registrasi Mekanik</span>
+                        </a>
+                    </li>
                     <li class="nav-small-cap">
                         <i class="ti ti-dots nav-small-cap-icon fs-4"></i>
                         <span class="hide-menu">Pengaturan Pengguna</span>
@@ -134,7 +150,7 @@
                         <span class="hide-menu">Form</span>
                     </li>
                     <li class="sidebar-item">
-                        <a class="sidebar-link" href="/registrations" aria-expanded="false">
+                        <a class="sidebar-link" href="{{ Auth::user()->event->link ?? '#' }}" aria-expanded="false">
                             <span>
                                 <i class="ti ti-forms"></i>
                             </span>

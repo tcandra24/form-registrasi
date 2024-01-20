@@ -76,7 +76,7 @@ class RegistrationController extends Controller
             $token = hash_hmac('sha256', Crypt::encryptString(Str::uuid() . Carbon::now()->getTimestampMs() . Auth::user()->name), Auth::user()->id . Auth::user()->name);
 
             QrCode::size(200)->style('round')->eye('circle')->generate($token, Storage::path('public/qr-codes/') . 'qr-code-' . $token . '.svg');
-            $registration_max = RegistrationModel::withTrashed()->max('registration_number') + 1;
+            $registration_max = RegistrationModel::withTrashed()->where('event_slug', Auth::user()->event->slug)->max('registration_number') + 1;
             $registration_number = str_pad($registration_max, 5, '0', STR_PAD_LEFT);
 
             $registration = RegistrationModel::create([
@@ -89,6 +89,7 @@ class RegistrationController extends Controller
                 'shift_id' => $request->shift,
                 'user_id' => Auth::user()->id,
                 'manufacture_id' => $request->manufacture,
+                'event_slug' => Auth::user()->event->slug,
                 'token' => $token
             ]);
 
