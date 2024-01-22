@@ -19,7 +19,6 @@ class RegistrationMechanic extends Model
         'no_hp',
         'workshop_name',
         'address',
-        'mechanics_count',
         'user_id',
         'event_slug',
         'token',

@@ -28,24 +28,30 @@ class AuthController extends Controller
             'password' => 'required',
             'event' => 'required',
         ], [
-            'email.required' => 'Email wajib diisi',
+            'email.required' => 'Email atau No HP wajib diisi',
             'password.required' => 'Password wajib diisi',
             'event.required' => 'Event wajib diisi',
         ]);
 
         try {
+            $user = User::where('email', $request->email)->orWhere('no_hp', $request->email)->first();
+
             if($request->event === 'manage-event'){
-                if(!User::role('admin')->where('email', $request->email)->first()){
+                if(!User::role('admin')->where('email', $user->email)->first()){
                     throw new \Exception('Login Gagal, Manage Event Hanya untuk Admin');
                 }
             } else {
-                $user = User::where('email', $request->email)->first();
                 if($user->event_id !== (int)$request->event){
                     throw new \Exception('Login Gagal, Event yang dipilih tidak sesuai');
                 }
             }
 
-            $credentials = $request->only('email', 'password');
+            // $credentials = $request->only('email', 'password');
+            $credentials = [
+                'email' => $user->email,
+                'password' => $request->password,
+            ];
+
             if (!Auth::attempt($credentials, $request->remember)) {
                 throw new \Exception('Login Gagal, Username/Password salah');
             }
@@ -82,6 +88,7 @@ class AuthController extends Controller
 
             $user = User::create([
                 'email'     => $request->email,
+                'no_hp'     => $request->no_hp,
                 'name'      => $request->name,
                 'password'  => Hash::make($request->password),
                 'event_id'  => $request->event,

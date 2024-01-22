@@ -18,8 +18,8 @@
             </div>
         @endif
         <div class="mb-3">
-            <label for="email" class="form-label">Username</label>
-            <input type="email" name="email"
+            <label for="email" class="form-label">Email atau No HP</label>
+            <input type="text" name="email"
                 class="form-control {{ $errors->has('email') ? 'border border-danger' : '' }}" id="email"
                 aria-describedby="email">
             @error('email')

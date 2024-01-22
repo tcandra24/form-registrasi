@@ -77,10 +77,6 @@
                                 <h4>Alamat: </h4>
                                 <p>{{ $registration->address }}</p>
                             </div>
-                            <div class="p-2">
-                                <h4>Jumlah Mekanik yang Hadir: </h4>
-                                <p>{{ $registration->mechanics_count }}</p>
-                            </div>
                         </div>
                     </div>
                 </div>
@@ -141,18 +137,6 @@
                                 <label for="address" class="form-label">Alamat</label>
                                 <textarea class="form-control" name="address" id="address" cols="30" rows="10"></textarea>
                                 @error('address')
-                                    <span class="text-danger">{{ $message }}</span>
-                                @enderror
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row mb-3">
-                        <div class="col-lg-6 d-flex align-items-stretch">
-                            <div class="mb-3 w-100">
-                                <label for="mechanicsCount" class="form-label">Jumlah Mekanik yang Hadir</label>
-                                <input type="number" name="mechanics_count" class="form-control" id="mechanicsCount"
-                                    value="{{ old('mechanics_count') }}" aria-describedby="mechanics_count">
-                                @error('mechanics_count')
                                     <span class="text-danger">{{ $message }}</span>
                                 @enderror
                             </div>

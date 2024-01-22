@@ -31,6 +31,15 @@
             @enderror
         </div>
         <div class="mb-3">
+            <label for="no_hp" class="form-label">No HP</label>
+            <input type="text" name="no_hp"
+                class="form-control {{ $errors->has('no_hp') ? 'border border-danger' : '' }}" value="{{ old('no_hp') }}"
+                id="no_hp" aria-describedby="no_hp">
+            @error('no_hp')
+                <span class="text-danger">{{ $message }}</span>
+            @enderror
+        </div>
+        <div class="mb-3">
             <label for="event" class="form-label">Event</label>
             <select class="form-control" name="event" id="event">
                 <option value="">Pilih Event</option>

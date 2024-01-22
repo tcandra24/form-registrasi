@@ -1,7 +1,7 @@
 @extends('layouts/dashboard')
 
 @section('title')
-    Transaksi Registrasi
+    Sampah Transaksi Registrasi
 @endsection
 
 @section('page-style')
@@ -20,9 +20,9 @@
         <div class="col-lg-12 d-flex align-items-stretch">
             <div class="card w-100">
                 <div class="card-body p-4">
-                    <h5 class="card-title fw-semibold mb-4">Transaksi Registrasi</h5>
+                    <h5 class="card-title fw-semibold mb-4">Sampah Transaksi Registrasi</h5>
                     <div class="row">
-                        <form action="{{ url('/transactions/registrations') }}">
+                        <form action="{{ url('/trash/registrationsh') }}">
                             <div class="row">
                                 <div class="col-lg-3 d-flex align-items-stretch">
                                     <div class="mb-3 w-100">
@@ -65,17 +65,13 @@
                         </form>
                     </div>
                     <div class="row">
-                        <form id="form-delete-not-scan" method="POST"
-                            action="{{ url('/transactions/registrations/delete-all-not-scan') }}">
-                            @csrf
-                            @method('DELETE')
+                        <form action="{{ url('/trash/registrations/export') }}">
+                            <input type="hidden" name="is_scan"
+                                value="{{ Request::has('scan') ? Request::get('scan') : '-' }}">
+                            <input type="hidden" name="shift"
+                                value="{{ Request::has('shift') ? Request::get('shift') : '-' }}">
+                            <button type="submit" class="btn btn-success">Export To Excel</button>
                         </form>
-                        <div class="col-lg-3">
-                            <button class="btn btn-danger btn-delete-all-not-scan">Hapus Semua yang Belum Scan</button>
-                        </div>
-                        <div class="col-lg-3">
-                            <a href="/trash/registrations" class="btn btn-primary">Sampah</a>
-                        </div>
                     </div>
                     <div class="row">
                         @if (Session::has('success'))
@@ -154,9 +150,6 @@
                                             <h6 class="fw-semibold mb-0">Pekerjaan</h6>
                                         </th>
                                         <th class="border-bottom-0">
-                                            <h6 class="fw-semibold mb-0">Tgl Buat</h6>
-                                        </th>
-                                        <th class="border-bottom-0">
                                             <h6 class="fw-semibold mb-0">Action</h6>
                                         </th>
                                     </tr>
@@ -169,15 +162,10 @@
                                                     <h6 class="fw-semibold mb-0">{{ $loop->iteration }}</h6>
                                                 </td>
                                                 <td class="border-bottom-0">
-                                                    <p class="mb-0 fw-normal">
-                                                        {{ $registration->registration_number }}
-                                                    </p>
+                                                    <p class="mb-0 fw-normal">{{ $registration->registration_number }}</p>
                                                 </td>
                                                 <td class="border-bottom-0">
-                                                    <a class="mb-0 fw-normal"
-                                                        href="/transactions/registrations/{{ $registration->id }}">
-                                                        {{ $registration->user->email }}
-                                                    </a>
+                                                    <p class="mb-0 fw-normal">{{ $registration->user->email }}</p>
                                                 </td>
                                                 <td class="border-bottom-0">
                                                     <p class="mb-0 fw-normal">{{ $registration->fullname }}</p>
@@ -236,28 +224,13 @@
                                                     <p class="mb-0 fw-normal">{{ $registration->job->name }}</p>
                                                 </td>
                                                 <td class="border-bottom-0">
-                                                    <div class="d-flex flex-column">
-                                                        <p class="mb-0">
-                                                            {{ \Carbon\Carbon::parse($registration->created_at)->locale('id')->translatedFormat('l, d F Y') }}
-                                                        </p>
-                                                        <p>
-                                                            {{ substr(substr($registration->created_at, -8), 0, 5) }}
-                                                        </p>
-                                                    </div>
-                                                </td>
-                                                <td class="border-bottom-0">
                                                     <div class="d-flex align-items-center gap-2">
+                                                        <button class="btn btn-secondary m-1 btn-restore"
+                                                            data-url="/trash/registrations/restore/{{ $registration->id }}"
+                                                            data-name="{{ $registration->fullname }}">Pulihkan</button>
                                                         <button class="btn btn-danger m-1 btn-delete"
-                                                            data-id="{{ $registration->id }}"
-                                                            data-name="{{ $registration->fullname }}"
-                                                            {{ $registration->is_scan ? 'disabled' : '' }}>Delete</button>
-
-                                                        <form id="form-delete-registration-{{ $registration->id }}"
-                                                            method="POST"
-                                                            action=" {{ url('/transactions/registrations/' . $registration->id) }}">
-                                                            @csrf
-                                                            @method('DELETE')
-                                                        </form>
+                                                            data-url="/trash/registrations/delete/{{ $registration->id }}"
+                                                            data-name="{{ $registration->fullname }}">Hapus</button>
                                                     </div>
                                                 </td>
                                             </tr>
@@ -266,7 +239,7 @@
                                         <tr>
                                             <td colspan="14">
                                                 <div class="alert alert-info text-center" role="alert">
-                                                    Registrasi Masih Kosong
+                                                    Sampah Kosong
                                                 </div>
                                             </td>
                                         </tr>
@@ -298,12 +271,12 @@
             theme: 'bootstrap-5'
         })
 
-        $('.btn-delete').on('click', function() {
-            const id = $(this).attr('data-id')
+        $('.btn-restore').on('click', function() {
+            const url = $(this).attr('data-url')
             const name = $(this).attr('data-name')
 
             Swal.fire({
-                title: "Yakin Hapus Data Registrasi ?",
+                title: "Yakin Pulihkan Data Registrasi ?",
                 text: name,
                 type: "warning",
                 showCancelButton: !0,
@@ -312,16 +285,19 @@
                 closeOnConfirm: !1
             }).then((result) => {
                 if (result.isConfirmed) {
-                    $('#form-delete-registration-' + id).submit()
+                    window.location.href = url
                 }
             })
 
         })
 
-        $('.btn-delete-all-not-scan').on('click', function() {
+        $('.btn-delete').on('click', function() {
+            const url = $(this).attr('data-url')
+            const name = $(this).attr('data-name')
+
             Swal.fire({
-                title: 'Yakin Hapus Data ?',
-                text: 'Data Registrasi yang Tidak di Scan Akan Dihapus',
+                title: "Yakin Hapus Permanen Data Registrasi ?",
+                text: name,
                 type: "warning",
                 showCancelButton: !0,
                 confirmButtonColor: "#DD6B55",
@@ -329,7 +305,7 @@
                 closeOnConfirm: !1
             }).then((result) => {
                 if (result.isConfirmed) {
-                    $('#form-delete-not-scan').submit()
+                    window.location.href = url
                 }
             })
 

@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Report;
 
 use App\Http\Controllers\Controller;
+use Maatwebsite\Excel\Facades\Excel;
+use App\Exports\RegistrationMechanicExport;
 use Illuminate\Http\Request;
 
 use App\Models\RegistrationMechanic;
@@ -20,5 +22,10 @@ class RegistrationMechanicController extends Controller
         $registrations = $registrations->get();
 
         return view('reports.registration_mechanic.index', [ 'registrations' => $registrations]);
+    }
+
+    public function export(Request $request)
+    {
+        return Excel::download(new RegistrationMechanicExport($request->is_scan), 'registration-mechanics.xlsx');
     }
 }

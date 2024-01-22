@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Trash;
 
+use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Registration;
 use Maatwebsite\Excel\Facades\Excel;
@@ -9,7 +10,8 @@ use App\Exports\RegistrationTrashExport;
 use App\Models\Shift;
 use Illuminate\Support\Facades\DB;
 
-class TrashController extends Controller
+
+class RegistrationController extends Controller
 {
     public function index()
     {
@@ -26,7 +28,7 @@ class TrashController extends Controller
 
         $registrations = $registrations->get();
 
-        return view('transactions.trash.index', [ 'registrations' => $registrations, 'shifts' => $shifts]);
+        return view('trash.registration.index', [ 'registrations' => $registrations, 'shifts' => $shifts]);
     }
 
     public function restore($id)
@@ -38,14 +40,14 @@ class TrashController extends Controller
             }])->where('id', $registration->shift->id)->first();
             $restQuota = (int)$shift->quota - (int)$shift->registration_count;
             if($restQuota < 1) {
-                return redirect()->to('/transactions/trash')->with('error', 'Kuota shift sudah penuh');
+                return redirect()->to('/trash/registrationsh')->with('error', 'Kuota shift sudah penuh');
             }
 
             Registration::onlyTrashed()->where('id', $id)->restore();
 
-            return redirect()->to('/transactions/trash')->with('success', 'Data Registrasi Berhasil Dipulihkan');
+            return redirect()->to('/trash/registrations')->with('success', 'Data Registrasi Berhasil Dipulihkan');
         } catch (\Exception $e) {
-            return redirect()->to('/transactions/trash')->with('error', $e->getMessage());
+            return redirect()->to('/trash/registrations')->with('error', $e->getMessage());
         }
     }
 
@@ -58,9 +60,9 @@ class TrashController extends Controller
                 $registration->forceDelete();
             });
 
-            return redirect()->to('/transactions/trash')->with('success', 'Data Registrasi Berhasil Dihapus');
+            return redirect()->to('/trash/registrations')->with('success', 'Data Registrasi Berhasil Dihapus');
         } catch (\Exception $e) {
-            return redirect()->to('/transactions/trash')->with('error', $e->getMessage());
+            return redirect()->to('/trash/registrations')->with('error', $e->getMessage());
         }
     }
 

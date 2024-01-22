@@ -73,21 +73,21 @@
                         <span class="hide-menu">Transaksi</span>
                     </li>
                     <li class="sidebar-item">
-                        <a class="sidebar-link" href="/transactions/registration" aria-expanded="false">
+                        <a class="sidebar-link" href="/transactions" aria-expanded="false">
                             <span>
                                 <i class="ti ti-database"></i>
                             </span>
                             <span class="hide-menu">Registrasi</span>
                         </a>
                     </li>
-                    <li class="sidebar-item">
+                    {{-- <li class="sidebar-item">
                         <a class="sidebar-link" href="/transactions/trash" aria-expanded="false">
                             <span>
                                 <i class="ti ti-trash"></i>
                             </span>
                             <span class="hide-menu">Sampah</span>
                         </a>
-                    </li>
+                    </li> --}}
                     <li class="sidebar-item">
                         <a class="sidebar-link" href="/registrations/import" aria-expanded="false">
                             <span>
@@ -101,21 +101,21 @@
                         <span class="hide-menu">Laporan</span>
                     </li>
                     <li class="sidebar-item">
-                        <a class="sidebar-link" href="/report/registrations" aria-expanded="false">
+                        <a class="sidebar-link" href="/reports" aria-expanded="false">
                             <span>
                                 <i class="ti ti-file"></i>
                             </span>
                             <span class="hide-menu">Registrasi</span>
                         </a>
                     </li>
-                    <li class="sidebar-item">
+                    {{-- <li class="sidebar-item">
                         <a class="sidebar-link" href="/report/registration-mechanics" aria-expanded="false">
                             <span>
                                 <i class="ti ti-file"></i>
                             </span>
                             <span class="hide-menu">Registrasi Mekanik</span>
                         </a>
-                    </li>
+                    </li> --}}
                     <li class="nav-small-cap">
                         <i class="ti ti-dots nav-small-cap-icon fs-4"></i>
                         <span class="hide-menu">Pengaturan Pengguna</span>

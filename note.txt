@@ -5,3 +5,8 @@ DB:
 - 15 November 2023
     - Tambah tabel Event (Belum)
     - tambah id event di tabel users
+- 22 Januari 2023
+    - Tambah table Event OK
+    - Tambah table register_mechanics OK
+    - tambah field event_id, no_hp pada user
+    - tambah field event_slug pada table Registration OK

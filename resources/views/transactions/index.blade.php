@@ -1,7 +1,7 @@
 @extends('layouts/dashboard')
 
 @section('title')
-    Laporan Registrasi
+    Registrasi
 @endsection
 
 @section('page-style')
@@ -19,14 +19,14 @@
     <div class="container-fluid">
         <div class="card">
             <div class="card-body">
-                <h5 class="card-title fw-semibold mb-4">Laporan Registrasi</h5>
+                <h5 class="card-title fw-semibold mb-4">Transaksi Registrasi</h5>
                 <div class="card-body">
                     <div class="row">
                         @foreach ($events as $event)
                             <div class="col-sm-6 col-xl-3">
                                 <div class="card overflow-hidden rounded-2">
                                     <div class="position-relative">
-                                        <a href="report{{ $event->link }}">
+                                        <a href="transactions{{ $event->link }}">
                                             <img src="{{ $event->image }}" class="card-img-top rounded-0"
                                                 alt="{{ $event->slug }}">
                                         </a>

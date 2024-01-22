@@ -31,13 +31,11 @@ class RegistrationMechanicsController extends Controller
             'no_hp' => 'required',
             'workshop_name' => 'required',
             'address' => 'required',
-            'mechanics_count' => 'required',
         ], [
             'fullname.required' => 'Nama Lengkap wajib diisi',
             'no_hp.required' => 'Nomer HP wajib diisi',
             'workshop_name.required' => 'Nama Bengkel wajib diisi',
             'address.required' => 'Alamat wajib diisi',
-            'mechanics_count.required' => 'Jumlah Mekanik wajib diisi'
         ]);
 
         try {
@@ -53,7 +51,6 @@ class RegistrationMechanicsController extends Controller
                 'no_hp' => $request->no_hp,
                 'workshop_name' => $request->workshop_name,
                 'address' => $request->address,
-                'mechanics_count' => $request->mechanics_count,
                 'user_id' => Auth::user()->id,
                 'event_slug' => Auth::user()->event->slug,
                 'token' => $token

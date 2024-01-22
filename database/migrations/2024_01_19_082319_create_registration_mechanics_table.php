@@ -20,7 +20,6 @@ class CreateRegistrationMechanicsTable extends Migration
             $table->string('no_hp');
             $table->string('workshop_name');
             $table->text('address');
-            $table->integer('mechanics_count');
             $table->unsignedBigInteger('user_id');
             $table->boolean('is_scan')->default(false);
             $table->dateTime('scan_date')->nullable();
