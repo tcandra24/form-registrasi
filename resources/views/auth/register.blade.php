@@ -40,9 +40,9 @@
             @enderror
         </div>
         <div class="mb-3">
-            <label for="event" class="form-label">Event</label>
+            <label for="event" class="form-label">Pilih Event</label>
             <select class="form-control" name="event" id="event">
-                <option value="">Pilih Event</option>
+                <option value="" selected>Pilih Event</option>
                 @foreach ($events as $event)
                     <option value="{{ $event->id }}">{{ $event->name }}</option>
                 @endforeach
