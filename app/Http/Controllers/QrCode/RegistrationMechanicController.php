@@ -1,20 +1,21 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\QrCode;
 
+use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use SimpleSoftwareIO\QrCode\Facades\QrCode;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Storage;
 
-use App\Models\Registration AS RegistrationModel;
+use App\Models\RegistrationMechanic;
 
-class QrCodeController extends Controller
+class RegistrationMechanicController extends Controller
 {
     public function download()
     {
-        $registration = RegistrationModel::where('user_id', Auth::user()->id)->first();
+        $registration = RegistrationMechanic::where('user_id', Auth::user()->id)->first();
         $fileName = 'qr-code-' . $registration->token . '.svg';
 
         return response()->download(Storage::path('public/qr-codes/') . $fileName, $fileName);

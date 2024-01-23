@@ -84,7 +84,11 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('/roles', [ \App\Http\Controllers\RoleController::class, 'index' ])
     ->middleware('permission:roles.index');
 
-    Route::get('/qr-code/download', [ \App\Http\Controllers\QrCodeController::class, 'download' ]);
+    // Route::get('/qr-code/download/{slug}', [ \App\Http\Controllers\QrCodeController::class, 'download' ]);
+    Route::get('/qr-code/registrations/download', [ \App\Http\Controllers\QrCode\RegistrationController::class, 'download' ]);
+    Route::get('/qr-code/registration-mechanics/download', [ \App\Http\Controllers\QrCode\RegistrationMechanicController::class, 'download' ]);
+
+
     Route::get('/term-condition', [ \App\Http\Controllers\TermConditionController::class, 'index']);
 
     Route::get('/reports', [ \App\Http\Controllers\Report\IndexController::class, 'index' ])

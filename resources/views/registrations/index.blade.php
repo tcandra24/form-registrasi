@@ -35,7 +35,7 @@
                         <div class="d-flex flex-column">
                             <img src="{{ asset('/storage/qr-codes/qr-code-' . $registration->token . '.svg') }}"
                                 width="300" height="300" alt="">
-                            <a href="/qr-code/download" target="_blank" rel=”nofollow”
+                            <a href="/qr-code/registrations/download" target="_blank" rel=”nofollow”
                                 class="btn btn-primary mt-3">Download</a>
                         </div>
                     </div>
