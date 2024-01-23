@@ -30,6 +30,13 @@
                     <strong>{{ Auth::user()->event->name }}</strong>.
                     Mohon QrCode dan Nomer Registrasi disimpan dengan baik.
                 </div>
+                <div class="alert alert-info alert-dismissible fade show m-2">
+                    <p>
+                        Selanjutnya, Anda dapat segera mengumpulkan label kemasan Bosch dan Fuboru sebanyak-banyaknya, dan
+                        dapat
+                        dibawa potongan label tersebut saat acara Mechanic Gathering di Bulan Mei 2024.
+                    </p>
+                </div>
                 <div class="d-block w-100 my-4">
                     <div class="d-flex justify-content-center">
                         <div class="d-flex flex-column">
@@ -79,6 +86,7 @@
                             </div>
                         </div>
                     </div>
+                    <i>Note: Konfirmasi Lokasi & Tanggal akan segera diinfokan kembali</i>
                 </div>
             @else
                 <h5 class="card-title fw-semibold mb-4">Input Data</h5>
@@ -142,7 +150,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="row">
+                    {{-- <div class="row">
                         <div class="col-lg-6 d-flex align-items-stretch">
                             <div class="mb-3 w-100">
                                 <div class="form-check">
@@ -153,9 +161,9 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </div> --}}
 
-                    <button type="submit" class="btn btn-primary btn-submit">Submit</button>
+                    <button type="submit" class="btn btn-primary">Submit</button>
                     <button type="reset" class="btn btn-danger">Reset</button>
                 </form>
             @endif

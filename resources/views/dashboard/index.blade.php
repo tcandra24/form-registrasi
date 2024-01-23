@@ -143,7 +143,7 @@
                             <h5 class="card-title">Ayo segera daftarkan diri anda!</h5>
                             {{-- <p class="card-text fs-2">Kuota Terbatas: 140 Pendatang Pertama Dapat Free Busi Bosch & Merchandise
                                 Exclusive</p> --}}
-                            <a href="{{ Auth::user()->event->link }}" class="btn btn-primary">Daftar</a>
+                            <a href="{{ Auth::user()->event->link }}" class="btn btn-lg btn-primary mt-2">Klik Disini</a>
                         </div>
                     </div>
                 </div>

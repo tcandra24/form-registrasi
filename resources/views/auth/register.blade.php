@@ -59,6 +59,13 @@
                 <span class="text-danger">{{ $message }}</span>
             @enderror
         </div>
+        <div class="mb-4">
+            <p>
+                <i>
+                    Note: Pendaftaran hanya berlaku untuk 1 orang (Per Nomer Register)
+                </i>
+            </p>
+        </div>
         <button type="submit" class="btn btn-primary w-100 py-8 fs-4 mb-4 rounded-2">Register</button>
         <div class="d-flex align-items-center justify-content-center">
             <p class="fs-4 mb-0 fw-bold">Sudah Punya Akun?</p>

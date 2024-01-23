@@ -36,6 +36,10 @@ class AuthController extends Controller
         try {
             $user = User::where('email', $request->email)->orWhere('no_hp', $request->email)->first();
 
+            if(!$user){
+                throw new \Exception('Login Gagal, Username/Password salah');
+            }
+
             if($request->event === 'manage-event'){
                 if(!User::role('admin')->where('email', $user->email)->first()){
                     throw new \Exception('Login Gagal, Manage Event Hanya untuk Admin');
