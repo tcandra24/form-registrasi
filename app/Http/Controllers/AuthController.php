@@ -41,7 +41,7 @@ class AuthController extends Controller
                     throw new \Exception('Login Gagal, Manage Event Hanya untuk Admin');
                 }
             } else {
-                if($user->event_id !== (int)$request->event){
+                if((int)$user->event_id !== (int)$request->event){
                     throw new \Exception('Login Gagal, Event yang dipilih tidak sesuai');
                 }
             }
