@@ -130,7 +130,7 @@
                             <div class="mb-3 w-100">
                                 <label for="noHp" class="form-label">No HP</label>
                                 <input type="text" name="no_hp" class="form-control" id="noHp"
-                                    value="{{ old('no_hp') }}" aria-describedby="no_hp">
+                                    value="{{ Auth::user()->no_hp }}" aria-describedby="no_hp">
                                 @error('no_hp')
                                     <span class="text-danger">{{ $message }}</span>
                                 @enderror
