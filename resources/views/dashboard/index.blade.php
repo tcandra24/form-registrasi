@@ -32,54 +32,6 @@
                             <div class="card-body">
                                 <div class="row align-items-start">
                                     <div class="col-8">
-                                        <h5 class="card-title mb-9 fw-semibold"> Jumlah Pendaftar </h5>
-                                        <h4 class="fw-semibold mb-3">{{ $count_registration }}</h4>
-                                    </div>
-                                    <div class="col-4">
-                                        <div class="d-flex justify-content-end">
-                                            <div
-                                                class="text-white bg-secondary rounded-circle p-6 d-flex align-items-center justify-content-center">
-                                                <i class="ti ti-article fs-6"></i>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-4">
-                <div class="row">
-                    <div class="col-lg-12">
-                        <div class="card">
-                            <div class="card-body">
-                                <div class="row align-items-start">
-                                    <div class="col-8">
-                                        <h5 class="card-title mb-9 fw-semibold"> Jumlah Pengguna </h5>
-                                        <h4 class="fw-semibold mb-3">{{ $count_user }}</h4>
-                                    </div>
-                                    <div class="col-4">
-                                        <div class="d-flex justify-content-end">
-                                            <div
-                                                class="text-white bg-primary rounded-circle p-6 d-flex align-items-center justify-content-center">
-                                                <i class="ti ti-user fs-6"></i>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-4">
-                <div class="row">
-                    <div class="col-lg-12">
-                        <div class="card">
-                            <div class="card-body">
-                                <div class="row align-items-start">
-                                    <div class="col-8">
                                         <h5 class="card-title mb-9 fw-semibold"> Jumlah Shift </h5>
                                         <h4 class="fw-semibold mb-3">{{ $count_shift }}</h4>
                                     </div>
@@ -116,6 +68,80 @@
                                         </div>
                                     </div>
                                 </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="row align-items-start">
+                                    <div class="col-8">
+                                        <h5 class="card-title mb-9 fw-semibold"> Jumlah Pendaftar </h5>
+                                        <h4 class="fw-semibold mb-3">{{ $count_registration }} / {{ $count_user }}</h4>
+                                    </div>
+                                    <div class="col-4">
+                                        <div class="d-flex justify-content-end">
+                                            <div
+                                                class="text-white bg-secondary rounded-circle p-6 d-flex align-items-center justify-content-center">
+                                                <i class="ti ti-article fs-6"></i>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-12">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="card">
+                            <div class="card-body">
+                                <table class="table text-nowrap mb-0 align-middle">
+                                    <thead class="text-dark fs-4">
+                                        <tr>
+                                            <th class="border-bottom-0">
+                                                <h6 class="fw-semibold mb-0">No</h6>
+                                            </th>
+                                            <th class="border-bottom-0">
+                                                <h6 class="fw-semibold mb-0">Event</h6>
+                                            </th>
+                                            <th class="border-bottom-0">
+                                                <h6 class="fw-semibold mb-0">Jumlah Pendaftar</h6>
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @if (count($events) > 0)
+                                            @foreach ($events as $event)
+                                                <tr>
+                                                    <td class="border-bottom-0">
+                                                        <h6 class="fw-semibold mb-0">{{ $loop->iteration }}</h6>
+                                                    </td>
+                                                    <td class="border-bottom-0">
+                                                        <p class="mb-0 fw-normal">{{ $event->name }}</p>
+                                                    </td>
+                                                    <td class="border-bottom-0">
+                                                        <p class="mb-0 fw-normal">{{ $event->users_count }}</p>
+                                                    </td>
+                                                </tr>
+                                            @endforeach
+                                        @else
+                                            <tr>
+                                                <td colspan="6">
+                                                    <div class="alert alert-info text-center" role="alert">
+                                                        Event Masih Kosong
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        @endif
+                                    </tbody>
+                                </table>
                             </div>
                         </div>
                     </div>

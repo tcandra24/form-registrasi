@@ -13,6 +13,11 @@ class Event extends Model
         'name', 'description', 'slug', 'link', 'image', 'is_active'
     ];
 
+    public function users()
+    {
+        return $this->hasMany(User::class, 'event_id', 'id');
+    }
+
     public function getNameAttribute($value)
     {
         return ucwords($value);
