@@ -14,6 +14,9 @@ use App\Mail\SendEmailFromRegistration;
 | contains the "web" middleware group. Now create something great!
 |
 */
+
+Route::get('/link/{slug}', [App\Http\Controllers\LinkController::class, 'show']);
+
 Route::group(['middleware' => ['guest']], function () {
     Route::get('/', function(){
       return redirect('/login');
@@ -60,7 +63,7 @@ Route::group(['middleware' => ['auth']], function () {
     Route::delete('/transactions/registration/delete-all-not-scan', [\App\Http\Controllers\Transaction\RegistrationController::class, 'destroyAllNotScan']);
     Route::resource('/transactions/registrations', \App\Http\Controllers\Transaction\RegistrationController::class, [ 'only' => ['index', 'show', 'destroy'] ]);
 
-    Route::delete('/transactions/registration-mechanic/delete-all-not-scan', [\App\Http\Controllers\Transaction\RegistrationMechanicController::class, 'destroyAllNotScan']);
+    Route::delete('/transactions/registration-mechanics/delete-all-not-scan', [\App\Http\Controllers\Transaction\RegistrationMechanicController::class, 'destroyAllNotScan']);
     Route::resource('/transactions/registration-mechanics', \App\Http\Controllers\Transaction\RegistrationMechanicController::class, [ 'only' => ['index', 'show', 'destroy'] ]);
 
     Route::get('/trash/registrations',  [ \App\Http\Controllers\Trash\RegistrationController::class, 'index' ]);
