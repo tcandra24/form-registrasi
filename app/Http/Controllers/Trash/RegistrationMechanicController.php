@@ -52,7 +52,6 @@ class RegistrationMechanicController extends Controller
         try {
             DB::transaction(function() use ($id){
                 $registration = RegistrationMechanic::onlyTrashed()->findOrFail($id);
-                $registration->services()->detach();
                 $registration->forceDelete();
             });
 
