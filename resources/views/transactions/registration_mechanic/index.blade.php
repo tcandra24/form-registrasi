@@ -126,6 +126,9 @@
                                             <h6 class="fw-semibold mb-0">Tanggal Scan</h6>
                                         </th>
                                         <th class="border-bottom-0">
+                                            <h6 class="fw-semibold mb-0">Tgl Buat</h6>
+                                        </th>
+                                        <th class="border-bottom-0">
                                             <h6 class="fw-semibold mb-0">Action</h6>
                                         </th>
                                     </tr>
