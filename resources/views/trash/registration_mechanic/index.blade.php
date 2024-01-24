@@ -126,10 +126,11 @@
                                 </thead>
                                 <tbody>
                                     @if (count($registrations) > 0)
-                                        @foreach ($registrations as $registration)
+                                        @foreach ($registrations as $key => $registration)
                                             <tr>
                                                 <td class="border-bottom-0">
-                                                    <h6 class="fw-semibold mb-0">{{ $loop->iteration }}</h6>
+                                                    <h6 class="fw-semibold mb-0">{{ $registrations->firstItem() + $key }}
+                                                    </h6>
                                                 </td>
                                                 <td class="border-bottom-0">
                                                     <p class="mb-0 fw-normal">{{ $registration->registration_number }}</p>
@@ -188,6 +189,9 @@
                                     @endif
                                 </tbody>
                             </table>
+                            <div class="d-flex flex-column justify-content-end my-2">
+                                {{ $registrations->withQueryString()->links() }}
+                            </div>
                         </div>
                     </div>
                 </div>

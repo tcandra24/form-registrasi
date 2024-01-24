@@ -75,7 +75,7 @@
                     <li class="sidebar-item">
                         <a class="sidebar-link" href="/transactions" aria-expanded="false">
                             <span>
-                                <i class="ti ti-database"></i>
+                                <i class="ti ti-server"></i>
                             </span>
                             <span class="hide-menu">Registrasi</span>
                         </a>
@@ -91,7 +91,7 @@
                     <li class="sidebar-item">
                         <a class="sidebar-link" href="/registrations/import" aria-expanded="false">
                             <span>
-                                <i class="ti ti-database"></i>
+                                <i class="ti ti-file-import"></i>
                             </span>
                             <span class="hide-menu">Import</span>
                         </a>

@@ -21,7 +21,8 @@ class DashboardController extends Controller
         $event = Event::count();
         $shiftWithQuota = Shift::where('is_active', true)->withCount('registration')->get();
 
-        $events = Event::withCount('users')->get();
+        // $events = Event::withCount('users')->get();
+        $events = Event::withCount('users')->withCount('registrations')->get();
         $is_registered = Registration::where('user_id', Auth::user()->id)->exists();
 
         return view('dashboard.index', [

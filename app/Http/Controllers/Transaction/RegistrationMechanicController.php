@@ -16,7 +16,7 @@ class RegistrationMechanicController extends Controller
             $registrations = $registrations->where('is_scan', request('scan'));
         }
 
-        $registrations = $registrations->get();
+        $registrations = $registrations->paginate(10);
 
         return view('transactions.registration_mechanic.index', [ 'registrations' => $registrations]);
     }

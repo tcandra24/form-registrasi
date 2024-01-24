@@ -18,6 +18,11 @@ class Event extends Model
         return $this->hasMany(User::class, 'event_id', 'id');
     }
 
+    public function registrations()
+    {
+        return $this->hasMany(Registration::class, 'event_slug', 'slug');
+    }
+
     public function getNameAttribute($value)
     {
         return ucwords($value);

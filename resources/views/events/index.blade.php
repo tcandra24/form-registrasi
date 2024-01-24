@@ -69,10 +69,10 @@
                             </thead>
                             <tbody>
                                 @if (count($events) > 0)
-                                    @foreach ($events as $event)
+                                    @foreach ($events as $key => $event)
                                         <tr>
                                             <td class="border-bottom-0">
-                                                <h6 class="fw-semibold mb-0">{{ $loop->iteration }}</h6>
+                                                <h6 class="fw-semibold mb-0">{{ $events->firstItem() + $key }}</h6>
                                             </td>
                                             <td class="border-bottom-0">
                                                 <a href="{{ $event->image }}" target="_blank">
@@ -124,6 +124,9 @@
                                 @endif
                             </tbody>
                         </table>
+                        <div class="d-flex flex-column justify-content-end my-2">
+                            {{ $events->links() }}
+                        </div>
                     </div>
                 </div>
             </div>

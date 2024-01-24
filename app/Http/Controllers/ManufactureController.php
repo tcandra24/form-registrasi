@@ -9,7 +9,7 @@ class ManufactureController extends Controller
 {
     public function index()
     {
-        $manufactures = Manufacture::all();
+        $manufactures = Manufacture::paginate(10);
         return view('manufactures.index', ['manufactures' => $manufactures]);
     }
 

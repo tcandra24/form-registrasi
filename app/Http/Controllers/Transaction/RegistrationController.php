@@ -22,7 +22,7 @@ class RegistrationController extends Controller
             $registrations = $registrations->where('shift_id', request('shift'));
         }
 
-        $registrations = $registrations->get();
+        $registrations = $registrations->paginate(10);
 
         return view('transactions.registration.index', [ 'registrations' => $registrations, 'shifts' => $shifts]);
     }
