@@ -30,15 +30,6 @@ class RegistrationMechanicController extends Controller
     public function restore($id)
     {
         try {
-            $registration = RegistrationMechanic::onlyTrashed()->where('id', $id)->first();
-            $shift = Shift::select('quota')->withCount(['registration' => function ($query) use ($registration) {
-                return $query->where('shift_id', $registration->shift->id);
-            }])->where('id', $registration->shift->id)->first();
-            $restQuota = (int)$shift->quota - (int)$shift->registration_count;
-            if($restQuota < 1) {
-                return redirect()->to('/trash/registration-mechanics')->with('error', 'Kuota shift sudah penuh');
-            }
-
             RegistrationMechanic::onlyTrashed()->where('id', $id)->restore();
 
             return redirect()->to('/trash/registration-mechanics')->with('success', 'Data Registrasi Berhasil Dipulihkan');
