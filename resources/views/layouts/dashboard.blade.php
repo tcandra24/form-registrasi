@@ -20,7 +20,7 @@
         <div class="body-wrapper">
             @include('sections/header')
 
-            <div class="container-fluid">
+            <div class="container-fluid" style="max-width: unset">
                 @yield('content')
             </div>
 
