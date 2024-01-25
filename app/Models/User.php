@@ -62,7 +62,7 @@ class User extends Authenticatable
 
     public function getNameAttribute($value)
     {
-        return ucwords($value);
+        return ucwords(strtolower($value));
     }
 
     public function setNameAttribute($value)
