@@ -74,7 +74,7 @@
                         </form>
                     </div>
                     <div class="row">
-                        <div class="table-responsive">
+                        <div class="table-responsive px-0">
                             <table class="table text-nowrap mb-0 align-middle">
                                 <thead class="text-dark fs-4">
                                     <tr>

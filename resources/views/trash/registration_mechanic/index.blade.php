@@ -170,10 +170,14 @@
                                                     <div class="d-flex align-items-center gap-2">
                                                         <button class="btn btn-secondary m-1 btn-restore"
                                                             data-url="/trash/registration-mechanics/restore/{{ $registration->id }}"
-                                                            data-name="{{ $registration->fullname }}">Pulihkan</button>
+                                                            data-name="{{ $registration->fullname }}">
+                                                            <i class="ti ti-restore"></i>
+                                                        </button>
                                                         <button class="btn btn-danger m-1 btn-delete"
                                                             data-url="/trash/registration-mechanics/delete/{{ $registration->id }}"
-                                                            data-name="{{ $registration->fullname }}">Hapus</button>
+                                                            data-name="{{ $registration->fullname }}">
+                                                            <i class="ti ti-trash"></i>
+                                                        </button>
                                                     </div>
                                                 </td>
                                             </tr>

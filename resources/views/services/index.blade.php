@@ -89,10 +89,10 @@
                                             <td class="border-bottom-0">
                                                 <div class="d-flex align-items-center gap-2">
                                                     <a href="/services/{{ $service->id }}/edit"
-                                                        class="btn btn-success m-1">Edit</a>
+                                                        class="btn btn-success m-1"><i class="ti ti-pencil"></i></a>
                                                     <button class="btn btn-danger m-1 btn-delete"
-                                                        data-id="{{ $service->id }}"
-                                                        data-name="{{ $service->name }}">Delete</button>
+                                                        data-id="{{ $service->id }}" data-name="{{ $service->name }}"><i
+                                                            class="ti ti-trash"></i></button>
 
                                                     <form id="form-delete-service-{{ $service->id }}" method="POST"
                                                         action=" {{ url('/services/' . $service->id) }}">

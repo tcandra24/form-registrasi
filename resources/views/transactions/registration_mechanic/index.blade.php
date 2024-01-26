@@ -94,7 +94,7 @@
                                 </button>
                             </div>
                         @endif
-                        <div class="table-responsive">
+                        <div class="table-responsive px-0">
                             <table class="table text-nowrap mb-0 align-middle">
                                 <thead class="text-dark fs-4">
                                     <tr>
@@ -195,7 +195,9 @@
                                                         <button class="btn btn-danger m-1 btn-delete"
                                                             data-id="{{ $registration->id }}"
                                                             data-name="{{ $registration->fullname }}"
-                                                            {{ $registration->is_scan ? 'disabled' : '' }}>Delete</button>
+                                                            {{ $registration->is_scan ? 'disabled' : '' }}>
+                                                            <i class="ti ti-trash"></i>
+                                                        </button>
 
                                                         <form
                                                             id="form-delete-registration-mechanics-{{ $registration->id }}"

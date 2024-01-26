@@ -99,10 +99,10 @@
                                             <td class="border-bottom-0">
                                                 <div class="d-flex align-items-center gap-2">
                                                     <a href="/events/{{ $event->id }}/edit"
-                                                        class="btn btn-success m-1">Edit</a>
+                                                        class="btn btn-success m-1"><i class="ti ti-pencil"></i></a>
                                                     <button class="btn btn-danger m-1 btn-delete"
-                                                        data-id="{{ $event->id }}"
-                                                        data-name="{{ $event->name }}">Delete</button>
+                                                        data-id="{{ $event->id }}" data-name="{{ $event->name }}"><i
+                                                            class="ti ti-trash"></i></button>
 
                                                     <form id="form-delete-event-{{ $event->id }}" method="POST"
                                                         action=" {{ url('/events/' . $event->id) }}">
