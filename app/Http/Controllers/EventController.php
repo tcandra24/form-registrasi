@@ -7,6 +7,8 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use App\Models\Event;
 
+use App\Services\Bitly;
+
 class EventController extends Controller
 {
     public function index()
@@ -37,12 +39,20 @@ class EventController extends Controller
             $image = $request->file('image');
             $image->storeAs('public/images/events', $image->hashName());
 
+            $slug = Str::slug($request->name);
+            [ 'id' => $id, 'link' => $link ] = Bitly::createShortLink([
+                'link' => url('/') . '/link/' . $slug,
+                'title' => ucwords(strtoupper($request->name)),
+            ]);
+
             Event::create([
-                'name' => $request->name,
-                'description' => $request->description,
-                'image' => $image->hashName(),
-                'link' => $request->link,
-                'slug' => Str::slug($request->name),
+                'name'          => $request->name,
+                'description'   => $request->description,
+                'image'         => $image->hashName(),
+                'link'          => $request->link,
+                'short_link'    => $link,
+                'bitly_id'      => $id,
+                'slug'          => $slug,
             ]);
 
             return redirect()->to('/events')->with('success', 'Event Berhasil Disimpan');
@@ -74,6 +84,16 @@ class EventController extends Controller
 
         try {
             $isActive = $request->is_active ? true : false;
+            $slug = Str::slug($request->name);
+
+            if($event->bitly_id){
+                Bitly::deleteShortLink($event->bitly_id);
+            }
+
+            [ 'id' => $id, 'link' => $link ] = Bitly::createShortLink([
+                'link' => url('/') . '/link/' . $slug,
+                'title' => ucwords(strtoupper($request->name)),
+            ]);
 
             if($request->file('image')) {
                 if(Storage::disk('local')->exists('public/images/events/'. basename($event->name))){
@@ -90,7 +110,9 @@ class EventController extends Controller
                     'image' => $image->hashName(),
                     'is_active' => $isActive,
                     'link' => $request->link,
-                    'slug' => Str::slug($request->name),
+                    'short_link' => $link,
+                    'bitly_id' => $id,
+                    'slug' => $slug,
                 ]);
             } else {
                 $event->update([
@@ -98,7 +120,9 @@ class EventController extends Controller
                     'description' => $request->description,
                     'is_active' => $isActive,
                     'link' => $request->link,
-                    'slug' => Str::slug($request->name),
+                    'short_link' => $link,
+                    'bitly_id' => $id,
+                    'slug' => $slug,
                 ]);
             }
 
@@ -113,6 +137,10 @@ class EventController extends Controller
         try {
             $event = Event::findOrFail($id);
             $event->delete();
+
+            if($event->bitly_id){
+                Bitly::deleteShortLink($event->bitly_id);
+            }
 
             if(Storage::disk('local')->exists('public/images/events/'. basename($event->name))){
                 Storage::disk('local')->delete('public/images/events/'. basename($event->image));

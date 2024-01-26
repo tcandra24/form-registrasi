@@ -104,7 +104,7 @@
                                                         data-id="{{ $event->id }}" data-name="{{ $event->name }}"><i
                                                             class="ti ti-trash"></i></button>
                                                     <button class="btn btn-primary m-1 btn-copy-link"
-                                                        data-link="{{ url('/') . '/link/' . $event->slug }}">
+                                                        data-link="{{ $event->short_link }}">
                                                         <i class="ti ti-link"></i>
                                                     </button>
 
@@ -173,6 +173,7 @@
                 text: "Berhasil copy link ke clipboard",
                 icon: "success",
                 confirmButtonColor: "#DD6B55",
+                timer: 1500,
             });
 
             navigator.clipboard.writeText(link);

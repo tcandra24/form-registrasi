@@ -20,6 +20,8 @@ class CreateEventsTable extends Migration
             $table->text('description');
             $table->string('slug');
             $table->string('link', 100);
+            $table->string('short_link', 50);
+            $table->string('bitly_id', 50);
             $table->boolean('is_active')->default(true);
             $table->timestamps();
         });
