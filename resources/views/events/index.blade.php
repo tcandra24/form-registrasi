@@ -103,6 +103,10 @@
                                                     <button class="btn btn-danger m-1 btn-delete"
                                                         data-id="{{ $event->id }}" data-name="{{ $event->name }}"><i
                                                             class="ti ti-trash"></i></button>
+                                                    <button class="btn btn-primary m-1 btn-copy-link"
+                                                        data-link="{{ url('/') . '/link/' . $event->slug }}">
+                                                        <i class="ti ti-link"></i>
+                                                    </button>
 
                                                     <form id="form-delete-event-{{ $event->id }}" method="POST"
                                                         action=" {{ url('/events/' . $event->id) }}">
@@ -149,7 +153,7 @@
             Swal.fire({
                 title: "Yakin Hapus Event ?",
                 text: name,
-                type: "warning",
+                icon: "warning",
                 showCancelButton: !0,
                 confirmButtonColor: "#DD6B55",
                 confirmButtonText: "Yes",
@@ -160,6 +164,18 @@
                 }
             })
 
+        })
+
+        $('.btn-copy-link').on('click', function() {
+            let link = $(this).attr('data-link')
+            Swal.fire({
+                title: "Copied!",
+                text: "Berhasil copy link ke clipboard",
+                icon: "success",
+                confirmButtonColor: "#DD6B55",
+            });
+
+            navigator.clipboard.writeText(link);
         })
     </script>
 @endsection

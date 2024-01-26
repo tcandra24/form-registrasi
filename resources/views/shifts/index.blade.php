@@ -157,7 +157,7 @@
             Swal.fire({
                 title: "Yakin Hapus Shift ?",
                 text: name,
-                type: "warning",
+                icon: "warning",
                 showCancelButton: !0,
                 confirmButtonColor: "#DD6B55",
                 confirmButtonText: "Yes",

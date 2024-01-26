@@ -133,7 +133,7 @@
             Swal.fire({
                 title: "Yakin Hapus Pekerjaan ?",
                 text: name,
-                type: "warning",
+                icon: "warning",
                 showCancelButton: !0,
                 confirmButtonColor: "#DD6B55",
                 confirmButtonText: "Yes",
