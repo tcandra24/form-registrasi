@@ -85,8 +85,7 @@ Route::group(['middleware' => ['auth']], function () {
     ->middleware('permission:permissions.index');
 
     Route::resource('/roles', \App\Http\Controllers\RoleController::class, [ 'except' => [ 'show' ] ])
-    // ->middleware('permission:roles.index|roles.create|roles.edit|roles.delete');
-    ->middleware('permission:roles.index');
+    ->middleware('permission:roles.index|roles.create|roles.edit|roles.delete');
 
     Route::get('/qr-code/registrations/download', [ \App\Http\Controllers\QrCode\RegistrationController::class, 'download' ]);
     Route::get('/qr-code/registration-mechanics/download', [ \App\Http\Controllers\QrCode\RegistrationMechanicController::class, 'download' ]);

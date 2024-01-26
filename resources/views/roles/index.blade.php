@@ -82,8 +82,8 @@
                                             </td>
                                             <td class="border-bottom-0">
                                                 <div class="d-flex align-items-center gap-2">
-                                                    <a href="/roles/{{ $role->id }}/edit"
-                                                        class="btn btn-success m-1">Edit</a>
+                                                    <a href="/roles/{{ $role->id }}/edit" class="btn btn-success m-1"><i
+                                                            class="ti ti-pencil"></i></a>
                                                 </div>
                                             </td>
                                         </tr>
