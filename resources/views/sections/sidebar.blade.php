@@ -140,15 +140,6 @@
                             <span class="hide-menu">Pengguna</span>
                         </a>
                     </li>
-                    <li class="sidebar-item {{ Request::segment(1) === 'permissions' ? 'selected' : '' }}">
-                        <a class="sidebar-link {{ Request::segment(1) === 'permissions' ? 'active' : '' }}"
-                            href="/permissions" aria-expanded="false">
-                            <span>
-                                <i class="ti ti-door"></i>
-                            </span>
-                            <span class="hide-menu">Ijin</span>
-                        </a>
-                    </li>
                     <li class="sidebar-item {{ Request::segment(1) === 'roles' ? 'selected' : '' }}">
                         <a class="sidebar-link {{ Request::segment(1) === 'roles' ? 'active' : '' }}" href="/roles"
                             aria-expanded="false">
@@ -156,6 +147,15 @@
                                 <i class="ti ti-settings"></i>
                             </span>
                             <span class="hide-menu">Role</span>
+                        </a>
+                    </li>
+                    <li class="sidebar-item {{ Request::segment(1) === 'permissions' ? 'selected' : '' }}">
+                        <a class="sidebar-link {{ Request::segment(1) === 'permissions' ? 'active' : '' }}"
+                            href="/permissions" aria-expanded="false">
+                            <span>
+                                <i class="ti ti-door"></i>
+                            </span>
+                            <span class="hide-menu">Ijin</span>
                         </a>
                     </li>
                 @else

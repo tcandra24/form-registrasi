@@ -84,10 +84,10 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('/permissions', [ \App\Http\Controllers\PermissionController::class, 'index' ])
     ->middleware('permission:permissions.index');
 
-    Route::get('/roles', [ \App\Http\Controllers\RoleController::class, 'index' ])
+    Route::resource('/roles', \App\Http\Controllers\RoleController::class, [ 'except' => [ 'show' ] ])
+    // ->middleware('permission:roles.index|roles.create|roles.edit|roles.delete');
     ->middleware('permission:roles.index');
 
-    // Route::get('/qr-code/download/{slug}', [ \App\Http\Controllers\QrCodeController::class, 'download' ]);
     Route::get('/qr-code/registrations/download', [ \App\Http\Controllers\QrCode\RegistrationController::class, 'download' ]);
     Route::get('/qr-code/registration-mechanics/download', [ \App\Http\Controllers\QrCode\RegistrationMechanicController::class, 'download' ]);
 
