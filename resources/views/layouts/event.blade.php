@@ -7,6 +7,8 @@
     <title>Event | @yield('title')</title>
     <link rel="shortcut icon" type="image/png" href="{{ asset('assets/images/logos/favicon.png') }}" />
     <link href="{{ asset('assets/css/styles.min.css') }}" rel="stylesheet">
+
+    <link href="{{ asset('assets/vendor/fast-bootstrap/css/fastbootstrap.min.css') }}" rel="stylesheet">
 </head>
 
 <body>
@@ -27,6 +29,7 @@
     </div>
     <script src="{{ asset('assets/libs/jquery/dist/jquery.min.js') }}"></script>
     <script src="{{ asset('assets/libs/bootstrap/dist/js/bootstrap.bundle.min.js') }}"></script>
+    <script src="{{ asset('assets/vendor/fast-bootstrap/js/bootstrap.bundle.min.js') }}"></script>
 </body>
 
 </html>
