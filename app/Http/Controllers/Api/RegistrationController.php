@@ -89,4 +89,45 @@ class RegistrationController extends Controller
             ], 400);
         }
     }
+
+    public function exportToFirebase()
+    {
+        try {
+            $registrations = Registration::with(['shift', 'job', 'services' => function($query) {
+                $query->select('name');
+            }, 'user', 'manufacture'])->get();
+
+            $registrations = $registrations->map(function($registration, $key){
+
+                return [
+                    "email" => $registration->user->email,
+                    "kendaraan" => $registration->vehicle_type,
+                    "merk" => $registration->manufacture->name,
+                    "nama" => $registration->fullname,
+                    "no_reg" => $registration->registration_number,
+                    "no_urut" => str_pad($key + 1, 3, '0', STR_PAD_LEFT),
+                    "nopol" => $registration->license_plate,
+                    "pekerjaan" => $registration->job->name,
+                    "search" => "",
+                    "shift" => $registration->shift->start . ' sampai ' . $registration->shift->end,
+                    "status" => $registration->is_scan ? 'Selesai' : 'Belum Selesai',
+                    "telp" => $registration->no_hp,
+                    "tgl_scan" => "",
+                    "tgl_service" => "",
+                    "token" => $registration->token,
+                ];
+            });
+
+            return response()->json([
+                'success' => true,
+                'register' => $registrations,
+                'service' => $registrations,
+            ], 200);
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message'=> $e->getMessage()
+            ], 400);
+        }
+    }
 }
