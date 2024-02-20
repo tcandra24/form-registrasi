@@ -100,21 +100,23 @@ class RegistrationController extends Controller
             $registrations = $registrations->map(function($registration, $key){
 
                 return [
-                    "email" => $registration->user->email,
-                    "kendaraan" => $registration->vehicle_type,
-                    "merk" => $registration->manufacture->name,
-                    "nama" => $registration->fullname,
-                    "no_reg" => $registration->registration_number,
-                    "no_urut" => str_pad($key + 1, 3, '0', STR_PAD_LEFT),
-                    "nopol" => $registration->license_plate,
-                    "pekerjaan" => $registration->job->name,
-                    "search" => "",
-                    "shift" => $registration->shift->start . ' sampai ' . $registration->shift->end,
-                    "status" => $registration->is_scan ? 'Selesai' : 'Belum Selesai',
-                    "telp" => $registration->no_hp,
-                    "tgl_scan" => "",
-                    "tgl_service" => "",
-                    "token" => $registration->token,
+                    str_pad($key + 1, 3, '0', STR_PAD_LEFT) => [
+                        "email" => $registration->user->email,
+                        "kendaraan" => $registration->vehicle_type,
+                        "merk" => $registration->manufacture->name,
+                        "nama" => $registration->fullname,
+                        "no_reg" => $registration->registration_number,
+                        "no_urut" => str_pad($key + 1, 3, '0', STR_PAD_LEFT),
+                        "nopol" => $registration->license_plate,
+                        "pekerjaan" => $registration->job->name,
+                        "search" => "",
+                        "shift" => $registration->shift->start . ' sampai ' . $registration->shift->end,
+                        "status" => $registration->is_scan ? 'Selesai' : 'Belum Selesai',
+                        "telp" => $registration->no_hp,
+                        "tgl_scan" => "",
+                        "tgl_service" => "",
+                        "token" => $registration->token,
+                    ]
                 ];
             });
 
