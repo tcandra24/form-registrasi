@@ -99,8 +99,8 @@ class RegistrationController extends Controller
 
             $registrations = $registrations->map(function($registration, $key){
 
-                return [
-                    str_pad($key + 1, 3, '0', STR_PAD_LEFT) => [
+                return (object)[
+                    str_pad($key + 1, 3, '0', STR_PAD_LEFT) => (object)[
                         "email" => $registration->user->email,
                         "kendaraan" => $registration->vehicle_type,
                         "merk" => $registration->manufacture->name,
