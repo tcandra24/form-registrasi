@@ -114,7 +114,7 @@ class RegistrationController extends Controller
                         "shift" => $registration->shift->start . ' sampai ' . $registration->shift->end,
                         "status" => $registration->is_scan ? 'Selesai' : 'Belum Selesai',
                         "telp" => $registration->no_hp,
-                        "tgl_scan" => "",
+                        "tgl_scan" => $registration->scan_date ?? '',
                         "tgl_service" => "",
                         "token" => $registration->token,
                     ]
