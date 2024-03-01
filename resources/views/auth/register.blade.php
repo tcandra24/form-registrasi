@@ -44,7 +44,8 @@
             <select class="form-control" name="event" id="event">
                 <option value="" selected>Pilih Event</option>
                 @foreach ($events as $event)
-                    <option value="{{ $event->id }}">{{ $event->name }}</option>
+                    <option value="{{ $event->id }}"
+                        {{ (int) request()->get('event') === $event->id ? 'selected' : '' }}>{{ $event->name }}</option>
                 @endforeach
             </select>
             @error('event')
