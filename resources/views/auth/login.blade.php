@@ -40,7 +40,8 @@
                 <option value="" selected>Pilih Event</option>
                 <option value="manage-event">Manage Event</option>
                 @foreach ($events as $event)
-                    <option value="{{ $event->id }}" {{ (int) request()->get('event') === $event->id ? 'selected' : '' }}>
+                    <option value="{{ $event->id }}"
+                        {{ (int) request()->get('event') === $event->id ? 'selected' : '' }}>
                         {{ $event->name }}</option>
                 @endforeach
             </select>
@@ -66,7 +67,8 @@
         </a> --}}
         <div class="d-flex align-items-center justify-content-center">
             <p class="fs-4 mb-0 fw-bold">Belum punya akun?</p>
-            <a class="text-primary fw-bold ms-2" href="{{ route('register') }}">Register</a>
+            <a class="text-primary fw-bold ms-2"
+                href="{{ route('register', ['event' => request()->get('event')]) }}">Register</a>
         </div>
     </form>
 @endsection
