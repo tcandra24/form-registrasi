@@ -40,7 +40,8 @@
                 <option value="" selected>Pilih Event</option>
                 <option value="manage-event">Manage Event</option>
                 @foreach ($events as $event)
-                    <option value="{{ $event->id }}">{{ $event->name }}</option>
+                    <option value="{{ $event->id }}" {{ (int) request()->get('event') === $event->id ? 'selected' : '' }}>
+                        {{ $event->name }}</option>
                 @endforeach
             </select>
             @error('event')
