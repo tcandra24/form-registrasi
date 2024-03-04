@@ -112,7 +112,7 @@
                             <div class="mb-3 w-100">
                                 <label for="fullName" class="form-label">Nama Lengkap</label>
                                 <input type="text" name="fullname" class="form-control" id="fullName"
-                                    value="{{ old('fullname') }}" aria-describedby="name">
+                                    value="{{ Auth::user()->name }}" aria-describedby="name">
                                 @error('fullname')
                                     <span class="text-danger">{{ $message }}</span>
                                 @enderror
