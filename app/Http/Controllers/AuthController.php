@@ -103,7 +103,19 @@ class AuthController extends Controller
             $role->syncPermissions($permissions);
             $user->assignRole($role);
 
-            return redirect()->route('login')->with('login-info', 'Register Berhasil, Silahkan Login');
+            $credentials = [
+                'email' => $user->email,
+                'password' => $request->password,
+            ];
+
+            if (!Auth::attempt($credentials, $request->remember)) {
+                throw new \Exception('Login Gagal, Username/Password salah');
+            }
+
+            $request->session()->regenerate();
+            return redirect()->intended('/dashboard');
+
+            // return redirect()->route('login')->with('login-info', 'Register Berhasil, Silahkan Login');
         } catch (\Exception $e) {
             return back()->with('register-error', $e->getMessage());
         }
