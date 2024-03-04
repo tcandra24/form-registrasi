@@ -54,7 +54,7 @@
                 <input class="form-check-input primary" type="checkbox" value="" id="flexCheckChecked" name="remember"
                     checked>
                 <label class="form-check-label text-dark" for="flexCheckChecked">
-                    Remember me
+                    Centang ini untuk tetap masuk
                 </label>
             </div>
         </div>
