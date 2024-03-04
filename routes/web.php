@@ -21,8 +21,11 @@ Route::group(['middleware' => ['guest']], function () {
     Route::get('/', function(){
       return redirect('/login');
     });
-    Route::get('/login', [App\Http\Controllers\AuthController::class, 'index']);
-    Route::post('/login', [App\Http\Controllers\AuthController::class, 'login'])->name('login');
+    Route::get('/login', [App\Http\Controllers\AuthController::class, 'register']);
+    Route::post('/login', [App\Http\Controllers\AuthController::class, 'store'])->name('login');
+
+    // Route::get('/login', [App\Http\Controllers\AuthController::class, 'index']);
+    // Route::post('/login', [App\Http\Controllers\AuthController::class, 'login'])->name('login');
 
     Route::get('/register', [App\Http\Controllers\AuthController::class, 'register']);
     Route::post('/register', [App\Http\Controllers\AuthController::class, 'store'])->name('register');
@@ -61,10 +64,10 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('/transactions', [ \App\Http\Controllers\Transaction\IndexController::class, 'index' ]);
 
     Route::delete('/transactions/registration/delete-all-not-scan', [\App\Http\Controllers\Transaction\RegistrationController::class, 'destroyAllNotScan']);
-    Route::resource('/transactions/registrations', \App\Http\Controllers\Transaction\RegistrationController::class, [ 'only' => ['index', 'show', 'destroy'] ]);
+    Route::resource('/transactions/registrations/{slug}', \App\Http\Controllers\Transaction\RegistrationController::class, [ 'only' => ['index', 'show', 'destroy'] ]);
 
     Route::delete('/transactions/registration-mechanics/delete-all-not-scan', [\App\Http\Controllers\Transaction\RegistrationMechanicController::class, 'destroyAllNotScan']);
-    Route::resource('/transactions/registration-mechanics', \App\Http\Controllers\Transaction\RegistrationMechanicController::class, [ 'only' => ['index', 'show', 'destroy'] ]);
+    Route::resource('/transactions/registration-mechanics/{slug}', \App\Http\Controllers\Transaction\RegistrationMechanicController::class, [ 'only' => ['index', 'show', 'destroy'] ]);
 
     Route::get('/trash/registrations',  [ \App\Http\Controllers\Trash\RegistrationController::class, 'index' ]);
     Route::get('/trash/registrations/restore/{id}',  [ \App\Http\Controllers\Trash\RegistrationController::class, 'restore' ]);
