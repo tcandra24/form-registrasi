@@ -22,13 +22,13 @@ Route::group(['middleware' => ['guest']], function () {
       return redirect('/login');
     });
     Route::get('/login', [App\Http\Controllers\AuthController::class, 'register']);
-    Route::post('/login', [App\Http\Controllers\AuthController::class, 'store'])->name('login');
+    Route::post('/login', [App\Http\Controllers\AuthController::class, 'store'])->name('register');
 
-    // Route::get('/login', [App\Http\Controllers\AuthController::class, 'index']);
-    // Route::post('/login', [App\Http\Controllers\AuthController::class, 'login'])->name('login');
+    Route::get('/login-admin', [App\Http\Controllers\AuthController::class, 'index']);
+    Route::post('/login-admin', [App\Http\Controllers\AuthController::class, 'login'])->name('login');
 
-    Route::get('/register', [App\Http\Controllers\AuthController::class, 'register']);
-    Route::post('/register', [App\Http\Controllers\AuthController::class, 'store'])->name('register');
+    // Route::get('/register', [App\Http\Controllers\AuthController::class, 'register']);
+    // Route::post('/register', [App\Http\Controllers\AuthController::class, 'store'])->name('register');
 
 
     Route::get('/auth/{provider}', [App\Http\Controllers\SocialiteController::class, 'redirectToProvider']);
