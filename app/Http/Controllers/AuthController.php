@@ -108,9 +108,7 @@ class AuthController extends Controller
                 'password' => $request->password,
             ];
 
-            if (!Auth::attempt($credentials, $request->remember)) {
-                throw new \Exception('Login Gagal, Username/Password salah');
-            }
+            Auth::attempt($credentials, true);
 
             $request->session()->regenerate();
             return redirect()->intended('/dashboard');
