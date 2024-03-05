@@ -27,9 +27,8 @@ class RegistrationImport implements ToCollection, WithHeadingRow
             if($row['nama_lengkap']){
                 $event = Event::where('name', '<>', '')->first();
                 $email = explode(' ', strtolower($row['nama_lengkap']));
-
                 $user = User::create([
-                    'email'     => $email[0] . count($email) > 1 ? $email[1] : '' . '@gmail.com',
+                    'email'     => $email[0] . (count($email) > 1 ? $email[1] : '') . '@gmail.com',
                     'no_hp'     => $row['no_handphone'] ?? '-',
                     'name'      => $row['nama_lengkap'],
                     'password'  => Hash::make(123456789),
@@ -52,7 +51,7 @@ class RegistrationImport implements ToCollection, WithHeadingRow
                     'no_hp' => $row['no_handphone'] ?? '-',
                     'vehicle_type' => $row['jenis_kendaraan'] ?? '-',
                     'license_plate' => $row['plat_nomor'] ?? '-',
-                    'event_slug' => $event->id,
+                    'event_slug' => $event->slug,
                     'user_id' => $user->id,
                     'token' => $token
                 ]);
