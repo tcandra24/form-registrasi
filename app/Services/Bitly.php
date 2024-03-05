@@ -13,7 +13,7 @@ class Bitly
             [ 'link' => $link, 'title' => $title ] = $object;
 
             $response =  Http::accept('application/json')
-            ->withToken(env('BITLY_ACCESS_TOKEN'))
+            ->withToken('adcc7e6505a320f181b0c95234bde5447b7c055b')
             ->post('https://api-ssl.bitly.com/v4/bitlinks', [
                 "domain" => "bit.ly",
                 "long_url" => $link,
@@ -42,7 +42,7 @@ class Bitly
             [ 'link' => $link, 'title' => $title ] = $object;
 
             $response =  Http::accept('application/json')
-                ->withToken(env('BITLY_ACCESS_TOKEN'))
+                ->withToken('adcc7e6505a320f181b0c95234bde5447b7c055b')
                 ->patch('https://api-ssl.bitly.com/v4/bitlinks/' . $id, [
                     "domain" => "bit.ly",
                     "long_url" => $link,
@@ -69,7 +69,7 @@ class Bitly
     {
         try {
             $response =  Http::accept('application/json')
-                ->withToken(env('BITLY_ACCESS_TOKEN'))
+                ->withToken('adcc7e6505a320f181b0c95234bde5447b7c055b')
                 ->delete('https://api-ssl.bitly.com/v4/bitlinks/' . $id);
 
             if($response->status() !== 200){
