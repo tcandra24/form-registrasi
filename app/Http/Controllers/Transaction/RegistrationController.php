@@ -5,26 +5,17 @@ namespace App\Http\Controllers\Transaction;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Registration;
-use App\Models\Shift;
 
 class RegistrationController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $registrations = Registration::where('fullname', '<>', '');
-        $shifts = Shift::all();
+        $registrations = Registration::where('event_slug', $request->event)->where('fullname', '<>', '')->paginate(10);
 
-        if(request()->has('scan') && request('scan') !== '-') {
-            $registrations = $registrations->where('is_scan', request('scan'));
-        }
-
-        if(request()->has('shift') && request('shift') !== '-') {
-            $registrations = $registrations->where('shift_id', request('shift'));
-        }
-
-        $registrations = $registrations->paginate(10);
-
-        return view('transactions.registration.index', [ 'registrations' => $registrations, 'shifts' => $shifts]);
+        return view('transactions.registration.index', [
+            'registrations' => $registrations,
+            'event_slug' => $request->slug,
+        ]);
     }
 
     public function show($id)
@@ -39,16 +30,16 @@ class RegistrationController extends Controller
             $registration = Registration::findOrFail($id);
             $registration->delete();
 
-            return redirect()->to('/transactions/registrations')->with('success', 'Data Registrasi Berhasil Dihapus');
+            return redirect()->to('/transactions/registrations/' . $registration->event_slug)->with('success', 'Data Registrasi Berhasil Dihapus');
         } catch (\Exception $e) {
             return redirect()->to('/transactions/registrations')->with('error', $e->getMessage());
         }
     }
 
-    public function destroyAllNotScan()
+    public function destroyAllNotScan(Request $request)
     {
         try {
-            $registration = Registration::where('is_scan', false);
+            $registration = Registration::where('event_slug', $request->event)->where('is_scan', false);
             $registration->delete();
 
             return redirect()->to('/transactions/registrations')->with('success', 'Semua Data Registrasi yang Tidak Scan Berhasil Dihapus');

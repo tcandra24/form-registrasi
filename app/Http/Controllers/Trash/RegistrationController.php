@@ -13,39 +13,28 @@ use Illuminate\Support\Facades\DB;
 
 class RegistrationController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $registrations = Registration::onlyTrashed()->where('fullname', '<>', '');
-        $shifts = Shift::all();
+        $registrations = Registration::onlyTrashed()->where('event_slug', $request->event)->where('fullname', '<>', '')->paginate(10);
 
-        if(request()->has('scan') && request('scan') !== '-') {
-            $registrations = $registrations->where('is_scan', request('scan'));
-        }
-
-        if(request()->has('shift') && request('shift') !== '-') {
-            $registrations = $registrations->where('shift_id', request('shift'));
-        }
-
-        $registrations = $registrations->paginate(10);
-
-        return view('trash.registration.index', [ 'registrations' => $registrations, 'shifts' => $shifts]);
+        return view('trash.registration.index', [ 'registrations' => $registrations]);
     }
 
     public function restore($id)
     {
         try {
             $registration = Registration::onlyTrashed()->where('id', $id)->first();
-            $shift = Shift::select('quota')->withCount(['registration' => function ($query) use ($registration) {
-                return $query->where('shift_id', $registration->shift->id);
-            }])->where('id', $registration->shift->id)->first();
-            $restQuota = (int)$shift->quota - (int)$shift->registration_count;
-            if($restQuota < 1) {
-                return redirect()->to('/trash/registrationsh')->with('error', 'Kuota shift sudah penuh');
-            }
+            // $shift = Shift::select('quota')->withCount(['registration' => function ($query) use ($registration) {
+            //     return $query->where('shift_id', $registration->shift->id);
+            // }])->where('id', $registration->shift->id)->first();
+            // $restQuota = (int)$shift->quota - (int)$shift->registration_count;
+            // if($restQuota < 1) {
+            //     return redirect()->to('/trash/registrationsh/' . $registration->event_slug)->with('error', 'Kuota shift sudah penuh');
+            // }
 
             Registration::onlyTrashed()->where('id', $id)->restore();
 
-            return redirect()->to('/trash/registrations')->with('success', 'Data Registrasi Berhasil Dipulihkan');
+            return redirect()->to('/trash/registrations/' . $registration->event_slug)->with('success', 'Data Registrasi Berhasil Dipulihkan');
         } catch (\Exception $e) {
             return redirect()->to('/trash/registrations')->with('error', $e->getMessage());
         }
@@ -54,13 +43,10 @@ class RegistrationController extends Controller
     public function destroy($id)
     {
         try {
-            DB::transaction(function() use ($id){
-                $registration = Registration::onlyTrashed()->findOrFail($id);
-                $registration->services()->detach();
-                $registration->forceDelete();
-            });
+            $registration = Registration::onlyTrashed()->findOrFail($id);
+            $registration->forceDelete();
 
-            return redirect()->to('/trash/registrations')->with('success', 'Data Registrasi Berhasil Dihapus');
+            return redirect()->to('/trash/registrations/'. $registration->event_slug)->with('success', 'Data Registrasi Berhasil Dihapus');
         } catch (\Exception $e) {
             return redirect()->to('/trash/registrations')->with('error', $e->getMessage());
         }

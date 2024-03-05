@@ -26,7 +26,7 @@
                             <div class="col-sm-6 col-xl-3">
                                 <div class="card overflow-hidden rounded-2">
                                     <div class="position-relative">
-                                        <a href="transactions{{ $event->link }}">
+                                        <a href="transactions{{ $event->link }}/{{ $event->slug }}">
                                             <img src="{{ $event->image }}" class="card-img-top rounded-0"
                                                 alt="{{ $event->slug }}">
                                         </a>

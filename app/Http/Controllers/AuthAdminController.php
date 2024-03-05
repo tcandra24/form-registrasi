@@ -4,20 +4,16 @@ namespace App\Http\Controllers;
 
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Hash;
-use Spatie\Permission\Models\Role;
-use Spatie\Permission\Models\Permission;
 
 use App\Models\User;
 use App\Models\Event;
-use Illuminate\Support\Facades\Session;
 
-class AuthController extends Controller
+class AuthAdminController extends Controller
 {
     public function index()
     {
         $events = Event::where('is_active', true)->get();
-        return view('auth.user.login', ['events' => $events]);
+        return view('auth.admin.login', ['events' => $events]);
     }
 
     public function login(Request $request)
@@ -63,58 +59,6 @@ class AuthController extends Controller
             return redirect()->intended('/dashboard');
         } catch (\Exception $e) {
             return back()->with('login-error', $e->getMessage());
-        }
-    }
-
-    public function register()
-    {
-        $events = Event::where('is_active', true)->get();
-        return view('auth.user.register', ['events' => $events]);
-    }
-
-    public function store(Request $request)
-    {
-        $request->validate([
-            'email' => 'required|unique:users,email',
-            'name' => 'required',
-            'password' => 'required',
-            'event' => 'required',
-        ], [
-            'email.required' => 'Email wajib diisi',
-            'name.required' => 'Nama wajib diisi',
-            'password.required' => 'Password wajib diisi',
-            'email.unique' => 'Email sudah digunakan',
-            'event.required' => 'Event wajib diisi',
-        ]);
-
-        try {
-
-            $user = User::create([
-                'email'     => $request->email,
-                'no_hp'     => $request->no_hp,
-                'name'      => $request->name,
-                'password'  => Hash::make($request->password),
-                'event_id'  => $request->event,
-            ]);
-
-            $permissions = Permission::all();
-            $role = Role::where('name', 'user')->first();
-            $role->syncPermissions($permissions);
-            $user->assignRole($role);
-
-            $credentials = [
-                'email' => $user->email,
-                'password' => $request->password,
-            ];
-
-            Auth::attempt($credentials, true);
-
-            $request->session()->regenerate();
-            return redirect()->intended('/dashboard');
-
-            // return redirect()->route('login')->with('login-info', 'Register Berhasil, Silahkan Login');
-        } catch (\Exception $e) {
-            return back()->with('register-error', $e->getMessage());
         }
     }
 

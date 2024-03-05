@@ -21,18 +21,17 @@ Route::group(['middleware' => ['guest']], function () {
     Route::get('/', function(){
       return redirect('/login');
     });
-    Route::get('/login', [App\Http\Controllers\AuthController::class, 'register']);
-    Route::post('/login', [App\Http\Controllers\AuthController::class, 'store'])->name('register');
+    Route::get('/login-admin', [App\Http\Controllers\AuthAdminController::class, 'index']);
+    Route::post('/login-admin', [App\Http\Controllers\AuthAdminController::class, 'login'])->name('login-admin');
 
-    Route::get('/login-admin', [App\Http\Controllers\AuthController::class, 'index']);
-    Route::post('/login-admin', [App\Http\Controllers\AuthController::class, 'login'])->name('login');
+    Route::get('/login', [App\Http\Controllers\AuthController::class, 'index']);
+    Route::post('/login', [App\Http\Controllers\AuthController::class, 'login'])->name('login');
 
-    // Route::get('/register', [App\Http\Controllers\AuthController::class, 'register']);
-    // Route::post('/register', [App\Http\Controllers\AuthController::class, 'store'])->name('register');
+    Route::get('/register', [App\Http\Controllers\AuthController::class, 'register']);
+    Route::post('/register', [App\Http\Controllers\AuthController::class, 'store'])->name('register');
 
-
-    Route::get('/auth/{provider}', [App\Http\Controllers\SocialiteController::class, 'redirectToProvider']);
-    Route::get('/auth/{provider}/callback', [App\Http\Controllers\SocialiteController::class, 'handleProvideCallback']);
+    // Route::get('/auth/{provider}', [App\Http\Controllers\SocialiteController::class, 'redirectToProvider']);
+    // Route::get('/auth/{provider}/callback', [App\Http\Controllers\SocialiteController::class, 'handleProvideCallback']);
 });
 
 
@@ -59,27 +58,30 @@ Route::group(['middleware' => ['auth']], function () {
     Route::post('/registrations/import', [ \App\Http\Controllers\RegistrationController::class, 'saveImport' ]);
 
     Route::resource('/registrations', \App\Http\Controllers\RegistrationController::class, [ 'only' => ['index', 'store'] ]);
-    Route::resource('/registration-mechanics', \App\Http\Controllers\RegistrationMechanicsController::class, [ 'only' => ['index', 'store'] ]);
+    // Route::resource('/registration-mechanics', \App\Http\Controllers\RegistrationMechanicsController::class, [ 'only' => ['index', 'store'] ]);
 
     Route::get('/transactions', [ \App\Http\Controllers\Transaction\IndexController::class, 'index' ]);
 
-    Route::delete('/transactions/registration/delete-all-not-scan', [\App\Http\Controllers\Transaction\RegistrationController::class, 'destroyAllNotScan']);
-    Route::resource('/transactions/registrations/{slug}', \App\Http\Controllers\Transaction\RegistrationController::class, [ 'only' => ['index', 'show', 'destroy'] ]);
+    Route::delete('/transactions/registration-delete-all/{event}', [\App\Http\Controllers\Transaction\RegistrationController::class, 'destroyAllNotScan']);
+    // Route::resource('/transactions/registrations/{slug}', \App\Http\Controllers\Transaction\RegistrationController::class, [ 'only' => ['index', 'show', 'destroy'] ]);
+    Route::get('/transactions/registrations/{event}',  [ \App\Http\Controllers\Transaction\RegistrationController::class, 'index' ]);
+    Route::get('/transactions/registrations-show/{id}',  [ \App\Http\Controllers\Transaction\RegistrationController::class, 'show' ]);
+    Route::delete('/transactions/registrations-delete/{id}',  [ \App\Http\Controllers\Transaction\RegistrationController::class, 'destroy' ]);
 
-    Route::delete('/transactions/registration-mechanics/delete-all-not-scan', [\App\Http\Controllers\Transaction\RegistrationMechanicController::class, 'destroyAllNotScan']);
-    Route::resource('/transactions/registration-mechanics/{slug}', \App\Http\Controllers\Transaction\RegistrationMechanicController::class, [ 'only' => ['index', 'show', 'destroy'] ]);
+    // Route::delete('/transactions/registration-mechanics/delete-all-not-scan', [\App\Http\Controllers\Transaction\RegistrationMechanicController::class, 'destroyAllNotScan']);
+    // Route::resource('/transactions/registration-mechanics/{slug}', \App\Http\Controllers\Transaction\RegistrationMechanicController::class, [ 'only' => ['index', 'show', 'destroy'] ]);
 
-    Route::get('/trash/registrations',  [ \App\Http\Controllers\Trash\RegistrationController::class, 'index' ]);
+    Route::get('/trash/registrations/{event}',  [ \App\Http\Controllers\Trash\RegistrationController::class, 'index' ]);
     Route::get('/trash/registrations/restore/{id}',  [ \App\Http\Controllers\Trash\RegistrationController::class, 'restore' ]);
     Route::get('/trash/registrations/delete/{id}',  [ \App\Http\Controllers\Trash\RegistrationController::class, 'destroy' ]);
 
     Route::get('/trash/registrations/export',  [ \App\Http\Controllers\Trash\RegistrationController::class, 'export' ]);
 
-    Route::get('/trash/registration-mechanics',  [ \App\Http\Controllers\Trash\RegistrationMechanicController::class, 'index' ]);
-    Route::get('/trash/registration-mechanics/restore/{id}',  [ \App\Http\Controllers\Trash\RegistrationMechanicController::class, 'restore' ]);
-    Route::get('/trash/registration-mechanics/delete/{id}',  [ \App\Http\Controllers\Trash\RegistrationMechanicController::class, 'destroy' ]);
+    // Route::get('/trash/registration-mechanics',  [ \App\Http\Controllers\Trash\RegistrationMechanicController::class, 'index' ]);
+    // Route::get('/trash/registration-mechanics/restore/{id}',  [ \App\Http\Controllers\Trash\RegistrationMechanicController::class, 'restore' ]);
+    // Route::get('/trash/registration-mechanics/delete/{id}',  [ \App\Http\Controllers\Trash\RegistrationMechanicController::class, 'destroy' ]);
 
-    Route::get('/trash/registration-mechanics/export',  [ \App\Http\Controllers\Trash\RegistrationMechanicController::class, 'export' ]);
+    // Route::get('/trash/registration-mechanics/export',  [ \App\Http\Controllers\Trash\RegistrationMechanicController::class, 'export' ]);
 
     Route::get('/users', [ \App\Http\Controllers\UserController::class, 'index' ])
     ->middleware('permission:users.index');
@@ -91,23 +93,22 @@ Route::group(['middleware' => ['auth']], function () {
     ->middleware('permission:roles.index|roles.create|roles.edit|roles.delete');
 
     Route::get('/qr-code/registrations/download', [ \App\Http\Controllers\QrCode\RegistrationController::class, 'download' ]);
-    Route::get('/qr-code/registration-mechanics/download', [ \App\Http\Controllers\QrCode\RegistrationMechanicController::class, 'download' ]);
-
+    // Route::get('/qr-code/registration-mechanics/download', [ \App\Http\Controllers\QrCode\RegistrationMechanicController::class, 'download' ]);
 
     Route::get('/term-condition', [ \App\Http\Controllers\TermConditionController::class, 'index']);
 
     Route::get('/reports', [ \App\Http\Controllers\Report\IndexController::class, 'index' ])
     ->middleware('permission:report_registrations.index');
 
-    Route::get('/report/export/registrations', [\App\Http\Controllers\Report\RegistrationController::class, 'export'])
+    Route::get('/report/export/registrations/{event}', [\App\Http\Controllers\Report\RegistrationController::class, 'export'])
     ->middleware('permission:report_registrations.index');
-    Route::get('/report/registrations', [ \App\Http\Controllers\Report\RegistrationController::class, 'index' ])
+    Route::get('/report/registrations/{event}', [ \App\Http\Controllers\Report\RegistrationController::class, 'index' ])
     ->middleware('permission:report_registrations.index');
 
-    Route::get('/report/export/registration-mechanics', [\App\Http\Controllers\Report\RegistrationMechanicController::class, 'export'])
-    ->middleware('permission:report_registrations.index');
-    Route::get('/report/registration-mechanics', [ \App\Http\Controllers\Report\RegistrationMechanicController::class, 'index' ])
-    ->middleware('permission:report_registrations.index');
+    // Route::get('/report/export/registration-mechanics', [\App\Http\Controllers\Report\RegistrationMechanicController::class, 'export'])
+    // ->middleware('permission:report_registrations.index');
+    // Route::get('/report/registration-mechanics', [ \App\Http\Controllers\Report\RegistrationMechanicController::class, 'index' ])
+    // ->middleware('permission:report_registrations.index');
 
     Route::post('/logout', [App\Http\Controllers\AuthController::class, 'logout'])->name('logout');
 });

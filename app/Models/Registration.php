@@ -15,41 +15,22 @@ class Registration extends Model
 
     protected $fillable = [
         'fullname',
+        'date_birth',
+        'address',
+        'gender',
+        'bood_type',
         'registration_number',
         'no_hp',
         'vehicle_type',
         'license_plate',
-        'job_id',
-        'shift_id',
         'user_id',
-        'manufacture_id',
         'event_slug',
         'token'
     ];
 
-    public function shift()
-    {
-        return $this->belongsTo(Shift::class);
-    }
-
-    public function job()
-    {
-        return $this->belongsTo(Job::class);
-    }
-
-    public function manufacture()
-    {
-        return $this->belongsTo(Manufacture::class);
-    }
-
     public function user()
     {
         return $this->belongsTo(User::class);
-    }
-
-    public function services()
-    {
-        return $this->belongsToMany(Service::class, 'registration_service');
     }
 
     public function getFullnameAttribute($value)
@@ -63,6 +44,11 @@ class Registration extends Model
     }
 
     public function getVehicleTypeAttribute($value)
+    {
+        return ucwords($value);
+    }
+
+    public function getGenderAttribute($value)
     {
         return ucwords($value);
     }

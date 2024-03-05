@@ -14,10 +14,10 @@ class Manufacture extends Model
         'is_active'
     ];
 
-    public function registration()
-    {
-        return $this->hasMany(Registration::class);
-    }
+    // public function registration()
+    // {
+    //     return $this->hasMany(Registration::class);
+    // }
 
     public function getNameAttribute($value)
     {

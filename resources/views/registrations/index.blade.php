@@ -5,6 +5,10 @@
 @endsection
 
 @section('page-style')
+    <link href="{{ asset('assets/vendor/bootstrap-material-datetimepicker/css/bootstrap-material-datetimepicker.css') }}"
+        rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
     <link rel="stylesheet" href="{{ asset('assets/vendor/select2/css/select2.min.css') }}" />
     <link rel="stylesheet" href="{{ asset('assets/vendor/select2/css/select2-bootstrap-5-theme.min.css') }}" />
     <style>
@@ -62,36 +66,26 @@
                         </div>
                         <div class="d-flex flex-column">
                             <div class="p-2">
-                                <h4>Status Scan: </h4>
-                                @if ($registration->is_scan)
-                                    <div class="d-flex align-items-center gap-2">
-                                        <span class="badge bg-primary rounded-3 fw-semibold">Sudah Scan</span>
-                                    </div>
-                                @else
-                                    <div class="d-flex align-items-center gap-2">
-                                        <span class="badge bg-danger rounded-3 fw-semibold">Belum Scan</span>
-                                    </div>
-                                @endif
-                            </div>
-                            <div class="p-2">
                                 <h4>Plat Nomor: </h4>
                                 <p>{{ $registration->license_plate }}</p>
                             </div>
                             <div class="p-2">
-                                <h4>Pekerjaan: </h4>
-                                <p>{{ $registration->job->name }}</p>
+                                <h4>Alamat: </h4>
+                                <p>{{ $registration->address }}</p>
                             </div>
                             <div class="p-2">
-                                <h4>Shift: </h4>
-                                <p>{{ $registration->shift->name }}</p>
-                                <div class="d-flex flex-column">
-                                    <div class="d-flex flex-column">
-                                        <p class="mb-0">
-                                            {{ \Carbon\Carbon::parse($registration->shift->start)->locale('id')->translatedFormat('l, d F Y') }}
-                                        </p>
-                                        <!-- <p>{{ substr(substr($registration->shift->start, -8), 0, 5) }} - {{ substr(substr($registration->shift->end, -8), 0, 5) }}</p> -->
-                                    </div>
-                                </div>
+                                <h4>Tanggal Lahir: </h4>
+                                <p>{{ $registration->date_birth }}</p>
+                            </div>
+                            <div class="p-2">
+                                <h4>Jenis Kelamin: </h4>
+                                <p>{{ $registration->gender }}</p>
+                            </div>
+                        </div>
+                        <div class="d-flex flex-column">
+                            <div class="p-2">
+                                <h4>Golongan Darah: </h4>
+                                <p>{{ $registration->bood_type }}</p>
                             </div>
                         </div>
                     </div>
@@ -120,7 +114,7 @@
                             <div class="mb-3 w-100">
                                 <label for="fullName" class="form-label">Nama Lengkap</label>
                                 <input type="text" name="fullname" class="form-control" id="fullName"
-                                    value="{{ old('fullname') }}" aria-describedby="name">
+                                    value="{{ Auth::user()->name }}" aria-describedby="name">
                                 @error('fullname')
                                     <span class="text-danger">{{ $message }}</span>
                                 @enderror
@@ -140,31 +134,25 @@
                     <div class="row">
                         <div class="col-lg-6 d-flex align-items-stretch">
                             <div class="mb-3 w-100">
-                                <label for="vehicleType" class="form-label">Tipe Kendaraan</label>
-                                <input type="text" name="vehicle_type" class="form-control" id="vehicleType"
-                                    value="{{ old('vehicle_type') }}" aria-describedby="vehicle_type">
-                                @error('vehicle_type')
+                                <label for="dateBirth" class="form-label">Tgl Lahir</label>
+                                <input type="text" name="date_birth" class="form-control" id="dateBirth"
+                                    value="{{ old('date_birth') }}" aria-describedby="date_birth">
+                                @error('date_birth')
                                     <span class="text-danger">{{ $message }}</span>
                                 @enderror
-                                <span class="text-gray fs-2">
-                                    <i>*Contoh: Vario 150, Vario 125 Mio, Beat dll.</i>
-                                </span>
                             </div>
                         </div>
                         <div class="col-lg-6 d-flex align-items-stretch">
                             <div class="mb-3 w-100">
-                                <label for="job" class="form-label">Merk/Brand Motor</label>
-                                <select name="manufacture" class="form-control" id="manufacture"
-                                    aria-describedby="manufacture">
-                                    <option value="">Pilih Merk/Brand Motor</option>
-                                    @foreach ($manufactures as $manufacture)
-                                        <option value="{{ $manufacture->id }}"
-                                            {{ (int) old('manufacture') === $manufacture->id ? 'selected' : '' }}>
-                                            {{ $manufacture->name }}
-                                        </option>
-                                    @endforeach
+                                <label for="boodType" class="form-label">Golongan Darah</label>
+                                <select name="bood_type" class="form-control" id="boodType">
+                                    <option value="">- Golongan Darah -</option>
+                                    <option value="A">A</option>
+                                    <option value="B">B</option>
+                                    <option value="AB">AB</option>
+                                    <option value="O">O</option>
                                 </select>
-                                @error('manufacture')
+                                @error('bood_type')
                                     <span class="text-danger">{{ $message }}</span>
                                 @enderror
                             </div>
@@ -183,74 +171,48 @@
                         </div>
                         <div class="col-lg-6 d-flex align-items-stretch">
                             <div class="mb-3 w-100">
-                                <label for="shift" class="form-label">Shift</label>
-                                <select name="shift" class="form-control" id="shift" aria-describedby="shift">
-                                    <option value="">Pilih Shift</option>
-                                    @foreach ($shifts as $shift)
-                                        <option value="{{ $shift->id }}"
-                                            {{ (int) old('shift') === $shift->id ? 'selected' : '' }}>
-                                            {{ \Carbon\Carbon::parse($shift->start)->locale('id')->translatedFormat('l, d F Y') }}
-                                            <!-- | {{ substr(substr($shift->start, -8), 0, 5) }} - {{ substr(substr($shift->end, -8), 0, 5) }} -->
-                                            (Sisa Kuota: {{ $shift->quota - $shift->registration_count }})
-                                        </option>
-                                    @endforeach
-                                </select>
-                                @error('shift')
+                                <label for="vehicleType" class="form-label">Kendaraan</label>
+                                <input type="text" name="vehicle_type" class="form-control" id="vehicleType"
+                                    value="{{ old('vehicle_type') }}" aria-describedby="vehicle_type">
+                                @error('vehicle_type')
                                     <span class="text-danger">{{ $message }}</span>
                                 @enderror
+                                <span class="text-gray fs-2">
+                                    <i>*Contoh: Vario 150, Vario 125 Mio, Beat dll.</i>
+                                </span>
                             </div>
                         </div>
                     </div>
                     <div class="row mb-3">
                         <div class="col-lg-6 d-flex align-items-stretch">
                             <div class="mb-3 w-100">
-                                <label for="services" class="form-label">Jasa</label>
-                                <select name="services[]" class="form-control" id="services"
-                                    aria-describedby="services" multiple="multiple">
-                                    @foreach ($services as $service)
-                                        <option value="{{ $service->id }}">
-                                            {{ $service->name }}
-                                        </option>
-                                    @endforeach
-                                </select>
-                                @error('services')
-                                    <span class="text-danger">{{ $message }}</span>
-                                @enderror
-                                <span class="text-gray fs-2">
-                                    <i>*Terdapat potongan harga untuk pembelian product, kecuali Busi Bosch gratis.</i>
-                                </span>
-                            </div>
-                        </div>
-                        <div class="col-lg-6 d-flex align-items-stretch">
-                            <div class="mb-3 w-100">
-                                <label for="job" class="form-label">Pekerjaan</label>
-                                <div class="d-flex" style="gap: 10px;">
-                                    @foreach ($jobs as $job)
-                                        <div class="form-check">
-                                            <input class="form-check-input" name="job" type="radio"
-                                                value="{{ $job->id }}" id="job" aria-describedby="job"
-                                                {{ (int) old('job') === $job->id ? 'checked' : '' }}>
-                                            <label class="form-check-label" for="job">
-                                                {{ $job->name }}
-                                            </label>
-                                        </div>
-                                    @endforeach
-                                </div>
-                                @error('job')
+                                <label for="address" class="form-label">Alamat</label>
+                                <textarea name="address" class="form-control" id="address" rows="7">{{ old('address') }}</textarea>
+                                @error('address')
                                     <span class="text-danger">{{ $message }}</span>
                                 @enderror
                             </div>
                         </div>
-                    </div>
-                    <div class="row">
                         <div class="col-lg-6 d-flex align-items-stretch">
                             <div class="mb-3 w-100">
+                                <label for="gender" class="form-label">Jenis Kelamin</label>
                                 <div class="form-check">
-                                    <input class="form-check-input" name="term-condition" type="checkbox"
-                                        id="term-condition" aria-describedby="term-condition">
-                                    <label for="term-condition" class="form-label">Saya telah menyetujui <a
-                                            href="/term-condition" class="text-primary">Syarat & Ketentuan</a></label>
+                                    <input class="form-check-input" name="gender" type="radio" value="male"
+                                        id="job" aria-describedby="gender">
+                                    <label class="form-check-label" for="gender">
+                                        Laki - Laki
+                                    </label>
                                 </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" name="gender" type="radio" value="female"
+                                        id="job" aria-describedby="gender">
+                                    <label class="form-check-label" for="gender">
+                                        Perempuan
+                                    </label>
+                                </div>
+                                @error('gender')
+                                    <span class="text-danger">{{ $message }}</span>
+                                @enderror
                             </div>
                         </div>
                     </div>
@@ -270,24 +232,15 @@
     <script src="{{ asset('assets/js/app.min.js') }}"></script>
     <script src="{{ asset('assets/vendor/select2/js/select2.full.min.js') }}"></script>
 
-    <script>
-        $('#shift').select2({
-            theme: 'bootstrap-5'
-        })
-        $('#services').select2({
-            theme: 'bootstrap-5'
-        })
-        $('#manufacture').select2({
-            theme: 'bootstrap-5'
-        })
+    <script src="{{ asset('assets/vendor/moment/moment.min.js') }}"></script>
+    <script src="{{ asset('assets/vendor/bootstrap-material-datetimepicker/js/bootstrap-material-datetimepicker.js') }}">
+    </script>
 
-        $('.btn-submit').attr('disabled', true)
-        $('#term-condition').on('change', function() {
-            if ($(this).is(':checked')) {
-                $('.btn-submit').attr('disabled', false)
-            } else {
-                $('.btn-submit').attr('disabled', true)
-            }
-        })
+    <script>
+        $('#dateBirth').bootstrapMaterialDatePicker({
+            weekStart: 1,
+            time: false,
+            format: 'YYYY/MM/DD',
+        });
     </script>
 @endsection

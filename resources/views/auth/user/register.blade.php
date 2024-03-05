@@ -2,9 +2,9 @@
 
 @section('content')
     <a href="#" class="text-nowrap logo-img text-center d-block py-3 w-100">
-        <img src="{{ asset('assets/images/logo.png') }}" width="180" alt="">
+        <img src="{{ asset('assets/images/logo.png') }}" width="100" alt="">
     </a>
-    <p class="text-center">Form Pendaftaran Event Fuboru</p>
+    <p class="text-center">Form Pendaftaran Donor Darah</p>
     <form method="POST" action="{{ route('register') }}">
         @csrf
         @if (Session::has('register-error'))
@@ -39,13 +39,12 @@
                 <span class="text-danger">{{ $message }}</span>
             @enderror
         </div>
-        <div class="mb-3">
+        <div class="mb-3" style="display: none;">
             <label for="event" class="form-label">Pilih Event</label>
             <select class="form-control" name="event" id="event">
                 <option value="" selected>Pilih Event</option>
                 @foreach ($events as $event)
-                    <option value="{{ $event->id }}"
-                        {{ (int) request()->get('event') === $event->id ? 'selected' : '' }}>{{ $event->name }}</option>
+                    <option value="{{ $event->id }}" selected>{{ $event->name }}</option>
                 @endforeach
             </select>
             @error('event')
