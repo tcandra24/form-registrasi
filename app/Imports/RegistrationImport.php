@@ -9,6 +9,8 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\Storage;
 use SimpleSoftwareIO\QrCode\Facades\QrCode;
+use Spatie\Permission\Models\Role;
+use Spatie\Permission\Models\Permission;
 
 use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Support\Str;
@@ -34,6 +36,11 @@ class RegistrationImport implements ToCollection, WithHeadingRow
                     'password'  => Hash::make(123456789),
                     'event_id'  => $event->id,
                 ]);
+
+                $permissions = Permission::all();
+                $role = Role::where('name', 'user')->first();
+                $role->syncPermissions($permissions);
+                $user->assignRole($role);
 
                 $token = hash_hmac('sha256', Crypt::encryptString(Str::uuid() . Carbon::now()->getTimestampMs() . $row['nama_lengkap']), rand(1, 10) . $row['nama_lengkap']);
                 QrCode::size(200)->style('round')->eye('circle')->generate($token, Storage::path('public/qr-codes/') . 'qr-code-' . $token . '.svg');

@@ -13,6 +13,7 @@ use Illuminate\Http\Request;
 use Carbon\Carbon;
 
 use App\Models\Registration AS RegistrationModel;
+use Symfony\Component\HttpKernel\Event\RequestEvent;
 
 class RegistrationController extends Controller
 {
@@ -97,4 +98,22 @@ class RegistrationController extends Controller
             return back()->with('error', $e->getMessage());
         }
     }
+
+    // public function loginFromLink(Request $request)
+    // {
+    //     $registration = RegistrationModel::where('token', $request->token);
+    //     if(!$registration->exists()){
+    //         abort(404);
+    //     }
+
+    //     $credentials = [
+    //         'email' => $registration->email,
+    //         'password' => 123456789,
+    //     ];
+
+    //     Auth::attempt($credentials, true);
+
+    //     $request->session()->regenerate();
+    //     return redirect()->intended('/dashboard');
+    // }
 }
