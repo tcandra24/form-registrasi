@@ -23,6 +23,7 @@ class Registration extends Model
         'no_hp',
         'vehicle_type',
         'license_plate',
+        'job_id',
         'user_id',
         'event_slug',
         'token'
@@ -31,6 +32,11 @@ class Registration extends Model
     public function user()
     {
         return $this->belongsTo(User::class);
+    }
+
+    public function job()
+    {
+        return $this->belongsTo(Job::class);
     }
 
     public function getFullnameAttribute($value)

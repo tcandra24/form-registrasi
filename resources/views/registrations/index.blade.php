@@ -87,6 +87,10 @@
                                 <h4>Golongan Darah: </h4>
                                 <p>{{ $registration->bood_type }}</p>
                             </div>
+                            <div class="p-2">
+                                <h4>Pekerjaan: </h4>
+                                <p>{{ $registration->job->name }}</p>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -211,6 +215,28 @@
                                     </label>
                                 </div>
                                 @error('gender')
+                                    <span class="text-danger">{{ $message }}</span>
+                                @enderror
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-lg-6 d-flex align-items-stretch">
+                            <div class="mb-3 w-100">
+                                <label for="job" class="form-label">Pekerjaan</label>
+                                <div class="d-flex" style="gap: 10px;">
+                                    @foreach ($jobs as $job)
+                                        <div class="form-check">
+                                            <input class="form-check-input" name="job" type="radio"
+                                                value="{{ $job->id }}" id="job" aria-describedby="job"
+                                                {{ (int) old('job') === $job->id ? 'checked' : '' }}>
+                                            <label class="form-check-label" for="job">
+                                                {{ $job->name }}
+                                            </label>
+                                        </div>
+                                    @endforeach
+                                </div>
+                                @error('job')
                                     <span class="text-danger">{{ $message }}</span>
                                 @enderror
                             </div>

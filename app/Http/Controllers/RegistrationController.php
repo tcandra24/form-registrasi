@@ -13,6 +13,7 @@ use Illuminate\Http\Request;
 use Carbon\Carbon;
 
 use App\Models\Registration AS RegistrationModel;
+use App\Models\Job;
 use Symfony\Component\HttpKernel\Event\RequestEvent;
 
 class RegistrationController extends Controller
@@ -25,7 +26,11 @@ class RegistrationController extends Controller
             return view('registrations.index', [ 'registration' => $registration]);
         }
 
-        return view('registrations.index');
+        $jobs = Job::where('is_active', true)->get();
+
+        return view('registrations.index', [
+            'jobs' => $jobs,
+        ]);
     }
 
     public function store(Request $request) {
@@ -34,6 +39,7 @@ class RegistrationController extends Controller
             'no_hp' => 'required',
             'vehicle_type' => 'required',
             'license_plate' => 'required',
+            'job' => 'required',
             'date_birth' => 'required',
             'address' => 'required',
             'gender' => 'required',
@@ -43,6 +49,7 @@ class RegistrationController extends Controller
             'no_hp.required' => 'Nomer HP wajib diisi',
             'vehicle_type.required' => 'Tipe Kendaraan wajib diisi',
             'license_plate.required' => 'Plat Nomor wajib diisi',
+            'job.required' => 'Pekerjaan wajib diisi',
             'date_birth.required' => 'Tanggal Lahir wajib diisi',
             'address.required' => 'Alamat wajib diisi',
             'gender.required' => 'Jenis Kelaminr wajib diisi',
@@ -66,6 +73,7 @@ class RegistrationController extends Controller
                 'no_hp' => $request->no_hp,
                 'vehicle_type' => $request->vehicle_type,
                 'license_plate' => $request->license_plate,
+                'job_id' => $request->job,
                 'user_id' => Auth::user()->id,
                 'event_slug' => Auth::user()->event->slug,
                 'token' => $token

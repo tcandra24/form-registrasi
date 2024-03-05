@@ -87,6 +87,9 @@
                                             <h6 class="fw-semibold mb-0">Alamat</h6>
                                         </th>
                                         <th class="border-bottom-0">
+                                            <h6 class="fw-semibold mb-0">Pekerjaan</h6>
+                                        </th>
+                                        <th class="border-bottom-0">
                                             <h6 class="fw-semibold mb-0">Golongan Darah</h6>
                                         </th>
                                         <th class="border-bottom-0">
@@ -138,6 +141,9 @@
                                                     <p class="mb-0 fw-normal">{{ $registration->address }}</p>
                                                 </td>
                                                 <td class="border-bottom-0">
+                                                    <p class="mb-0 fw-normal">{{ $registration->job->name }}</p>
+                                                </td>
+                                                <td class="border-bottom-0">
                                                     <p class="mb-0 fw-normal">{{ $registration->bood_type }}</p>
                                                 </td>
                                                 <td class="border-bottom-0">
@@ -186,7 +192,7 @@
                                         @endforeach
                                     @else
                                         <tr>
-                                            <td colspan="13">
+                                            <td colspan="14">
                                                 <div class="alert alert-info text-center" role="alert">
                                                     Registrasi Masih Kosong
                                                 </div>
