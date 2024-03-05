@@ -63,6 +63,10 @@
                             <h4>Golongan Darah: </h4>
                             <p>{{ $registration->bood_type }}</p>
                         </div>
+                        <div class="p-2">
+                            <h4>Pekerjaan: </h4>
+                            <p>{{ $registration->job->name }}</p>
+                        </div>
                     </div>
                 </div>
             </div>
