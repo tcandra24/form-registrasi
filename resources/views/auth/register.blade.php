@@ -31,7 +31,7 @@
             @enderror
         </div>
         <div class="mb-3">
-            <label for="no_hp" class="form-label">No HP</label>
+            <label for="no_hp" class="form-label">Nomer HP/Telp</label>
             <input type="text" name="no_hp"
                 class="form-control {{ $errors->has('no_hp') ? 'border border-danger' : '' }}" value="{{ old('no_hp') }}"
                 id="no_hp" aria-describedby="no_hp">
@@ -39,7 +39,7 @@
                 <span class="text-danger">{{ $message }}</span>
             @enderror
         </div>
-        <div class="mb-3">
+        <div class="mb-3" style="display: none;">
             <label for="event" class="form-label">Pilih Event</label>
             <select class="form-control" name="event" id="event">
                 <option value="" selected>Pilih Event</option>
@@ -54,6 +54,7 @@
         </div>
         <div class="mb-4">
             <label for="password" class="form-label">Password</label>
+            <span> <i>(buat password baru untuk event ini)</i></span>
             <input type="password" name="password"
                 class="form-control {{ $errors->has('password') ? 'border border-danger' : '' }}" id="password">
             @error('password')
