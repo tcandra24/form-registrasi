@@ -10,10 +10,12 @@ use Illuminate\Contracts\View\View;
 class RegistrationMechanicExport implements FromView
 {
     protected $is_scan;
+    protected $event;
 
-    public function __construct($is_scan)
+    public function __construct($is_scan, $event)
     {
         $this->is_scan = $is_scan;
+        $this->event = $event;
     }
 
     /**
@@ -21,7 +23,7 @@ class RegistrationMechanicExport implements FromView
     */
     public function view(): View
     {
-        $registrations = RegistrationMechanic::where('fullname', '<>', '');
+        $registrations = RegistrationMechanic::where('event_slug', $this->event)->where('fullname', '<>', '');
 
         if(request()->has('is_scan') && request('is_scan') !== '-') {
             $registrations = $registrations->where('is_scan', request('is_scan'));

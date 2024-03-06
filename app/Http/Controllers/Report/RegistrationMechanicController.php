@@ -11,9 +11,9 @@ use App\Models\RegistrationMechanic;
 
 class RegistrationMechanicController extends Controller
 {
-    public function index()
+    public function index($event)
     {
-        $registrations = RegistrationMechanic::where('fullname', '<>', '');
+        $registrations = RegistrationMechanic::where('event_slug', $event)->where('fullname', '<>', '');
 
         if(request()->has('scan') && request('scan') !== '-') {
             $registrations = $registrations->where('is_scan', request('scan'));
@@ -24,8 +24,8 @@ class RegistrationMechanicController extends Controller
         return view('reports.registration_mechanic.index', [ 'registrations' => $registrations]);
     }
 
-    public function export(Request $request)
+    public function export(Request $request, $event)
     {
-        return Excel::download(new RegistrationMechanicExport($request->is_scan), 'registration-mechanics.xlsx');
+        return Excel::download(new RegistrationMechanicExport($request->is_scan, $event), 'registration-mechanics.xlsx');
     }
 }

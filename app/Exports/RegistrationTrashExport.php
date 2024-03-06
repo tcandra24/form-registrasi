@@ -12,18 +12,20 @@ class RegistrationTrashExport implements FromView
 {
     protected $shift;
     protected $is_scan;
+    protected $event;
 
-    public function __construct($shift, $is_scan)
+    public function __construct($shift, $is_scan, $event)
     {
         $this->shift = $shift;
         $this->is_scan = $is_scan;
+        $this->event = $event;
     }
     /**
     * @return \Illuminate\Support\Collection
     */
     public function view(): View
     {
-        $registrations = Registration::onlyTrashed()->where('fullname', '<>', '');
+        $registrations = Registration::onlyTrashed()->where('event_slug', $this->event)->where('fullname', '<>', '');
 
         if(request()->has('is_scan') && request('is_scan') !== '-') {
             $registrations = $registrations->where('is_scan', request('is_scan'));

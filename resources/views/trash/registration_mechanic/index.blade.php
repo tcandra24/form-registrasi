@@ -49,7 +49,7 @@
                         </form>
                     </div>
                     <div class="row">
-                        <form action="{{ url('/trash/registration-mechanics/export') }}">
+                        <form action="{{ url('/trash/registration-mechanics/' . request()->event . '/export') }}">
                             <input type="hidden" name="is_scan"
                                 value="{{ Request::has('scan') ? Request::get('scan') : '-' }}">
                             <button type="submit" class="btn btn-success">Export To Excel</button>
@@ -169,12 +169,12 @@
                                                 <td class="border-bottom-0">
                                                     <div class="d-flex align-items-center gap-2">
                                                         <button class="btn btn-secondary m-1 btn-restore"
-                                                            data-url="/trash/registration-mechanics/restore/{{ $registration->id }}"
+                                                            data-url="/trash/registration-mechanics/{{ $registration->event_slug }}/restore/{{ $registration->id }}"
                                                             data-name="{{ $registration->fullname }}">
                                                             <i class="ti ti-restore"></i>
                                                         </button>
                                                         <button class="btn btn-danger m-1 btn-delete"
-                                                            data-url="/trash/registration-mechanics/delete/{{ $registration->id }}"
+                                                            data-url="/trash/registration-mechanics/{{ $registration->event_slug }}/delete/{{ $registration->id }}"
                                                             data-name="{{ $registration->fullname }}">
                                                             <i class="ti ti-trash"></i>
                                                         </button>

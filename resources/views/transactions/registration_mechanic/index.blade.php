@@ -22,7 +22,7 @@
                 <div class="card-body p-4">
                     <h5 class="card-title fw-semibold mb-4">Transaksi Registrasi Mechanic</h5>
                     <div class="row">
-                        <form action="{{ url('/transactions/registration-mechanics') }}">
+                        <form action="{{ url('/transactions/registrations/' . request()->event) }}">
                             <div class="row">
                                 <div class="col-lg-3 d-flex align-items-stretch">
                                     <div class="mb-3 w-100">
@@ -50,7 +50,7 @@
                     </div>
                     <div class="row">
                         <form id="form-delete-not-scan" method="POST"
-                            action="{{ url('/transactions/registration-mechanics/delete-all-not-scan') }}">
+                            action="{{ url('/transactions/registration-mechanics/' . request()->event . '/delete-not-scan') }}">
                             @csrf
                             @method('DELETE')
                         </form>
@@ -58,7 +58,8 @@
                             <button class="btn btn-danger btn-delete-all-not-scan">Hapus Semua yang Belum Scan</button>
                         </div>
                         <div class="col-lg-3">
-                            <a href="/trash/registration-mechanics" class="btn btn-primary">Sampah</a>
+                            <a href="/trash/registration-mechanics/{{ request()->event }}"
+                                class="btn btn-primary">Sampah</a>
                         </div>
                     </div>
                     <div class="row">
@@ -148,7 +149,7 @@
                                                 </td>
                                                 <td class="border-bottom-0">
                                                     <a class="mb-0 fw-normal"
-                                                        href="/transactions/registration-mechanics/{{ $registration->id }}">
+                                                        href="/transactions/registrations/{{ $registration->event_slug }}/show/{{ $registration->id }}">
                                                         {{ $registration->user->email }}
                                                     </a>
                                                 </td>
@@ -202,7 +203,7 @@
                                                         <form
                                                             id="form-delete-registration-mechanics-{{ $registration->id }}"
                                                             method="POST"
-                                                            action=" {{ url('/transactions/registration-mechanics/' . $registration->id) }}">
+                                                            action=" {{ url('/transactions/registrations/' . $registration->event_slug . '/delete/' . $registration->id) }}">
                                                             @csrf
                                                             @method('DELETE')
                                                         </form>

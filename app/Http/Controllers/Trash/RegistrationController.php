@@ -13,9 +13,11 @@ use Illuminate\Support\Facades\DB;
 
 class RegistrationController extends Controller
 {
-    public function index()
+    public function index($event)
     {
-        $registrations = Registration::onlyTrashed()->where('fullname', '<>', '');
+        $registrations = Registration::onlyTrashed()
+        ->where('event_slug', $event)
+        ->where('fullname', '<>', '');
         $shifts = Shift::all();
 
         if(request()->has('scan') && request('scan') !== '-') {
@@ -31,10 +33,10 @@ class RegistrationController extends Controller
         return view('trash.registration.index', [ 'registrations' => $registrations, 'shifts' => $shifts]);
     }
 
-    public function restore($id)
+    public function restore($event, $id)
     {
         try {
-            $registration = Registration::onlyTrashed()->where('id', $id)->first();
+            $registration = Registration::onlyTrashed()->where('event_slug', $event)->where('id', $id)->first();
             $shift = Shift::select('quota')->withCount(['registration' => function ($query) use ($registration) {
                 return $query->where('shift_id', $registration->shift->id);
             }])->where('id', $registration->shift->id)->first();
@@ -45,29 +47,29 @@ class RegistrationController extends Controller
 
             Registration::onlyTrashed()->where('id', $id)->restore();
 
-            return redirect()->to('/trash/registrations')->with('success', 'Data Registrasi Berhasil Dipulihkan');
+            return redirect()->to('/trash/registrations/' . $event)->with('success', 'Data Registrasi Berhasil Dipulihkan');
         } catch (\Exception $e) {
-            return redirect()->to('/trash/registrations')->with('error', $e->getMessage());
+            return redirect()->to('/trash/registrations/' . $event)->with('error', $e->getMessage());
         }
     }
 
-    public function destroy($id)
+    public function destroy($event, $id)
     {
         try {
-            DB::transaction(function() use ($id){
-                $registration = Registration::onlyTrashed()->findOrFail($id);
+            DB::transaction(function() use ($id, $event){
+                $registration = Registration::onlyTrashed()->where('event_slug', $event)->findOrFail($id);
                 $registration->services()->detach();
                 $registration->forceDelete();
             });
 
-            return redirect()->to('/trash/registrations')->with('success', 'Data Registrasi Berhasil Dihapus');
+            return redirect()->to('/trash/registrations/' . $event)->with('success', 'Data Registrasi Berhasil Dihapus');
         } catch (\Exception $e) {
-            return redirect()->to('/trash/registrations')->with('error', $e->getMessage());
+            return redirect()->to('/trash/registrations/' . $event)->with('error', $e->getMessage());
         }
     }
 
-    public function export(Request $request)
+    public function export(Request $request, $event)
     {
-        return Excel::download(new RegistrationTrashExport($request->shift, $request->is_scan), 'registrations-deleted.xlsx');
+        return Excel::download(new RegistrationTrashExport($request->shift, $request->is_scan, $event), 'registrations-deleted.xlsx');
     }
 }

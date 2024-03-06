@@ -13,9 +13,9 @@ use Illuminate\Support\Facades\DB;
 
 class RegistrationMechanicController extends Controller
 {
-    public function index()
+    public function index($event)
     {
-        $registrations = RegistrationMechanic::onlyTrashed()->where('fullname', '<>', '');
+        $registrations = RegistrationMechanic::onlyTrashed()->where('event_slug', $event)->where('fullname', '<>', '');
         $shifts = Shift::all();
 
         if(request()->has('scan') && request('scan') !== '-') {
@@ -27,10 +27,10 @@ class RegistrationMechanicController extends Controller
         return view('trash.registration_mechanic.index', [ 'registrations' => $registrations, 'shifts' => $shifts]);
     }
 
-    public function restore($id)
+    public function restore($event, $id)
     {
         try {
-            RegistrationMechanic::onlyTrashed()->where('id', $id)->restore();
+            RegistrationMechanic::onlyTrashed()->where('event_slug', $event)->where('id', $id)->restore();
 
             return redirect()->to('/trash/registration-mechanics')->with('success', 'Data Registrasi Berhasil Dipulihkan');
         } catch (\Exception $e) {
@@ -38,11 +38,11 @@ class RegistrationMechanicController extends Controller
         }
     }
 
-    public function destroy($id)
+    public function destroy($event, $id)
     {
         try {
-            DB::transaction(function() use ($id){
-                $registration = RegistrationMechanic::onlyTrashed()->findOrFail($id);
+            DB::transaction(function() use ($id, $event){
+                $registration = RegistrationMechanic::onlyTrashed()->where('event_slug', $event)->findOrFail($id);
                 $registration->forceDelete();
             });
 
@@ -52,8 +52,8 @@ class RegistrationMechanicController extends Controller
         }
     }
 
-    public function export(Request $request)
+    public function export(Request $request, $event)
     {
-        return Excel::download(new RegistrationMechanicTrashExport($request->is_scan), 'registration-mechanics-deleted.xlsx');
+        return Excel::download(new RegistrationMechanicTrashExport($request->is_scan, $event), 'registration-mechanics-deleted.xlsx');
     }
 }

@@ -22,9 +22,9 @@ class RegistrationController extends Controller
     //     return DataTables::of($masterSO)->addIndexColumn()->toJson();
     // }
 
-    public function index()
+    public function index($event)
     {
-        $registrations = Registration::where('fullname', '<>', '');
+        $registrations = Registration::where('event_slug', $event)->where('fullname', '<>', '');
         $shifts = Shift::all();
 
         if(request()->has('scan') && request('scan') !== '-') {
@@ -40,8 +40,8 @@ class RegistrationController extends Controller
         return view('reports.registration.index', [ 'registrations' => $registrations, 'shifts' => $shifts]);
     }
 
-    public function export(Request $request)
+    public function export(Request $request, $event)
     {
-        return Excel::download(new RegistrationExport($request->shift, $request->is_scan), 'registrations.xlsx');
+        return Excel::download(new RegistrationExport($request->shift, $request->is_scan, $event), 'registrations.xlsx');
     }
 }

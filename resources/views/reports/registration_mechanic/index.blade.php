@@ -49,7 +49,7 @@
                         </form>
                     </div>
                     <div class="row">
-                        <form action="{{ url('/report/export/registration-mechanics') }}">
+                        <form action="{{ url('/report/export/registration-mechanics/' . request()->event) }}">
                             <input type="hidden" name="is_scan"
                                 value="{{ Request::has('scan') ? Request::get('scan') : '-' }}">
                             <button type="submit" class="btn btn-success">Export To Excel</button>

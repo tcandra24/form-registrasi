@@ -9,9 +9,9 @@ use App\Models\Shift;
 
 class RegistrationController extends Controller
 {
-    public function index()
+    public function index($event)
     {
-        $registrations = Registration::where('fullname', '<>', '');
+        $registrations = Registration::where('event_slug', $event)->where('fullname', '<>', '');
         $shifts = Shift::all();
 
         if(request()->has('scan') && request('scan') !== '-') {
@@ -24,36 +24,39 @@ class RegistrationController extends Controller
 
         $registrations = $registrations->paginate(10);
 
-        return view('transactions.registration.index', [ 'registrations' => $registrations, 'shifts' => $shifts]);
+        return view('transactions.registration.index', [
+            'registrations' => $registrations,
+            'shifts' => $shifts
+        ]);
     }
 
-    public function show($id)
+    public function show($event, $id)
     {
-        $registration = Registration::where('id', $id)->first();
+        $registration = Registration::where('event_slug', $event)->where('id', $id)->first();
         return view('transactions.registration.show', [ 'registration' => $registration]);
     }
 
-    public function destroy($id)
+    public function destroy($event, $id)
     {
         try {
-            $registration = Registration::findOrFail($id);
+            $registration = Registration::where('event_slug', $event)->where('id', $id);
             $registration->delete();
 
-            return redirect()->to('/transactions/registrations')->with('success', 'Data Registrasi Berhasil Dihapus');
+            return redirect()->to('/transactions/registrations/' . $event)->with('success', 'Data Registrasi Berhasil Dihapus');
         } catch (\Exception $e) {
-            return redirect()->to('/transactions/registrations')->with('error', $e->getMessage());
+            return redirect()->to('/transactions/registrations/' . $event)->with('error', $e->getMessage());
         }
     }
 
-    public function destroyAllNotScan()
+    public function destroyAllNotScan($event)
     {
         try {
-            $registration = Registration::where('is_scan', false);
+            $registration = Registration::where('event_slug', $event)->where('is_scan', false);
             $registration->delete();
 
-            return redirect()->to('/transactions/registrations')->with('success', 'Semua Data Registrasi yang Tidak Scan Berhasil Dihapus');
+            return redirect()->to('/transactions/registrations/' . $event)->with('success', 'Semua Data Registrasi yang Tidak Scan Berhasil Dihapus');
         } catch (\Exception $e) {
-            return redirect()->to('/transactions/registrations')->with('error', $e->getMessage());
+            return redirect()->to('/transactions/registrations/' . $event)->with('error', $e->getMessage());
         }
     }
 }

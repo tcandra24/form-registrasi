@@ -65,7 +65,7 @@
                         </form>
                     </div>
                     <div class="row">
-                        <form action="{{ url('/report/export/registrations') }}">
+                        <form action="{{ url('/report/export/registrations/' . request()->event) }}">
                             <input type="hidden" name="is_scan"
                                 value="{{ Request::has('scan') ? Request::get('scan') : '-' }}">
                             <input type="hidden" name="shift"

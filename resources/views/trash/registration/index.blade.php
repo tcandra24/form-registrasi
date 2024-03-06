@@ -65,7 +65,7 @@
                         </form>
                     </div>
                     <div class="row">
-                        <form action="{{ url('/trash/registrations/export') }}">
+                        <form action="{{ url('/trash/registrations/' . request()->event . '/export') }}">
                             <input type="hidden" name="is_scan"
                                 value="{{ Request::has('scan') ? Request::get('scan') : '-' }}">
                             <input type="hidden" name="shift"
@@ -227,10 +227,10 @@
                                                 <td class="border-bottom-0">
                                                     <div class="d-flex align-items-center gap-2">
                                                         <button class="btn btn-secondary m-1 btn-restore"
-                                                            data-url="/trash/registrations/restore/{{ $registration->id }}"
+                                                            data-url="/trash/registrations/{{ $registration->event_slug }}/restore/{{ $registration->id }}"
                                                             data-name="{{ $registration->fullname }}">Pulihkan</button>
                                                         <button class="btn btn-danger m-1 btn-delete"
-                                                            data-url="/trash/registrations/delete/{{ $registration->id }}"
+                                                            data-url="/trash/registrations/{{ $registration->event_slug }}/delete/{{ $registration->id }}"
                                                             data-name="{{ $registration->fullname }}">Hapus</button>
                                                     </div>
                                                 </td>
