@@ -13,9 +13,9 @@ use App\Models\Registration AS RegistrationModel;
 
 class RegistrationController extends Controller
 {
-    public function download()
+    public function download($token)
     {
-        $registration = RegistrationModel::where('user_id', Auth::user()->id)->first();
+        $registration = RegistrationModel::where('token', $token)->first();
         $fileName = 'qr-code-' . $registration->token . '.svg';
 
         return response()->download(Storage::path('public/qr-codes/') . $fileName, $fileName);

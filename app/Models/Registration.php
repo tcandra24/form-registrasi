@@ -26,7 +26,9 @@ class Registration extends Model
         'job_id',
         'user_id',
         'event_slug',
-        'token'
+        'token',
+        'is_scan',
+        'scan_date',
     ];
 
     public function user()

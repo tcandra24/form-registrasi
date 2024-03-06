@@ -39,8 +39,8 @@
                         <div class="d-flex flex-column">
                             <img src="{{ asset('/storage/qr-codes/qr-code-' . $registration->token . '.svg') }}"
                                 width="300" height="300" alt="">
-                            <a href="/qr-code/registrations/download" target="_blank" rel=”nofollow”
-                                class="btn btn-primary mt-3">Download</a>
+                            <a href="/qr-code/registrations/download/{{ $registration->token }}" target="_blank"
+                                rel=”nofollow” class="btn btn-primary mt-3">Download</a>
                         </div>
                     </div>
                 </div>
@@ -79,7 +79,7 @@
                             </div>
                             <div class="p-2">
                                 <h4>Jenis Kelamin: </h4>
-                                <p>{{ $registration->gender }}</p>
+                                <p>{{ $registration->gender === 'male' ? 'Laki-Laki' : 'Perempuan' }}</p>
                             </div>
                         </div>
                         <div class="d-flex flex-column">

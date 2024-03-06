@@ -14,7 +14,16 @@ class RegistrationController extends Controller
 {
     public function index($event)
     {
-        $registrations = Registration::where('event_slug', $event)->paginate(10);
+        $registrations = Registration::when(request()->search, function($query){
+            if (request()->filter === 'email') {
+                $query->whereRelation('user', 'name', 'LIKE', '%' . request()->search . '%');
+            } else {
+                $query->where(request()->filter, 'LIKE', '%' . request()->search . '%');
+            }
+        })
+        ->when(request()->scan, function($query){
+            $query->where('is_scan', request()->scan == 'true' ? true : false);
+        })->where('event_slug', $event)->paginate(10);
 
         return view('reports.registration.index', [ 'registrations' => $registrations]);
     }

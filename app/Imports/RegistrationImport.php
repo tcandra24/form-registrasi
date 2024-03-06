@@ -19,6 +19,7 @@ use Carbon\Carbon;
 use App\Models\Registration;
 use App\Models\Event;
 use App\Models\User;
+use App\Models\Job;
 
 class RegistrationImport implements ToCollection, WithHeadingRow
 {
@@ -47,6 +48,8 @@ class RegistrationImport implements ToCollection, WithHeadingRow
                 $registration_max = Registration::withTrashed()->where('event_slug', $event->slug)->max('registration_number') + 1;
                 $registration_number = str_pad($registration_max, 5, '0', STR_PAD_LEFT);
 
+                $job = Job::select('id')->where('name', strtolower($row['pekerjaan']))->first();
+
                 $date = \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject(intval($row['tgl_lahir']))->format('Y-m-d');
                 Registration::create([
                     'fullname' => $row['nama_lengkap'],
@@ -60,7 +63,8 @@ class RegistrationImport implements ToCollection, WithHeadingRow
                     'license_plate' => $row['plat_nomor'] ?? '-',
                     'event_slug' => $event->slug,
                     'user_id' => $user->id,
-                    'token' => $token
+                    'job_id' => $job->id,
+                    'token' => $token,
                 ]);
             }
         }

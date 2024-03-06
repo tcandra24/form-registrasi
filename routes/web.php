@@ -67,6 +67,7 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('/transactions/registrations/{event}',  [ \App\Http\Controllers\Transaction\RegistrationController::class, 'index' ]);
     Route::get('/transactions/registrations-show/{id}',  [ \App\Http\Controllers\Transaction\RegistrationController::class, 'show' ]);
     Route::delete('/transactions/registrations-delete/{id}',  [ \App\Http\Controllers\Transaction\RegistrationController::class, 'destroy' ]);
+    Route::patch('/transactions/registrations-scan/{id}',  [ \App\Http\Controllers\Transaction\RegistrationController::class, 'scanManual' ]);
 
     // Route::delete('/transactions/registration-mechanics/delete-all-not-scan', [\App\Http\Controllers\Transaction\RegistrationMechanicController::class, 'destroyAllNotScan']);
     // Route::resource('/transactions/registration-mechanics/{slug}', \App\Http\Controllers\Transaction\RegistrationMechanicController::class, [ 'only' => ['index', 'show', 'destroy'] ]);
@@ -92,7 +93,7 @@ Route::group(['middleware' => ['auth']], function () {
     Route::resource('/roles', \App\Http\Controllers\RoleController::class, [ 'except' => [ 'show' ] ])
     ->middleware('permission:roles.index|roles.create|roles.edit|roles.delete');
 
-    Route::get('/qr-code/registrations/download', [ \App\Http\Controllers\QrCode\RegistrationController::class, 'download' ]);
+    Route::get('/qr-code/registrations/download/{token}', [ \App\Http\Controllers\QrCode\RegistrationController::class, 'download' ]);
     // Route::get('/qr-code/registration-mechanics/download', [ \App\Http\Controllers\QrCode\RegistrationMechanicController::class, 'download' ]);
 
     Route::get('/term-condition', [ \App\Http\Controllers\TermConditionController::class, 'index']);
