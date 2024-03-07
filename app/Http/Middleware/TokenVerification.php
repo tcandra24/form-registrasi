@@ -16,26 +16,26 @@ class TokenVerification
      */
     public function handle(Request $request, Closure $next)
     {
-        if (!$request->headers->has('Content-Type')){
-            return response()->json([
-                'success' => false,
-                'message' => 'Content Type Header harus application/json'
-            ], 400);
-        }
+        // if (!$request->headers->has('Content-Type')){
+        //     return response()->json([
+        //         'success' => false,
+        //         'message' => 'Content Type Header harus application/json'
+        //     ], 400);
+        // }
 
-        if (!$request->headers->has('X-Token')){
-            return response()->json([
-                'success' => false,
-                'message' => 'Token Header harus diisi'
-            ], 400);
-        }
+        // if (!$request->headers->has('X-Token')){
+        //     return response()->json([
+        //         'success' => false,
+        //         'message' => 'Token Header harus diisi'
+        //     ], 400);
+        // }
 
-        if ($request->header('X-Token') !== 'bd78cb96df3de3e068e22643760e85bbd9a66b3b6ec6b9248d580d011e489143') {
-            return response()->json([
-                'success' => false,
-                'message' => 'Token Transaksi Salah'
-            ], 400);
-        }
+        // if ($request->header('X-Token') !== 'bd78cb96df3de3e068e22643760e85bbd9a66b3b6ec6b9248d580d011e489143') {
+        //     return response()->json([
+        //         'success' => false,
+        //         'message' => 'Token Transaksi Salah'
+        //     ], 400);
+        // }
 
         return $next($request);
     }
