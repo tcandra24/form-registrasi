@@ -28,8 +28,8 @@ class RegistrationController extends Controller
         return view('reports.registration.index', [ 'registrations' => $registrations]);
     }
 
-    public function export($event)
+    public function export(Request $request, $event)
     {
-        return Excel::download(new RegistrationExport($event), 'registrations.xlsx');
+        return Excel::download(new RegistrationExport($request->scan, $event, $request->search, $request->filter), 'registrations.xlsx');
     }
 }

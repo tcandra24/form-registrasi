@@ -52,8 +52,8 @@ class RegistrationController extends Controller
         }
     }
 
-    public function export(Request $request)
+    public function export(Request $request, $event)
     {
-        return Excel::download(new RegistrationTrashExport($request->shift, $request->is_scan), 'registrations-deleted.xlsx');
+        return Excel::download(new RegistrationTrashExport($request->scan, $event, $request->search, $request->filter), 'registrations-deleted.xlsx');
     }
 }

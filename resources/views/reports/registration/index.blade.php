@@ -73,6 +73,10 @@
                     </div>
                     <div class="row">
                         <form action="{{ url('/report/export/registrations/' . request()->event) }}">
+                            <input type="hidden" name="scan" value="{{ request()->scan }}">
+                            <input type="hidden" name="shift" value="{{ request()->shift }}">
+                            <input type="hidden" name="search" value="{{ request()->search }}">
+                            <input type="hidden" name="filter" value="{{ request()->filter }}">
                             <button type="submit" class="btn btn-success">Export To Excel</button>
                         </form>
                     </div>

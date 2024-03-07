@@ -10,30 +10,35 @@ use Maatwebsite\Excel\Concerns\FromView;
 
 class RegistrationTrashExport implements FromView
 {
-    protected $shift;
-    protected $is_scan;
+    protected $scan;
+    protected $event;
+    protected $search;
+    protected $filter;
 
-    public function __construct($shift, $is_scan)
+    public function __construct($scan, $event, $search, $filter)
     {
-        $this->shift = $shift;
-        $this->is_scan = $is_scan;
+        $this->scan = $scan;
+        $this->event = $event;
+        $this->search = $search;
+        $this->filter = $filter;
     }
     /**
     * @return \Illuminate\Support\Collection
     */
     public function view(): View
     {
-        $registrations = Registration::onlyTrashed()->where('fullname', '<>', '');
-
-        if(request()->has('is_scan') && request('is_scan') !== '-') {
-            $registrations = $registrations->where('is_scan', request('is_scan'));
-        }
-
-        if(request()->has('shift') && request('shift') !== '-') {
-            $registrations = $registrations->where('shift_id', request('shift'));
-        }
-
-        $registrations = $registrations->get();
+        $registrations = Registration::onlyTrashed()->where('event_slug', $this->event)
+        ->when($this->search, function($query){
+            if ($this->filter === 'email') {
+                $query->whereRelation('user', 'name', 'LIKE', '%' . $this->search . '%');
+            } else {
+                $query->where($this->filter, 'LIKE', '%' . $this->search . '%');
+            }
+        })
+        ->when($this->scan, function($query){
+            $query->where('is_scan', $this->scan == 'true' ? true : false);
+        })
+        ->where('fullname', '<>', '')->get();
 
         return view('exports.registrations', [
             'registrations' => $registrations,
