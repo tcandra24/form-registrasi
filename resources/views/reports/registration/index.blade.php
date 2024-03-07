@@ -22,7 +22,7 @@
                 <div class="card-body p-4">
                     <h5 class="card-title fw-semibold mb-4">Report Registrasi</h5>
                     <div class="row">
-                        <form action="{{ url('/transactions/registrations/' . request()->event) }}">
+                        <form action="{{ url('/reports/registrations/' . request()->event) }}">
                             <div class="row">
                                 <div class="col-lg-2 d-flex align-items-stretch">
                                     <div class="mb-3 w-100">
