@@ -91,6 +91,18 @@
                                 <h4>Pekerjaan: </h4>
                                 <p>{{ $registration->job->name }}</p>
                             </div>
+                            <div class="p-2">
+                                <h4>Status Kedatangan: </h4>
+                                @if ($registration->is_scan)
+                                    <div class="d-flex align-items-center gap-2">
+                                        <span class="badge bg-primary rounded-3 fw-semibold">Sudah Datang</span>
+                                    </div>
+                                @else
+                                    <div class="d-flex align-items-center gap-2">
+                                        <span class="badge bg-danger rounded-3 fw-semibold">Belum Datang</span>
+                                    </div>
+                                @endif
+                            </div>
                         </div>
                     </div>
                 </div>
