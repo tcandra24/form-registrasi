@@ -45,16 +45,16 @@
                         <table class="table text-nowrap mb-0 align-middle">
                             <thead class="text-dark fs-4">
                                 <tr>
-                                    <th class="border-bottom-0">
+                                    <th class="border-bottom-0 pb-0">
                                         <h6 class="fw-semibold mb-0">No</h6>
                                     </th>
-                                    <th class="border-bottom-0">
+                                    <th class="border-bottom-0 pb-0">
                                         <h6 class="fw-semibold mb-0">Nama</h6>
                                     </th>
-                                    <th class="border-bottom-0">
+                                    <th class="border-bottom-0 pb-0">
                                         <h6 class="fw-semibold mb-0">Ijin</h6>
                                     </th>
-                                    <th class="border-bottom-0">
+                                    <th class="border-bottom-0 pb-0">
                                         <h6 class="fw-semibold mb-0">Action</h6>
                                     </th>
                                 </tr>
@@ -63,13 +63,13 @@
                                 @if (count($roles) > 0)
                                     @foreach ($roles as $key => $role)
                                         <tr>
-                                            <td class="border-bottom-0">
+                                            <td class="border-bottom-0 pb-0">
                                                 <h6 class="fw-semibold mb-0">{{ $roles->firstItem() + $key }}</h6>
                                             </td>
-                                            <td class="border-bottom-0">
+                                            <td class="border-bottom-0 pb-0">
                                                 <p class="mb-0 fw-normal">{{ ucwords($role->name) }}</p>
                                             </td>
-                                            <td class="border-bottom-0">
+                                            <td class="border-bottom-0 pb-0">
                                                 <div class="row">
                                                     <div class="d-flex align-items-center gap-2 flex-wrap"
                                                         style="min-width: 200px;">
@@ -80,7 +80,7 @@
                                                     </div>
                                                 </div>
                                             </td>
-                                            <td class="border-bottom-0">
+                                            <td class="border-bottom-0 pb-0">
                                                 <div class="d-flex align-items-center gap-2">
                                                     <a href="/roles/{{ $role->id }}/edit" class="btn btn-success m-1"><i
                                                             class="ti ti-pencil"></i></a>

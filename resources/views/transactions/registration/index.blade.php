@@ -21,20 +21,43 @@
             <div class="card w-100">
                 <div class="card-body p-4">
                     <h5 class="card-title fw-semibold mb-4">Transaksi Registrasi</h5>
-                    <div class="row">
+                    <div class="row mb-3">
                         <form action="{{ url('/transactions/registrations/' . request()->event) }}">
                             <div class="row">
-                                <div class="col-lg-3 d-flex align-items-stretch">
+                                <div class="col-lg-2 d-flex align-items-stretch">
                                     <div class="mb-3 w-100">
-                                        <label for="scan" class="form-label">Status Scan</label>
+                                        <label for="filter" class="form-label">Filter</label>
+                                        <select name="filter" class="form-control" id="filter"
+                                            aria-describedby="filter">
+                                            <option value="fullname" selected>Nama</option>
+                                            <option value="email" {{ request()->filter === 'email' ? 'selected' : '' }}>
+                                                Email</option>
+                                            <option value="no_hp" {{ request()->filter === 'no_hp' ? 'selected' : '' }}>No.
+                                                HP/Telp</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4 d-flex align-items-stretch">
+                                    <div class="mb-3 w-100">
+                                        <label for="search" class="form-label">Cari</label>
+                                        <input type="text" name="search" id="search" class="form-control"
+                                            value="{{ request()->has('search') ? request()->search : '' }}"
+                                            aria-describedby="search">
+                                    </div>
+                                </div>
+                                <div class="col-lg-2 d-flex align-items-stretch">
+                                    <div class="mb-3 w-100">
+                                        <label for="scan" class="form-label">Status</label>
                                         <select name="scan" class="form-control" id="scan" aria-describedby="scan">
-                                            <option value="-">Semua Status</option>
-                                            <option value="0"
-                                                {{ Request::has('scan') && (int) Request::get('scan') === 0 ? 'selected' : '' }}>
-                                                Belum Scan</option>
-                                            <option value="1"
-                                                {{ Request::has('scan') && (int) Request::get('scan') === 1 ? 'selected' : '' }}>
-                                                Sudah Scan</option>
+                                            <option value="">Semua Status</option>
+                                            <option value="false"
+                                                {{ request()->has('scan') && request()->scan === 'false' ? 'selected' : '' }}>
+                                                Belum Scan
+                                            </option>
+                                            <option value="true"
+                                                {{ request()->has('scan') && request()->scan === 'true' ? 'selected' : '' }}>
+                                                Sudah Scan
+                                            </option>
                                         </select>
                                     </div>
                                 </div>
@@ -42,10 +65,10 @@
                                     <div class="mb-3 w-100">
                                         <label for="siftEnd" class="form-label">Shift</label>
                                         <select name="shift" class="form-control" id="shift" aria-describedby="shift">
-                                            <option value="-">Semua Shift</option>
+                                            <option value="">Semua Shift</option>
                                             @foreach ($shifts as $shift)
                                                 <option value="{{ $shift->id }}"
-                                                    {{ (int) $shift->id === (int) Request::get('shift') ? 'selected' : '' }}>
+                                                    {{ (int) $shift->id === (int) request()->shift ? 'selected' : '' }}>
                                                     {{ \Carbon\Carbon::parse($shift->start)->locale('id')->translatedFormat('l, d F Y') }}
                                                     | {{ substr(substr($shift->start, -8), 0, 5) }} -
                                                     {{ substr(substr($shift->end, -8), 0, 5) }}
@@ -54,9 +77,11 @@
                                         </select>
                                     </div>
                                 </div>
+                            </div>
+                            <div class="row">
                                 <div class="col-lg-6 d-flex align-items-stretch">
                                     <div class="mb-3 w-100">
-                                        <div class="d-flex" style="margin-top: 30px;gap: 10px;">
+                                        <div class="d-flex">
                                             <button type="submit" class="btn btn-primary">Cari</button>
                                         </div>
                                     </div>
@@ -65,17 +90,19 @@
                         </form>
                     </div>
                     <div class="row">
-                        <form id="form-delete-not-scan" method="POST"
-                            action="{{ url('/transactions/registrations/' . request()->event . '/delete-not-scan') }}">
-                            @csrf
-                            @method('DELETE')
-                        </form>
-                        <div class="col-lg-3">
-                            <button class="btn btn-danger btn-delete-all-not-scan">Hapus Semua yang Belum Scan</button>
+                        <div class="col-lg-6 d-flex flex-row">
+                            <form id="form-delete-not-scan" method="POST"
+                                action="{{ url('/transactions/registrations/' . request()->event . '/delete-not-scan') }}">
+                                @csrf
+                                @method('DELETE')
+                            </form>
+                            <button class="btn btn-danger btn-delete-all-not-scan">Hapus Semua</button>
+                            <a href="/trash/registrations/{{ request()->event }}" class="btn btn-primary"
+                                style="margin-left: 5px;">Sampah</a>
                         </div>
-                        <div class="col-lg-3">
-                            <a href="/trash/registrations/{{ request()->event }}" class="btn btn-primary">Sampah</a>
-                        </div>
+                    </div>
+                    <div class="row">
+                        <p class="mt-2"><i>*Tombol "Hapus Semua" akan menghapus data yang belum discan</i></p>
                     </div>
                     <div class="row">
                         @if (Session::has('success'))
@@ -114,49 +141,49 @@
                             <table class="table text-nowrap mb-0 align-middle">
                                 <thead class="text-dark fs-4">
                                     <tr>
-                                        <th class="border-bottom-0">
+                                        <th class="border-bottom-0 pb-0">
                                             <h6 class="fw-semibold mb-0">No</h6>
                                         </th>
-                                        <th class="border-bottom-0">
+                                        <th class="border-bottom-0 pb-0">
                                             <h6 class="fw-semibold mb-0">Nomer Registrasi</h6>
                                         </th>
-                                        <th class="border-bottom-0">
+                                        <th class="border-bottom-0 pb-0">
                                             <h6 class="fw-semibold mb-0">Email</h6>
                                         </th>
-                                        <th class="border-bottom-0">
+                                        <th class="border-bottom-0 pb-0">
                                             <h6 class="fw-semibold mb-0">Nama Lengkap</h6>
                                         </th>
-                                        <th class="border-bottom-0">
+                                        <th class="border-bottom-0 pb-0">
                                             <h6 class="fw-semibold mb-0">Jasa</h6>
                                         </th>
-                                        <th class="border-bottom-0">
+                                        <th class="border-bottom-0 pb-0">
                                             <h6 class="fw-semibold mb-0">Shift</h6>
                                         </th>
-                                        <th class="border-bottom-0">
+                                        <th class="border-bottom-0 pb-0">
                                             <h6 class="fw-semibold mb-0">No Handphone</h6>
                                         </th>
-                                        <th class="border-bottom-0">
+                                        <th class="border-bottom-0 pb-0">
                                             <h6 class="fw-semibold mb-0">Jenis Kendaraan</h6>
                                         </th>
-                                        <th class="border-bottom-0">
+                                        <th class="border-bottom-0 pb-0">
                                             <h6 class="fw-semibold mb-0">Merk/Brand Motor</h6>
                                         </th>
-                                        <th class="border-bottom-0">
+                                        <th class="border-bottom-0 pb-0">
                                             <h6 class="fw-semibold mb-0">Plat Nomor</h6>
                                         </th>
-                                        <th class="border-bottom-0">
+                                        <th class="border-bottom-0 pb-0">
                                             <h6 class="fw-semibold mb-0">Status Scan</h6>
                                         </th>
-                                        <th class="border-bottom-0">
+                                        <th class="border-bottom-0 pb-0">
                                             <h6 class="fw-semibold mb-0">Tanggal Scan</h6>
                                         </th>
-                                        <th class="border-bottom-0">
+                                        <th class="border-bottom-0 pb-0">
                                             <h6 class="fw-semibold mb-0">Pekerjaan</h6>
                                         </th>
-                                        <th class="border-bottom-0">
+                                        <th class="border-bottom-0 pb-0">
                                             <h6 class="fw-semibold mb-0">Tgl Buat</h6>
                                         </th>
-                                        <th class="border-bottom-0">
+                                        <th class="border-bottom-0 pb-0">
                                             <h6 class="fw-semibold mb-0">Action</h6>
                                         </th>
                                     </tr>
@@ -165,25 +192,25 @@
                                     @if (count($registrations) > 0)
                                         @foreach ($registrations as $key => $registration)
                                             <tr>
-                                                <td class="border-bottom-0">
+                                                <td class="border-bottom-0 pb-0">
                                                     <h6 class="fw-semibold mb-0">{{ $registrations->firstItem() + $key }}
                                                     </h6>
                                                 </td>
-                                                <td class="border-bottom-0">
+                                                <td class="border-bottom-0 pb-0">
                                                     <p class="mb-0 fw-normal">
                                                         {{ $registration->registration_number }}
                                                     </p>
                                                 </td>
-                                                <td class="border-bottom-0">
+                                                <td class="border-bottom-0 pb-0">
                                                     <a class="mb-0 fw-normal"
                                                         href="/transactions/registrations/{{ $registration->event_slug }}/show/{{ $registration->id }}">
                                                         {{ $registration->user->email }}
                                                     </a>
                                                 </td>
-                                                <td class="border-bottom-0">
+                                                <td class="border-bottom-0 pb-0">
                                                     <p class="mb-0 fw-normal">{{ $registration->fullname }}</p>
                                                 </td>
-                                                <td class="border-bottom-0">
+                                                <td class="border-bottom-0 pb-0">
                                                     <div class="row">
                                                         <div class="d-flex align-items-center gap-2 flex-wrap"
                                                             style="min-width: 200px;">
@@ -194,7 +221,7 @@
                                                         </div>
                                                     </div>
                                                 </td>
-                                                <td class="border-bottom-0">
+                                                <td class="border-bottom-0 pb-0">
                                                     <div class="d-flex flex-column">
                                                         <p class="mb-0">
                                                             {{ \Carbon\Carbon::parse($registration->shift->start)->locale('id')->translatedFormat('l, d F Y') }}
@@ -205,19 +232,19 @@
                                                         </p>
                                                     </div>
                                                 </td>
-                                                <td class="border-bottom-0">
+                                                <td class="border-bottom-0 pb-0">
                                                     <p class="mb-0 fw-normal">{{ $registration->no_hp }}</p>
                                                 </td>
-                                                <td class="border-bottom-0">
+                                                <td class="border-bottom-0 pb-0">
                                                     <p class="mb-0 fw-normal">{{ $registration->vehicle_type }}</p>
                                                 </td>
-                                                <td class="border-bottom-0">
+                                                <td class="border-bottom-0 pb-0">
                                                     <p class="mb-0 fw-normal">{{ $registration->manufacture->name }}</p>
                                                 </td>
-                                                <td class="border-bottom-0">
+                                                <td class="border-bottom-0 pb-0">
                                                     <p class="mb-0 fw-normal">{{ $registration->license_plate }}</p>
                                                 </td>
-                                                <td class="border-bottom-0">
+                                                <td class="border-bottom-0 pb-0">
                                                     @if ($registration->is_scan)
                                                         <div class="d-flex align-items-center gap-2">
                                                             <span class="badge bg-primary rounded-3 fw-semibold">Sudah
@@ -230,13 +257,13 @@
                                                         </div>
                                                     @endif
                                                 </td>
-                                                <td class="border-bottom-0">
+                                                <td class="border-bottom-0 pb-0">
                                                     <p class="mb-0 fw-normal">{{ $registration->scan_date ?? '-' }}</p>
                                                 </td>
-                                                <td class="border-bottom-0">
+                                                <td class="border-bottom-0 pb-0">
                                                     <p class="mb-0 fw-normal">{{ $registration->job->name }}</p>
                                                 </td>
-                                                <td class="border-bottom-0">
+                                                <td class="border-bottom-0 pb-0">
                                                     <div class="d-flex flex-column">
                                                         <p class="mb-0">
                                                             {{ \Carbon\Carbon::parse($registration->created_at)->locale('id')->translatedFormat('l, d F Y') }}
@@ -246,7 +273,7 @@
                                                         </p>
                                                     </div>
                                                 </td>
-                                                <td class="border-bottom-0">
+                                                <td class="border-bottom-0 pb-0">
                                                     <div class="d-flex align-items-center gap-2">
                                                         <button class="btn btn-danger m-1 btn-delete"
                                                             data-id="{{ $registration->id }}"

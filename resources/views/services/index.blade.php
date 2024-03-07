@@ -45,19 +45,19 @@
                         <table class="table text-nowrap mb-0 align-middle">
                             <thead class="text-dark fs-4">
                                 <tr>
-                                    <th class="border-bottom-0">
+                                    <th class="border-bottom-0 pb-0">
                                         <h6 class="fw-semibold mb-0">No</h6>
                                     </th>
-                                    <th class="border-bottom-0">
+                                    <th class="border-bottom-0 pb-0">
                                         <h6 class="fw-semibold mb-0">Nama</h6>
                                     </th>
-                                    <th class="border-bottom-0">
+                                    <th class="border-bottom-0 pb-0">
                                         <h6 class="fw-semibold mb-0">Keterangan</h6>
                                     </th>
-                                    <th class="border-bottom-0">
+                                    <th class="border-bottom-0 pb-0">
                                         <h6 class="fw-semibold mb-0">Status</h6>
                                     </th>
-                                    <th class="border-bottom-0">
+                                    <th class="border-bottom-0 pb-0">
                                         <h6 class="fw-semibold mb-0">Action</h6>
                                     </th>
                                 </tr>
@@ -66,16 +66,16 @@
                                 @if (count($services) > 0)
                                     @foreach ($services as $key => $service)
                                         <tr>
-                                            <td class="border-bottom-0">
+                                            <td class="border-bottom-0 pb-0">
                                                 <h6 class="fw-semibold mb-0">{{ $services->firstItem() + $key }}</h6>
                                             </td>
-                                            <td class="border-bottom-0">
+                                            <td class="border-bottom-0 pb-0">
                                                 <p class="mb-0 fw-normal">{{ $service->name }}</p>
                                             </td>
-                                            <td class="border-bottom-0">
+                                            <td class="border-bottom-0 pb-0">
                                                 <p class="mb-0 fw-normal">{{ $service->description }}</p>
                                             </td>
-                                            <td class="border-bottom-0">
+                                            <td class="border-bottom-0 pb-0">
                                                 @if ($service->is_active)
                                                     <div class="d-flex align-items-center gap-2">
                                                         <span class="badge bg-primary rounded-3 fw-semibold">Aktif</span>
@@ -86,7 +86,7 @@
                                                     </div>
                                                 @endif
                                             </td>
-                                            <td class="border-bottom-0">
+                                            <td class="border-bottom-0 pb-0">
                                                 <div class="d-flex align-items-center gap-2">
                                                     <a href="/services/{{ $service->id }}/edit"
                                                         class="btn btn-success m-1"><i class="ti ti-pencil"></i></a>

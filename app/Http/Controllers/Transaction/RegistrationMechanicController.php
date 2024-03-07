@@ -10,13 +10,17 @@ class RegistrationMechanicController extends Controller
 {
     public function index($event)
     {
-        $registrations = RegistrationMechanic::where('event_slug', $event)->where('fullname', '<>', '');
-
-        if(request()->has('scan') && request('scan') !== '-') {
-            $registrations = $registrations->where('is_scan', request('scan'));
-        }
-
-        $registrations = $registrations->paginate(10);
+        $registrations = RegistrationMechanic::when(request()->search, function($query){
+            if (request()->filter === 'email') {
+                $query->whereRelation('user', 'name', 'LIKE', '%' . request()->search . '%');
+            } else {
+                $query->where(request()->filter, 'LIKE', '%' . request()->search . '%');
+            }
+        })
+        ->when(request()->scan, function($query){
+            $query->where('is_scan', request()->scan == 'true' ? true : false);
+        })
+        ->where('event_slug', $event)->where('fullname', '<>', '')->paginate(10);
 
         return view('transactions.registration_mechanic.index', [
             'registrations' => $registrations

@@ -70,9 +70,9 @@ Route::group(['middleware' => ['auth']], function () {
     Route::delete('/transactions/registrations/{event}/delete-not-scan', [\App\Http\Controllers\Transaction\RegistrationController::class, 'destroyAllNotScan']);
 
 
-    Route::get('/transactions/registration-mechanics/{event}',  [ \App\Http\Controllers\Transaction\RegistrationController::class, 'index' ]);
-    Route::get('/transactions/registration-mechanics/{event}/show/{id}',  [ \App\Http\Controllers\Transaction\RegistrationController::class, 'show' ]);
-    Route::delete('/transactions/registration-mechanics/{event}/delete/{id}',  [ \App\Http\Controllers\Transaction\RegistrationController::class, 'destroy' ]);
+    Route::get('/transactions/registration-mechanics/{event}',  [ \App\Http\Controllers\Transaction\RegistrationMechanicController::class, 'index' ]);
+    Route::get('/transactions/registration-mechanics/{event}/show/{id}',  [ \App\Http\Controllers\Transaction\RegistrationMechanicController::class, 'show' ]);
+    Route::delete('/transactions/registration-mechanics/{event}/delete/{id}',  [ \App\Http\Controllers\Transaction\RegistrationMechanicController::class, 'destroy' ]);
     Route::delete('/transactions/registration-mechanics/{event}/delete-not-scan', [\App\Http\Controllers\Transaction\RegistrationMechanicController::class, 'destroyAllNotScan']);
 
     Route::get('/trash/registrations/{event}',  [ \App\Http\Controllers\Trash\RegistrationController::class, 'index' ]);

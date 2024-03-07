@@ -44,25 +44,25 @@
                         <table class="table text-nowrap mb-0 align-middle">
                             <thead class="text-dark fs-4">
                                 <tr>
-                                    <th class="border-bottom-0">
+                                    <th class="border-bottom-0 pb-0"">
                                         <h6 class="fw-semibold mb-0">No</h6>
                                     </th>
-                                    <th class="border-bottom-0">
+                                    <th class="border-bottom-0 pb-0"">
                                         <h6 class="fw-semibold mb-0">Gambar</h6>
                                     </th>
-                                    <th class="border-bottom-0">
+                                    <th class="border-bottom-0 pb-0"">
                                         <h6 class="fw-semibold mb-0">Nama</h6>
                                     </th>
-                                    <th class="border-bottom-0">
+                                    <th class="border-bottom-0 pb-0"">
                                         <h6 class="fw-semibold mb-0">Keterangan</h6>
                                     </th>
-                                    <th class="border-bottom-0">
+                                    <th class="border-bottom-0 pb-0"">
                                         <h6 class="fw-semibold mb-0">Link</h6>
                                     </th>
-                                    <th class="border-bottom-0">
+                                    <th class="border-bottom-0 pb-0"">
                                         <h6 class="fw-semibold mb-0">Status</h6>
                                     </th>
-                                    <th class="border-bottom-0">
+                                    <th class="border-bottom-0 pb-0"">
                                         <h6 class="fw-semibold mb-0">Action</h6>
                                     </th>
                                 </tr>
@@ -71,32 +71,32 @@
                                 @if (count($events) > 0)
                                     @foreach ($events as $key => $event)
                                         <tr>
-                                            <td class="border-bottom-0">
+                                            <td class="border-bottom-0 pb-0"">
                                                 <h6 class="fw-semibold mb-0">{{ $events->firstItem() + $key }}</h6>
                                             </td>
-                                            <td class="border-bottom-0">
+                                            <td class="border-bottom-0 pb-0"">
                                                 <a href="{{ $event->image }}" target="_blank">
                                                     <img class="img-thumbnail rounded w-50" loading="lazy"
                                                         src="{{ $event->image }}" alt="{{ $event->name }}">
                                                 </a>
                                             </td>
-                                            <td class="border-bottom-0">
+                                            <td class="border-bottom-0 pb-0"">
                                                 <p class="mb-0 fw-normal">{{ $event->name }}</p>
                                             </td>
-                                            <td class="border-bottom-0">
+                                            <td class="border-bottom-0 pb-0"">
                                                 <p class="mb-0 fw-normal">{{ $event->description }}</p>
                                             </td>
-                                            <td class="border-bottom-0">
+                                            <td class="border-bottom-0 pb-0"">
                                                 <p class="mb-0 fw-normal">{{ $event->link }}</p>
                                             </td>
-                                            <td class="border-bottom-0">
+                                            <td class="border-bottom-0 pb-0"">
                                                 @if ($event->is_active)
                                                     <span class="badge bg-primary rounded-3 fw-semibold">Aktif</span>
                                                 @else
                                                     <span class="badge bg-danger rounded-3 fw-semibold">Tidak Aktif</span>
                                                 @endif
                                             </td>
-                                            <td class="border-bottom-0">
+                                            <td class="border-bottom-0 pb-0"">
                                                 <div class="d-flex align-items-center gap-2">
                                                     <a href="/events/{{ $event->id }}/edit"
                                                         class="btn btn-success m-1"><i class="ti ti-pencil"></i></a>

@@ -8,13 +8,17 @@ use Illuminate\Contracts\View\View;
 
 class RegistrationMechanicTrashExport implements FromView
 {
-    protected $is_scan;
+    protected $scan;
     protected $event;
+    protected $search;
+    protected $filter;
 
-    public function __construct($is_scan, $event)
+    public function __construct($scan, $event, $search, $filter)
     {
-        $this->is_scan = $is_scan;
+        $this->scan = $scan;
         $this->event = $event;
+        $this->search = $search;
+        $this->filter = $filter;
     }
 
     /**
@@ -22,13 +26,18 @@ class RegistrationMechanicTrashExport implements FromView
     */
     public function view(): View
     {
-        $registrations = RegistrationMechanic::onlyTrashed()->where('event_slug', $this->event)->where('fullname', '<>', '');
-
-        if(request()->has('is_scan') && request('is_scan') !== '-') {
-            $registrations = $registrations->where('is_scan', request('is_scan'));
-        }
-
-        $registrations = $registrations->get();
+        $registrations = RegistrationMechanic::onlyTrashed()
+        ->when($this->search, function($query){
+            if ($this->filter === 'email') {
+                $query->whereRelation('user', 'name', 'LIKE', '%' . $this->search . '%');
+            } else {
+                $query->where($this->filter, 'LIKE', '%' . $this->search . '%');
+            }
+        })
+        ->when($this->scan, function($query){
+            $query->where('is_scan', $this->scan == 'true' ? true : false);
+        })
+        ->where('event_slug', $this->event)->where('fullname', '<>', '')->get();
 
         return view('exports.registration-mechanic', [
             'registrations' => $registrations,

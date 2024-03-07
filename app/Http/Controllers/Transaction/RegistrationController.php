@@ -11,18 +11,21 @@ class RegistrationController extends Controller
 {
     public function index($event)
     {
-        $registrations = Registration::where('event_slug', $event)->where('fullname', '<>', '');
+        $registrations = Registration::when(request()->search, function($query){
+            if (request()->filter === 'email') {
+                $query->whereRelation('user', 'name', 'LIKE', '%' . request()->search . '%');
+            } else {
+                $query->where(request()->filter, 'LIKE', '%' . request()->search . '%');
+            }
+        })
+        ->when(request()->scan, function($query){
+            $query->where('is_scan', request()->scan == 'true' ? true : false);
+        })
+        ->when(request()->shift, function($query){
+            $query->where('shift_id', request()->shift);
+        })
+        ->where('event_slug', $event)->where('fullname', '<>', '')->paginate(10);
         $shifts = Shift::all();
-
-        if(request()->has('scan') && request('scan') !== '-') {
-            $registrations = $registrations->where('is_scan', request('scan'));
-        }
-
-        if(request()->has('shift') && request('shift') !== '-') {
-            $registrations = $registrations->where('shift_id', request('shift'));
-        }
-
-        $registrations = $registrations->paginate(10);
 
         return view('transactions.registration.index', [
             'registrations' => $registrations,

@@ -15,16 +15,20 @@ class RegistrationMechanicController extends Controller
 {
     public function index($event)
     {
-        $registrations = RegistrationMechanic::onlyTrashed()->where('event_slug', $event)->where('fullname', '<>', '');
-        $shifts = Shift::all();
+        $registrations = RegistrationMechanic::onlyTrashed()
+        ->when(request()->search, function($query){
+            if (request()->filter === 'email') {
+                $query->whereRelation('user', 'name', 'LIKE', '%' . request()->search . '%');
+            } else {
+                $query->where(request()->filter, 'LIKE', '%' . request()->search . '%');
+            }
+        })
+        ->when(request()->scan, function($query){
+            $query->where('is_scan', request()->scan == 'true' ? true : false);
+        })
+        ->where('event_slug', $event)->where('fullname', '<>', '')->paginate(10);
 
-        if(request()->has('scan') && request('scan') !== '-') {
-            $registrations = $registrations->where('is_scan', request('scan'));
-        }
-
-        $registrations = $registrations->paginate(10);
-
-        return view('trash.registration_mechanic.index', [ 'registrations' => $registrations, 'shifts' => $shifts]);
+        return view('trash.registration_mechanic.index', [ 'registrations' => $registrations]);
     }
 
     public function restore($event, $id)
@@ -54,6 +58,6 @@ class RegistrationMechanicController extends Controller
 
     public function export(Request $request, $event)
     {
-        return Excel::download(new RegistrationMechanicTrashExport($request->is_scan, $event), 'registration-mechanics-deleted.xlsx');
+        return Excel::download(new RegistrationMechanicTrashExport($request->is_scan, $event, $request->search, $request->filter), 'registration-mechanics-deleted.xlsx');
     }
 }

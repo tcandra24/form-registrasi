@@ -44,28 +44,28 @@
                         <table class="table text-nowrap mb-0 align-middle">
                             <thead class="text-dark fs-4">
                                 <tr>
-                                    <th class="border-bottom-0">
+                                    <th class="border-bottom-0 pb-0">
                                         <h6 class="fw-semibold mb-0">No</h6>
                                     </th>
-                                    <th class="border-bottom-0">
+                                    <th class="border-bottom-0 pb-0">
                                         <h6 class="fw-semibold mb-0">Nama</h6>
                                     </th>
-                                    <th class="border-bottom-0">
+                                    <th class="border-bottom-0 pb-0">
                                         <h6 class="fw-semibold mb-0">Awal</h6>
                                     </th>
-                                    <th class="border-bottom-0">
+                                    <th class="border-bottom-0 pb-0">
                                         <h6 class="fw-semibold mb-0">Akhir</h6>
                                     </th>
-                                    <th class="border-bottom-0">
+                                    <th class="border-bottom-0 pb-0">
                                         <h6 class="fw-semibold mb-0">Kuota</h6>
                                     </th>
-                                    <th class="border-bottom-0">
+                                    <th class="border-bottom-0 pb-0">
                                         <h6 class="fw-semibold mb-0">Sisa</h6>
                                     </th>
-                                    <th class="border-bottom-0">
+                                    <th class="border-bottom-0 pb-0">
                                         <h6 class="fw-semibold mb-0">Status</h6>
                                     </th>
-                                    <th class="border-bottom-0">
+                                    <th class="border-bottom-0 pb-0">
                                         <h6 class="fw-semibold mb-0">Action</h6>
                                     </th>
                                 </tr>
@@ -74,26 +74,26 @@
                                 @if (count($shifts) > 0)
                                     @foreach ($shifts as $key => $shift)
                                         <tr>
-                                            <td class="border-bottom-0">
+                                            <td class="border-bottom-0 pb-0">
                                                 <h6 class="fw-semibold mb-0">{{ $shifts->firstItem() + $key }}</h6>
                                             </td>
-                                            <td class="border-bottom-0">
+                                            <td class="border-bottom-0 pb-0">
                                                 <p class="mb-0 fw-normal">{{ $shift->name }}</p>
                                             </td>
-                                            <td class="border-bottom-0">
+                                            <td class="border-bottom-0 pb-0">
                                                 <p class="mb-0 fw-normal">{{ $shift->start }}</p>
                                             </td>
-                                            <td class="border-bottom-0">
+                                            <td class="border-bottom-0 pb-0">
                                                 <p class="mb-0 fw-normal">{{ $shift->end }}</p>
                                             </td>
-                                            <td class="border-bottom-0">
+                                            <td class="border-bottom-0 pb-0">
                                                 <p class="mb-0 fw-normal">{{ $shift->quota }}</p>
                                             </td>
-                                            <td class="border-bottom-0">
+                                            <td class="border-bottom-0 pb-0">
                                                 <p class="mb-0 fw-normal">{{ $shift->quota - $shift->registration_count }}
                                                 </p>
                                             </td>
-                                            <td class="border-bottom-0">
+                                            <td class="border-bottom-0 pb-0">
                                                 @if ($shift->is_active)
                                                     <div class="d-flex align-items-center gap-2">
                                                         <span class="badge bg-primary rounded-3 fw-semibold">Aktif</span>
@@ -104,7 +104,7 @@
                                                     </div>
                                                 @endif
                                             </td>
-                                            <td class="border-bottom-0">
+                                            <td class="border-bottom-0 pb-0">
                                                 <div class="d-flex align-items-center gap-2">
                                                     <a href="/shifts/{{ $shift->id }}/edit"
                                                         class="btn btn-success m-1"><i class="ti ti-pencil"></i></a>
