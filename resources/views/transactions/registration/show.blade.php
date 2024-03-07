@@ -52,7 +52,7 @@
                         </div>
                         <div class="p-2">
                             <h4>Tanggal Lahir: </h4>
-                            <p>{{ $registration->date_birth }}</p>
+                            <p>{{ Carbon\Carbon::parse($registration->date_birth)->format('d-m-Y') }}</p>
                         </div>
                         <div class="p-2">
                             <h4>Jenis Kelamin: </h4>

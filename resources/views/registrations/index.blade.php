@@ -75,7 +75,7 @@
                             </div>
                             <div class="p-2">
                                 <h4>Tanggal Lahir: </h4>
-                                <p>{{ $registration->date_birth }}</p>
+                                <p>{{ Carbon\Carbon::parse($registration->date_birth)->format('d-m-Y') }}</p>
                             </div>
                             <div class="p-2">
                                 <h4>Jenis Kelamin: </h4>
@@ -156,6 +156,9 @@
                                 @error('date_birth')
                                     <span class="text-danger">{{ $message }}</span>
                                 @enderror
+                                <span class="text-gray fs-2">
+                                    <i>*Contoh: 13-12-1999, 23-06-1995, 01-12-2000 dll.</i>
+                                </span>
                             </div>
                         </div>
                         <div class="col-lg-6 d-flex align-items-stretch">
@@ -275,10 +278,10 @@
     </script>
 
     <script>
-        $('#dateBirth').bootstrapMaterialDatePicker({
-            weekStart: 1,
-            time: false,
-            format: 'YYYY/MM/DD',
-        });
+        // $('#dateBirth').bootstrapMaterialDatePicker({
+        //    weekStart: 1,
+        //    time: false,
+        //    format: 'YYYY/MM/DD',
+        //});
     </script>
 @endsection
