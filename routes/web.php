@@ -41,19 +41,19 @@ Route::group(['middleware' => ['auth']], function () {
     ->middleware('permission:dashboard.index')->name('dashboard');
 
     Route::resource('/jobs', \App\Http\Controllers\JobController::class, [ 'except' => ['show'] ])
-    ->middleware('permission:jobs.index|jobs.create|jobs.edit|jobs.delete');
+    ->middleware('permission:master.jobs.index|master.jobs.create|master.jobs.edit|master.jobs.delete');
 
     Route::resource('/shifts', \App\Http\Controllers\ShiftController::class, [ 'except' => ['show'] ])
-    ->middleware('permission:shifts.index|shifts.create|shifts.edit|shifts.delete');
+    ->middleware('permission:master.shifts.index|master.shifts.create|master.shifts.edit|master.shifts.delete');
 
     Route::resource('/manufactures', \App\Http\Controllers\ManufactureController::class, [ 'except' => ['show'] ])
-    ->middleware('permission:manufactures.index|manufactures.create|manufactures.edit|manufactures.delete');
+    ->middleware('permission:master.manufactures.index|master.manufactures.create|master.manufactures.edit|master.manufactures.delete');
 
     Route::resource('/events', \App\Http\Controllers\EventController::class, [ 'except' => ['show'] ])
-    ->middleware('permission:events.index|events.create|events.edit|events.delete');
+    ->middleware('permission:master.events.index|master.events.create|master.events.edit|master.events.delete');
 
     Route::resource('/services', \App\Http\Controllers\ServiceController::class, [ 'except' => ['show'] ])
-    ->middleware('permission:services.index|services.create|services.edit|services.delete');
+    ->middleware('permission:master.services.index|master.services.create|master.services.edit|master.services.delete');
 
     Route::get('/registrations/import', [ \App\Http\Controllers\RegistrationController::class, 'import' ]);
     Route::post('/registrations/import', [ \App\Http\Controllers\RegistrationController::class, 'saveImport' ]);
@@ -63,38 +63,42 @@ Route::group(['middleware' => ['auth']], function () {
 
     Route::get('/transactions', [ \App\Http\Controllers\Transaction\IndexController::class, 'index' ]);
 
+    Route::group(['prefix' => '/transactions/registrations','middleware' => ['permission:transaction.registrations.index']], function() {
+        Route::get('/{event}',  [ \App\Http\Controllers\Transaction\RegistrationController::class, 'index' ]);
+        Route::get('/{event}/show/{id}',  [ \App\Http\Controllers\Transaction\RegistrationController::class, 'show' ]);
+        Route::delete('/{event}/delete/{id}',  [ \App\Http\Controllers\Transaction\RegistrationController::class, 'destroy' ]);
+        Route::delete('/{event}/delete-not-scan', [\App\Http\Controllers\Transaction\RegistrationController::class, 'destroyAllNotScan']);
+    });
 
-    Route::get('/transactions/registrations/{event}',  [ \App\Http\Controllers\Transaction\RegistrationController::class, 'index' ]);
-    Route::get('/transactions/registrations/{event}/show/{id}',  [ \App\Http\Controllers\Transaction\RegistrationController::class, 'show' ]);
-    Route::delete('/transactions/registrations/{event}/delete/{id}',  [ \App\Http\Controllers\Transaction\RegistrationController::class, 'destroy' ]);
-    Route::delete('/transactions/registrations/{event}/delete-not-scan', [\App\Http\Controllers\Transaction\RegistrationController::class, 'destroyAllNotScan']);
+    Route::group(['prefix' => '/transactions/registration-mechanics','middleware' => ['permission:transaction.registrations.index']], function() {
+        Route::get('/{event}',  [ \App\Http\Controllers\Transaction\RegistrationMechanicController::class, 'index' ]);
+        Route::get('/{event}/show/{id}',  [ \App\Http\Controllers\Transaction\RegistrationMechanicController::class, 'show' ]);
+        Route::delete('/{event}/delete/{id}',  [ \App\Http\Controllers\Transaction\RegistrationMechanicController::class, 'destroy' ]);
+        Route::delete('/{event}/delete-not-scan', [\App\Http\Controllers\Transaction\RegistrationMechanicController::class, 'destroyAllNotScan']);
+    });
 
+    Route::group(['prefix' => '/trash/registrations','middleware' => ['permission:transaction.registrations.index']], function() {
+        Route::get('/{event}',  [ \App\Http\Controllers\Trash\RegistrationController::class, 'index' ]);
+        Route::get('/{event}/restore/{id}',  [ \App\Http\Controllers\Trash\RegistrationController::class, 'restore' ]);
+        Route::get('/{event}/delete/{id}',  [ \App\Http\Controllers\Trash\RegistrationController::class, 'destroy' ]);
+        Route::get('/{event}/export',  [ \App\Http\Controllers\Trash\RegistrationController::class, 'export' ]);
+    });
 
-    Route::get('/transactions/registration-mechanics/{event}',  [ \App\Http\Controllers\Transaction\RegistrationMechanicController::class, 'index' ]);
-    Route::get('/transactions/registration-mechanics/{event}/show/{id}',  [ \App\Http\Controllers\Transaction\RegistrationMechanicController::class, 'show' ]);
-    Route::delete('/transactions/registration-mechanics/{event}/delete/{id}',  [ \App\Http\Controllers\Transaction\RegistrationMechanicController::class, 'destroy' ]);
-    Route::delete('/transactions/registration-mechanics/{event}/delete-not-scan', [\App\Http\Controllers\Transaction\RegistrationMechanicController::class, 'destroyAllNotScan']);
+    Route::group(['prefix' => '/trash/registration-mechanics','middleware' => ['permission:transaction.registrations.index']], function() {
+        Route::get('/{event}',  [ \App\Http\Controllers\Trash\RegistrationMechanicController::class, 'index' ]);
+        Route::get('/{event}/restore/{id}',  [ \App\Http\Controllers\Trash\RegistrationMechanicController::class, 'restore' ]);
+        Route::get('/{event}/delete/{id}',  [ \App\Http\Controllers\Trash\RegistrationMechanicController::class, 'destroy' ]);
+        Route::get('/{event}/export',  [ \App\Http\Controllers\Trash\RegistrationMechanicController::class, 'export' ]);
+    });
 
-    Route::get('/trash/registrations/{event}',  [ \App\Http\Controllers\Trash\RegistrationController::class, 'index' ]);
-    Route::get('/trash/registrations/{event}/restore/{id}',  [ \App\Http\Controllers\Trash\RegistrationController::class, 'restore' ]);
-    Route::get('/trash/registrations/{event}/delete/{id}',  [ \App\Http\Controllers\Trash\RegistrationController::class, 'destroy' ]);
-
-    Route::get('/trash/registrations/{event}/export',  [ \App\Http\Controllers\Trash\RegistrationController::class, 'export' ]);
-
-    Route::get('/trash/registration-mechanics/{event}',  [ \App\Http\Controllers\Trash\RegistrationMechanicController::class, 'index' ]);
-    Route::get('/trash/registration-mechanics/{event}/restore/{id}',  [ \App\Http\Controllers\Trash\RegistrationMechanicController::class, 'restore' ]);
-    Route::get('/trash/registration-mechanics/{event}/delete/{id}',  [ \App\Http\Controllers\Trash\RegistrationMechanicController::class, 'destroy' ]);
-
-    Route::get('/trash/registration-mechanics/{event}/export',  [ \App\Http\Controllers\Trash\RegistrationMechanicController::class, 'export' ]);
-
-    Route::get('/users', [ \App\Http\Controllers\UserController::class, 'index' ])
-    ->middleware('permission:users.index');
+    Route::resource('/users', \App\Http\Controllers\UserController::class)
+    ->middleware('permission:setting.users.index|setting.users.create|setting.users.edit|setting.users.delete');
 
     Route::get('/permissions', [ \App\Http\Controllers\PermissionController::class, 'index' ])
-    ->middleware('permission:permissions.index');
+    ->middleware('permission:setting.permissions.index');
 
     Route::resource('/roles', \App\Http\Controllers\RoleController::class, [ 'except' => [ 'show' ] ])
-    ->middleware('permission:roles.index|roles.create|roles.edit|roles.delete');
+    ->middleware('permission:setting.roles.index|setting.roles.create|setting.roles.edit|setting.roles.delete');
 
     Route::get('/qr-code/registrations/download', [ \App\Http\Controllers\QrCode\RegistrationController::class, 'download' ]);
     Route::get('/qr-code/registration-mechanics/download', [ \App\Http\Controllers\QrCode\RegistrationMechanicController::class, 'download' ]);
@@ -103,17 +107,17 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('/term-condition', [ \App\Http\Controllers\TermConditionController::class, 'index']);
 
     Route::get('/reports', [ \App\Http\Controllers\Report\IndexController::class, 'index' ])
-    ->middleware('permission:report_registrations.index');
+    ->middleware('permission:report.registrations.index');
 
     Route::get('/report/export/registrations/{event}', [\App\Http\Controllers\Report\RegistrationController::class, 'export'])
-    ->middleware('permission:report_registrations.index');
+    ->middleware('permission:report.registrations.index');
     Route::get('/report/registrations/{event}', [ \App\Http\Controllers\Report\RegistrationController::class, 'index' ])
-    ->middleware('permission:report_registrations.index');
+    ->middleware('permission:report.registrations.index');
 
     Route::get('/report/export/registration-mechanics/{event}', [\App\Http\Controllers\Report\RegistrationMechanicController::class, 'export'])
-    ->middleware('permission:report_registrations.index');
+    ->middleware('permission:report.registrations.index');
     Route::get('/report/registration-mechanics/{event}', [ \App\Http\Controllers\Report\RegistrationMechanicController::class, 'index' ])
-    ->middleware('permission:report_registrations.index');
+    ->middleware('permission:report.registrations.index');
 
     Route::post('/logout', [App\Http\Controllers\AuthController::class, 'logout'])->name('logout');
 });

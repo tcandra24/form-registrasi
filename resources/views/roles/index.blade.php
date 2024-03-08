@@ -10,7 +10,9 @@
             <div class="card w-100">
                 <div class="card-body p-4">
                     <h5 class="card-title fw-semibold mb-4">Daftar Role</h5>
-                    <a href="/roles/create" class="btn btn-primary m-1">Tambah</a>
+                    @can('setting.roles.create')
+                        <a href="/roles/create" class="btn btn-primary m-1">Tambah</a>
+                    @endcan
                     @if (Session::has('success'))
                         <div class="alert alert-success alert-dismissible fade show m-2">
                             <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="2"
@@ -82,8 +84,11 @@
                                             </td>
                                             <td class="border-bottom-0 pb-0">
                                                 <div class="d-flex align-items-center gap-2">
-                                                    <a href="/roles/{{ $role->id }}/edit" class="btn btn-success m-1"><i
-                                                            class="ti ti-pencil"></i></a>
+                                                    @can('setting.roles.edit')
+                                                        <a href="/roles/{{ $role->id }}/edit" class="btn btn-success m-1">
+                                                            <i class="ti ti-pencil"></i>
+                                                        </a>
+                                                    @endcan
                                                 </div>
                                             </td>
                                         </tr>

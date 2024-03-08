@@ -10,7 +10,9 @@
             <div class="card w-100">
                 <div class="card-body p-4">
                     <h5 class="card-title fw-semibold mb-4">Daftar Jasa</h5>
-                    <a href="/services/create" class="btn btn-primary m-1">Tambah</a>
+                    @can('master.services.create')
+                        <a href="/services/create" class="btn btn-primary m-1">Tambah</a>
+                    @endcan
                     @if (Session::has('success'))
                         <div class="alert alert-success alert-dismissible fade show m-2">
                             <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="2"
@@ -88,18 +90,24 @@
                                             </td>
                                             <td class="border-bottom-0 pb-0">
                                                 <div class="d-flex align-items-center gap-2">
-                                                    <a href="/services/{{ $service->id }}/edit"
-                                                        class="btn btn-success m-1"><i class="ti ti-pencil"></i></a>
-                                                    <button class="btn btn-danger m-1 btn-delete"
-                                                        data-id="{{ $service->id }}" data-name="{{ $service->name }}">
-                                                        <i class="ti ti-trash"></i>
-                                                    </button>
+                                                    @can('master.services.edit')
+                                                        <a href="/services/{{ $service->id }}/edit"
+                                                            class="btn btn-success m-1">
+                                                            <i class="ti ti-pencil"></i>
+                                                        </a>
+                                                    @endcan
+                                                    @can('master.services.delete')
+                                                        <button class="btn btn-danger m-1 btn-delete"
+                                                            data-id="{{ $service->id }}" data-name="{{ $service->name }}">
+                                                            <i class="ti ti-trash"></i>
+                                                        </button>
 
-                                                    <form id="form-delete-service-{{ $service->id }}" method="POST"
-                                                        action=" {{ url('/services/' . $service->id) }}">
-                                                        @csrf
-                                                        @method('DELETE')
-                                                    </form>
+                                                        <form id="form-delete-service-{{ $service->id }}" method="POST"
+                                                            action=" {{ url('/services/' . $service->id) }}">
+                                                            @csrf
+                                                            @method('DELETE')
+                                                        </form>
+                                                    @endcan
                                                 </div>
                                             </td>
                                         </tr>

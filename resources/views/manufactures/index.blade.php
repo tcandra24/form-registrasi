@@ -10,7 +10,9 @@
             <div class="card w-100">
                 <div class="card-body p-4">
                     <h5 class="card-title fw-semibold mb-4">Daftar Merk/Brand Motor</h5>
-                    <a href="/manufactures/create" class="btn btn-primary m-1">Tambah</a>
+                    @can('master.manufactures.create')
+                        <a href="/manufactures/create" class="btn btn-primary m-1">Tambah</a>
+                    @endcan
                     @if (Session::has('success'))
                         <div class="alert alert-success alert-dismissible fade show m-2">
                             <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="2"
@@ -82,18 +84,24 @@
                                             </td>
                                             <td class="border-bottom-0 pb-0"">
                                                 <div class="d-flex align-items-center gap-2">
-                                                    <a href="/manufactures/{{ $manufacture->id }}/edit"
-                                                        class="btn btn-success m-1"><i class="ti ti-pencil"></i></a>
-                                                    <button class="btn btn-danger m-1 btn-delete"
-                                                        data-id="{{ $manufacture->id }}"
-                                                        data-name="{{ $manufacture->name }}"><i
-                                                            class="ti ti-trash"></i></button>
+                                                    @can('master.manufactures.edit')
+                                                        <a href="/manufactures/{{ $manufacture->id }}/edit"
+                                                            class="btn btn-success m-1">
+                                                            <i class="ti ti-pencil"></i>
+                                                        </a>
+                                                    @endcan
+                                                    @can('master.manufactures.delete')
+                                                        <button class="btn btn-danger m-1 btn-delete"
+                                                            data-id="{{ $manufacture->id }}"
+                                                            data-name="{{ $manufacture->name }}"><i
+                                                                class="ti ti-trash"></i></button>
 
-                                                    <form id="form-delete-manufacture-{{ $manufacture->id }}" method="POST"
-                                                        action=" {{ url('/manufactures/' . $manufacture->id) }}">
-                                                        @csrf
-                                                        @method('DELETE')
-                                                    </form>
+                                                        <form id="form-delete-manufacture-{{ $manufacture->id }}" method="POST"
+                                                            action=" {{ url('/manufactures/' . $manufacture->id) }}">
+                                                            @csrf
+                                                            @method('DELETE')
+                                                        </form>
+                                                    @endcan
                                                 </div>
                                             </td>
                                         </tr>
