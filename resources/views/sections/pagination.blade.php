@@ -37,7 +37,7 @@
             @if ($paginator->hasMorePages())
                 <li class="page-item">
                     <a class="page-link" href="{{ $paginator->nextPageUrl() }}" rel="next"
-                        aria-label="@lang('pagination.next')" tabindex="-1" aria-disabled="false">Previous</a>
+                        aria-label="@lang('pagination.next')" tabindex="-1" aria-disabled="false">Next</a>
                 </li>
             @else
                 <li class="page-item disabled" aria-label="@lang('pagination.next')">
