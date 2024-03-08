@@ -14,6 +14,7 @@ use Carbon\Carbon;
 
 use App\Models\Registration AS RegistrationModel;
 use App\Models\Job;
+use App\Models\Shift;
 use Symfony\Component\HttpKernel\Event\RequestEvent;
 
 class RegistrationController extends Controller
@@ -27,9 +28,11 @@ class RegistrationController extends Controller
         }
 
         $jobs = Job::where('is_active', true)->get();
+        $shift = Shift::select('id')->first();
 
         return view('registrations.index', [
             'jobs' => $jobs,
+            'shift' => $shift,
         ]);
     }
 
@@ -57,6 +60,11 @@ class RegistrationController extends Controller
         ]);
 
         try {
+            $shift = Shift::select('quota')->withCount('registration')->where('id', $request->shift)->first();
+            if(($shift->quota - $shift->registration_count) === 0){
+                return redirect()->to('/registrations')->with('error', 'Kuota shift sudah penuh');
+            }
+
             $token = hash_hmac('sha256', Crypt::encryptString(Str::uuid() . Carbon::now()->getTimestampMs() . Auth::user()->name), Auth::user()->id . Auth::user()->name);
 
             QrCode::size(200)->style('round')->eye('circle')->generate($token, Storage::path('public/qr-codes/') . 'qr-code-' . $token . '.svg');
@@ -74,6 +82,7 @@ class RegistrationController extends Controller
                 'vehicle_type' => $request->vehicle_type,
                 'license_plate' => $request->license_plate,
                 'job_id' => $request->job,
+                'shift_id' => $request->shift,
                 'user_id' => Auth::user()->id,
                 'event_slug' => Auth::user()->event->slug,
                 'token' => $token

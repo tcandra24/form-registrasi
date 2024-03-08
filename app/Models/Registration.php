@@ -24,6 +24,7 @@ class Registration extends Model
         'vehicle_type',
         'license_plate',
         'job_id',
+        'shift_id',
         'user_id',
         'event_slug',
         'token',

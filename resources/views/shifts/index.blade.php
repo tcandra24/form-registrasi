@@ -123,7 +123,7 @@
                                     @endforeach
                                 @else
                                     <tr>
-                                        <td colspan="6">
+                                        <td colspan="8">
                                             <div class="alert alert-info text-center" role="alert">
                                                 Shift Masih Kosong
                                             </div>
