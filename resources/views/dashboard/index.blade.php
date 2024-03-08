@@ -90,6 +90,9 @@
                                             <th class="border-bottom-0">
                                                 <h6 class="fw-semibold mb-0">Jumlah Pendaftar</h6>
                                             </th>
+                                            <th class="border-bottom-0">
+                                                <h6 class="fw-semibold mb-0">Sisa Kuota</h6>
+                                            </th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -105,6 +108,10 @@
                                                     <td class="border-bottom-0">
                                                         <p class="mb-0 fw-normal">{{ $event->registrations_count }} /
                                                             {{ $event->users_count }}</p>
+                                                    </td>
+                                                    <td class="border-bottom-0">
+                                                        <p class="mb-0 fw-normal">
+                                                            {{ $shift->quota - $event->registrations_count }}</p>
                                                     </td>
                                                 </tr>
                                             @endforeach
