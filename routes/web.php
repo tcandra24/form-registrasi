@@ -30,7 +30,6 @@ Route::group(['middleware' => ['guest']], function () {
     // Route::get('/register', [App\Http\Controllers\AuthController::class, 'register']);
     // Route::post('/register', [App\Http\Controllers\AuthController::class, 'store'])->name('register');
 
-
     Route::get('/auth/{provider}', [App\Http\Controllers\SocialiteController::class, 'redirectToProvider']);
     Route::get('/auth/{provider}/callback', [App\Http\Controllers\SocialiteController::class, 'handleProvideCallback']);
 });

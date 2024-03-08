@@ -34,16 +34,11 @@
                 <span class="text-danger">{{ $message }}</span>
             @enderror
         </div>
-        <div class="mb-4">
+        <div class="mb-4" style="display: none;">
             <label for="event" class="form-label">Pilih Event</label>
             <select class="form-control" name="event" id="event">
                 <option value="" selected>Pilih Event</option>
-                <option value="manage-event">Manage Event</option>
-                @foreach ($events as $event)
-                    <option value="{{ $event->id }}"
-                        {{ (int) request()->get('event') === $event->id ? 'selected' : '' }}>
-                        {{ $event->name }}</option>
-                @endforeach
+                <option value="manage-event" selected>Manage Event</option>
             </select>
             @error('event')
                 <span class="text-danger">{{ $message }}</span>
