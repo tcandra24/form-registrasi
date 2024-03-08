@@ -23,7 +23,7 @@
             </div>
         </div>
     </div>
-    @hasrole('admin')
+    @hasrole(['admin', 'admin.event'])
         <div class="row">
             <div class="col-lg-4">
                 <div class="row">

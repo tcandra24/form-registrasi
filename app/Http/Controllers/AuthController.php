@@ -40,7 +40,7 @@ class AuthController extends Controller
             }
 
             if($request->event === 'manage-event'){
-                if(!User::role('admin')->where('email', $user->email)->first() && !User::role('admin.event')->where('email', $user->email)->first()){
+                if(!User::role('admin')->where('email', $user->email)->exists()){
                     throw new \Exception('Login Gagal, Manage Event Hanya untuk Admin');
                 }
             } else {

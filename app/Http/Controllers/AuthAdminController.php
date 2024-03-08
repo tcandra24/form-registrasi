@@ -36,13 +36,20 @@ class AuthAdminController extends Controller
             }
 
             if($request->event === 'manage-event'){
-                if(!User::role('admin')->where('email', $user->email)->first()){
+                $authorizeAdmin = false;
+                if(User::role('admin')->where('email', $user->email)->exists()){
+                    $authorizeAdmin = true;
+                }
+
+                if(User::role('admin.event')->where('email', $user->email)->exists()){
+                    $authorizeAdmin = true;
+                }
+
+                if (!$authorizeAdmin){
                     throw new \Exception('Login Gagal, Manage Event Hanya untuk Admin');
                 }
             } else {
-                if((int)$user->event_id !== (int)$request->event){
-                    throw new \Exception('Login Gagal, Event yang dipilih tidak sesuai');
-                }
+                throw new \Exception('Login Gagal, Login hanya untuk admin');
             }
 
             // $credentials = $request->only('email', 'password');
