@@ -122,7 +122,7 @@
                             <i class="ti ti-dots nav-small-cap-icon fs-4"></i>
                             <span class="hide-menu">Laporan</span>
                         </li>
-                        @can('setting.permissions.index')
+                        @can('report.registrations.index')
                             <li
                                 class="sidebar-item {{ Request::segment(1) === 'reports' || Request::segment(1) === 'report' ? 'selected' : '' }}">
                                 <a class="sidebar-link {{ Request::segment(1) === 'reports' || Request::segment(1) === 'report' ? 'active' : '' }}"
