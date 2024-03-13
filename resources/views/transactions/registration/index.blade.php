@@ -20,6 +20,13 @@
         <div class="col-lg-12 d-flex align-items-stretch">
             <div class="card w-100">
                 <div class="card-body p-4">
+                    <div class="row mb-3">
+                        <div class="col-lg-2 d-flex align-items-stretch">
+                            <a href="/transactions" class="btn btn-primary">
+                                <i class="ti ti-arrow-narrow-left"></i> Kembali
+                            </a>
+                        </div>
+                    </div>
                     <h5 class="card-title fw-semibold mb-4">Transaksi Registrasi</h5>
                     <div class="row mb-3">
                         <form action="{{ url('/transactions/registrations/' . request()->event) }}">
@@ -338,9 +345,9 @@
             Swal.fire({
                 title: "Yakin Hapus Data Registrasi ?",
                 text: name,
-                type: "warning",
+                icon: "warning",
                 showCancelButton: !0,
-                confirmButtonColor: "#DD6B55",
+                confirmButtonColor: "#5d87ff",
                 confirmButtonText: "Yes",
                 closeOnConfirm: !1
             }).then((result) => {

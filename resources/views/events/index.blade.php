@@ -161,7 +161,7 @@
                 text: name,
                 icon: "warning",
                 showCancelButton: !0,
-                confirmButtonColor: "#DD6B55",
+                confirmButtonColor: "#5d87ff",
                 confirmButtonText: "Yes",
                 closeOnConfirm: !1
             }).then((result) => {
@@ -178,7 +178,7 @@
                 title: "Copied!",
                 text: "Berhasil copy link ke clipboard",
                 icon: "success",
-                confirmButtonColor: "#DD6B55",
+                confirmButtonColor: "#5d87ff",
                 timer: 1500,
             });
 

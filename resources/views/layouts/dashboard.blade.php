@@ -23,6 +23,7 @@
             @include('sections/header')
 
             <div class="container-fluid" style="max-width: unset">
+                @include('sections/breadcrumb')
                 @yield('content')
             </div>
 

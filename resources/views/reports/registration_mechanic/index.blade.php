@@ -20,6 +20,13 @@
         <div class="col-lg-12 d-flex align-items-stretch">
             <div class="card w-100">
                 <div class="card-body p-4">
+                    <div class="row mb-3">
+                        <div class="col-lg-2 d-flex align-items-stretch">
+                            <a href="/reports" class="btn btn-primary">
+                                <i class="ti ti-arrow-narrow-left"></i> Kembali
+                            </a>
+                        </div>
+                    </div>
                     <h5 class="card-title fw-semibold mb-4">Report Registrasi Mekanik</h5>
                     <div class="row mb-3">
                         <form action="{{ url('/report/registration-mechanics/' . request()->event) }}">

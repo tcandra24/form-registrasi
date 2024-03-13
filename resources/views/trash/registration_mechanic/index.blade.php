@@ -254,9 +254,9 @@
             Swal.fire({
                 title: "Yakin Pulihkan Data Registrasi ?",
                 text: name,
-                type: "warning",
+                icon: "warning",
                 showCancelButton: !0,
-                confirmButtonColor: "#DD6B55",
+                confirmButtonColor: "#5d87ff",
                 confirmButtonText: "Yes",
                 closeOnConfirm: !1
             }).then((result) => {
@@ -274,9 +274,9 @@
             Swal.fire({
                 title: "Yakin Hapus Permanen Data Registrasi ?",
                 text: name,
-                type: "warning",
+                icon: "warning",
                 showCancelButton: !0,
-                confirmButtonColor: "#DD6B55",
+                confirmButtonColor: "#5d87ff",
                 confirmButtonText: "Yes",
                 closeOnConfirm: !1
             }).then((result) => {

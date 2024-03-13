@@ -177,7 +177,7 @@
                 text: name,
                 icon: "warning",
                 showCancelButton: !0,
-                confirmButtonColor: "#DD6B55",
+                confirmButtonColor: "#5d87ff",
                 confirmButtonText: "Yes",
                 closeOnConfirm: !1
             }).then((result) => {
