@@ -14,11 +14,14 @@
                         <table class="table text-nowrap mb-0 align-middle">
                             <thead class="text-dark fs-4">
                                 <tr>
-                                    <th class="border-bottom-0 pb-0"">
+                                    <th class="border-bottom-0 pb-0">
                                         <h6 class="fw-semibold mb-0">No</h6>
                                     </th>
-                                    <th class="border-bottom-0 pb-0"">
+                                    <th class="border-bottom-0 pb-0">
                                         <h6 class="fw-semibold mb-0">Nama</h6>
+                                    </th>
+                                    <th class="border-bottom-0 pb-0">
+                                        <h6 class="fw-semibold mb-0">Guard</h6>
                                     </th>
                                 </tr>
                             </thead>
@@ -26,17 +29,20 @@
                                 @if (count($permissions) > 0)
                                     @foreach ($permissions as $key => $permission)
                                         <tr>
-                                            <td class="border-bottom-0 pb-0"">
+                                            <td class="border-bottom-0 pb-0">
                                                 <h6 class="fw-semibold mb-0">{{ $permissions->firstItem() + $key }}</h6>
                                             </td>
-                                            <td class="border-bottom-0 pb-0"">
+                                            <td class="border-bottom-0 pb-0">
                                                 <p class="mb-0 fw-normal">{{ $permission->name }}</p>
+                                            </td>
+                                            <td class="border-bottom-0 pb-0">
+                                                <p class="mb-0 fw-normal">{{ $permission->guard_name }}</p>
                                             </td>
                                         </tr>
                                     @endforeach
                                 @else
                                     <tr>
-                                        <td colspan="2">
+                                        <td colspan="3">
                                             <div class="alert alert-info text-center" role="alert">
                                                 Ijin Masih Kosong
                                             </div>
