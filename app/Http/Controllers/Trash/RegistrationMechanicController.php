@@ -36,9 +36,9 @@ class RegistrationMechanicController extends Controller
         try {
             RegistrationMechanic::onlyTrashed()->where('event_slug', $event)->where('id', $id)->restore();
 
-            return redirect()->to('/trash/registration-mechanics')->with('success', 'Data Registrasi Berhasil Dipulihkan');
+            return redirect()->to('/trash/registration-mechanics/' . $event)->with('success', 'Data Registrasi Berhasil Dipulihkan');
         } catch (\Exception $e) {
-            return redirect()->to('/trash/registration-mechanics')->with('error', $e->getMessage());
+            return redirect()->to('/trash/registration-mechanics/' . $event)->with('error', $e->getMessage());
         }
     }
 
@@ -50,9 +50,9 @@ class RegistrationMechanicController extends Controller
                 $registration->forceDelete();
             });
 
-            return redirect()->to('/trash/registration-mechanics')->with('success', 'Data Registrasi Berhasil Dihapus');
+            return redirect()->to('/trash/registration-mechanics/' . $event)->with('success', 'Data Registrasi Berhasil Dihapus');
         } catch (\Exception $e) {
-            return redirect()->to('/trash/registration-mechanics')->with('error', $e->getMessage());
+            return redirect()->to('/trash/registration-mechanics/' . $event)->with('error', $e->getMessage());
         }
     }
 
