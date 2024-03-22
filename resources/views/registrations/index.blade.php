@@ -190,7 +190,8 @@
                                         <option value="{{ $shift->id }}"
                                             {{ (int) old('shift') === $shift->id ? 'selected' : '' }}>
                                             {{ \Carbon\Carbon::parse($shift->start)->locale('id')->translatedFormat('l, d F Y') }}
-                                            <!-- | {{ substr(substr($shift->start, -8), 0, 5) }} - {{ substr(substr($shift->end, -8), 0, 5) }} -->
+                                            {{ substr(substr($shift->start, -8), 0, 5) }} -
+                                            {{ substr(substr($shift->end, -8), 0, 5) }}
                                             (Sisa Kuota: {{ $shift->quota - $shift->registration_count }})
                                         </option>
                                     @endforeach
