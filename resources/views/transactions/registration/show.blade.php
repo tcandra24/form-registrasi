@@ -1,7 +1,7 @@
 @extends('layouts/dashboard')
 
 @section('title')
-Transaksi Registrasi {{ $registration->fullname }}
+    Transaksi Registrasi {{ $registration->fullname }}
 @endsection
 
 @section('page-style')
@@ -9,64 +9,68 @@ Transaksi Registrasi {{ $registration->fullname }}
 @endsection
 
 @section('content')
-<div class="card">
-    <div class="card-body">
-        <div class="d-block w-100 my-4">
-            <div class="d-flex justify-content-center">
-                <div class="d-flex flex-column">
-                    <img src="{{ asset('/storage/qr-codes/qr-code-' . $registration->token . '.svg') }}" width="300" height="300" alt="">
-                    <a href="/qr-code/download" target="_blank" rel=”nofollow” class="btn btn-primary mt-3">Download</a>
+    <div class="card">
+        <div class="card-body">
+            <div class="d-block w-100 my-4">
+                <div class="d-flex justify-content-center">
+                    <div class="d-flex flex-column">
+                        <img src="{{ asset('/storage/qr-codes/qr-code-' . $registration->token . '.svg') }}" width="300"
+                            height="300" alt="">
+                        <a href="/qr-code/download" target="_blank" rel=”nofollow” class="btn btn-primary mt-3">Download</a>
+                    </div>
                 </div>
             </div>
-        </div>
-        <div class="d-block w-100">
-            <div class="d-flex flex-row justify-content-center">
-                <div class="d-flex flex-column">
-                    <div class="p-2">
-                        <h4>Nama Lengkap: </h4>
-                        <p>{{ $registration->fullname }}</p>
+            <div class="d-block w-100">
+                <div class="d-flex flex-row justify-content-center">
+                    <div class="d-flex flex-column">
+                        <div class="p-2">
+                            <h4>Nama Lengkap: </h4>
+                            <p>{{ $registration->fullname }}</p>
+                        </div>
+                        <div class="p-2">
+                            <h4>Nomer Registrasi: </h4>
+                            <p>{{ $registration->registration_number }}</p>
+                        </div>
+                        <div class="p-2">
+                            <h4>No HP: </h4>
+                            <p>{{ $registration->no_hp }}</p>
+                        </div>
+                        <div class="p-2">
+                            <h4>Tipe Kendaraan: </h4>
+                            <p>{{ $registration->vehicle_type }}</p>
+                        </div>
                     </div>
-                    <div class="p-2">
-                        <h4>Nomer Registrasi: </h4>
-                        <p>{{ $registration->registration_number }}</p>
-                    </div>
-                    <div class="p-2">
-                        <h4>No HP: </h4>
-                        <p>{{ $registration->no_hp }}</p>
-                    </div>
-                    <div class="p-2">
-                        <h4>Tipe Kendaraan: </h4>
-                        <p>{{ $registration->vehicle_type  }}</p>
-                    </div>
-                </div>
-                <div class="d-flex flex-column">
-                    <div class="p-2">
-                        <h4>Status Scan: </h4>
-                        @if($registration->is_scan)
-                            <div class="d-flex align-items-center gap-2">
-                                <span class="badge bg-primary rounded-3 fw-semibold">Sudah Scan</span>
-                            </div>
-                        @else
-                            <div class="d-flex align-items-center gap-2">
-                                <span class="badge bg-danger rounded-3 fw-semibold">Belum Scan</span>
-                            </div>
-                        @endif
-                    </div>
-                    <div class="p-2">
-                        <h4>Plat Nomor: </h4>
-                        <p>{{ $registration->license_plate  }}</p>
-                    </div>
-                    <div class="p-2">
-                        <h4>Pekerjaan: </h4>
-                        <p>{{ $registration->job->name  }}</p>
-                    </div>
-                    <div class="p-2">
-                        <h4>Shift: </h4>
-                        <p>{{ $registration->shift->name  }}</p>
-                        <div class="d-flex flex-column">
+                    <div class="d-flex flex-column">
+                        <div class="p-2">
+                            <h4>Status Scan: </h4>
+                            @if ($registration->is_scan)
+                                <div class="d-flex align-items-center gap-2">
+                                    <span class="badge bg-primary rounded-3 fw-semibold">Sudah Scan</span>
+                                </div>
+                            @else
+                                <div class="d-flex align-items-center gap-2">
+                                    <span class="badge bg-danger rounded-3 fw-semibold">Belum Scan</span>
+                                </div>
+                            @endif
+                        </div>
+                        <div class="p-2">
+                            <h4>Plat Nomor: </h4>
+                            <p>{{ $registration->license_plate }}</p>
+                        </div>
+                        <div class="p-2">
+                            <h4>Pekerjaan: </h4>
+                            <p>{{ $registration->job->name }}</p>
+                        </div>
+                        <div class="p-2">
+                            <h4>Shift: </h4>
+                            <p>{{ $registration->shift->name }}</p>
                             <div class="d-flex flex-column">
-                                <p class="mb-0">{{ \Carbon\Carbon::parse($registration->shift->start)->locale('id')->translatedFormat('l, d F Y') }}</p>
-                                <p>{{ substr(substr($registration->shift->start, -8), 0, 5) }} - {{ substr(substr($registration->shift->end, -8), 0, 5) }}</p>
+                                <div class="d-flex flex-column">
+                                    <p class="mb-0">
+                                        {{ \Carbon\Carbon::parse($registration->shift->start)->locale('id')->translatedFormat('l, d F Y') }}
+                                    </p>
+                                    <!-- <p>{{ substr(substr($registration->shift->start, -8), 0, 5) }} - {{ substr(substr($registration->shift->end, -8), 0, 5) }}</p> -->
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -74,12 +78,11 @@ Transaksi Registrasi {{ $registration->fullname }}
             </div>
         </div>
     </div>
-</div>
 @endsection
 
 @section('script')
-<script src="{{ asset('assets/libs/jquery/dist/jquery.min.js') }}"></script>
-<script src="{{ asset('assets/libs/bootstrap/dist/js/bootstrap.bundle.min.js') }}"></script>
-<script src="{{ asset('assets/js/sidebarmenu.js') }}"></script>
-<script src="{{ asset('assets/js/app.min.js') }}"></script>
+    <script src="{{ asset('assets/libs/jquery/dist/jquery.min.js') }}"></script>
+    <script src="{{ asset('assets/libs/bootstrap/dist/js/bootstrap.bundle.min.js') }}"></script>
+    <script src="{{ asset('assets/js/sidebarmenu.js') }}"></script>
+    <script src="{{ asset('assets/js/app.min.js') }}"></script>
 @endsection
