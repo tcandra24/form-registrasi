@@ -71,6 +71,8 @@ Route::group(['middleware' => ['auth']], function () {
 
     Route::group(['prefix' => '/transactions/registration-mechanics','middleware' => ['permission:transaction.registrations.index']], function() {
         Route::get('/{event}',  [ \App\Http\Controllers\Transaction\RegistrationMechanicController::class, 'index' ]);
+        Route::get('/{event}/import',  [ \App\Http\Controllers\Transaction\RegistrationMechanicController::class, 'import' ]);
+        Route::post('/{event}/import',  [ \App\Http\Controllers\Transaction\RegistrationMechanicController::class, 'doImport' ]);
         Route::get('/{event}/show/{id}',  [ \App\Http\Controllers\Transaction\RegistrationMechanicController::class, 'show' ]);
         Route::delete('/{event}/delete/{id}',  [ \App\Http\Controllers\Transaction\RegistrationMechanicController::class, 'destroy' ]);
         Route::delete('/{event}/delete-not-scan', [\App\Http\Controllers\Transaction\RegistrationMechanicController::class, 'destroyAllNotScan']);

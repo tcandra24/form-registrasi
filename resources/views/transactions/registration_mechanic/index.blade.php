@@ -90,6 +90,8 @@
                             <button class="btn btn-danger btn-delete-all-not-scan">Hapus Semua</button>
                             <a href="/trash/registration-mechanics/{{ request()->event }}" class="btn btn-primary"
                                 style="margin-left: 5px;">Sampah</a>
+                            <a href="/transactions/registration-mechanics/{{ request()->event }}/import"
+                                class="btn btn-secondary" style="margin-left: 5px;">Import</a>
                         </div>
                     </div>
                     <div class="row">

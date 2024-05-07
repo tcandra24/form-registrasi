@@ -45,6 +45,8 @@ class RegistrationMechanicsController extends Controller
             $registration_max = RegistrationMechanic::withTrashed()->where('event_slug', Auth::user()->event->slug)->max('registration_number') + 1;
             $registration_number = str_pad($registration_max, 5, '0', STR_PAD_LEFT);
 
+            $isVip = (int)$request->is_vip;
+
             RegistrationMechanic::create([
                 'fullname' => $request->fullname,
                 'registration_number' => $registration_number,
@@ -53,6 +55,7 @@ class RegistrationMechanicsController extends Controller
                 'address' => $request->address,
                 'user_id' => Auth::user()->id,
                 'event_slug' => Auth::user()->event->slug,
+                'is_vip' => $isVip,
                 'token' => $token
             ]);
 

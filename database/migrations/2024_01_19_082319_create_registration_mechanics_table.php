@@ -22,6 +22,7 @@ class CreateRegistrationMechanicsTable extends Migration
             $table->text('address');
             $table->unsignedBigInteger('user_id');
             $table->boolean('is_scan')->default(false);
+            $table->boolean('is_vip')->default(false);
             $table->dateTime('scan_date')->nullable();
             $table->string('event_slug');
             $table->string('token');

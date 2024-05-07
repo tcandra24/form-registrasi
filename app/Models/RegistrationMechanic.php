@@ -21,6 +21,8 @@ class RegistrationMechanic extends Model
         'address',
         'user_id',
         'event_slug',
+        'is_scan',
+        'is_vip',
         'token',
     ];
 

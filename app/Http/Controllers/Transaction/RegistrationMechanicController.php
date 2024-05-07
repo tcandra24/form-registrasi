@@ -6,6 +6,9 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\RegistrationMechanic;
 
+use Maatwebsite\Excel\Facades\Excel;
+use App\Imports\RegistrationMechanicImport;
+
 class RegistrationMechanicController extends Controller
 {
     public function index($event)
@@ -54,6 +57,28 @@ class RegistrationMechanicController extends Controller
             return redirect()->to('/transactions/registration-mechanics/' . $event)->with('success', 'Semua Data Registrasi yang Tidak Scan Berhasil Dihapus');
         } catch (\Exception $e) {
             return redirect()->to('/transactions/registration-mechanics/' . $event)->with('error', $e->getMessage());
+        }
+    }
+
+    public function import()
+    {
+        return view('transactions.registration_mechanic.import');
+    }
+
+    public function doImport(Request $request)
+    {
+        $request->validate([
+            'file' => 'required|mimes:xlsx,xls',
+        ]);
+
+        try {
+            $file = $request->file('file');
+
+            Excel::import(new RegistrationMechanicImport, $file);
+
+            return redirect()->to('/transactions/registration-mechanics/'. request()->event . '/import')->with('success', 'Import Berhasil Dilakukan');
+        } catch (\Exception $e) {
+            return back()->with('error', $e->getMessage());
         }
     }
 }
