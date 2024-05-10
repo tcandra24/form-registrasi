@@ -39,6 +39,8 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('/dashboard', [ App\Http\Controllers\DashboardController::class, 'index' ])
     ->middleware('permission:dashboard.index')->name('dashboard');
 
+    Route::get('/show-on-monitor', [ App\Http\Controllers\DashboardController::class, 'showOnMonitor' ])->name('show-on-monitor');
+
     Route::resource('/jobs', \App\Http\Controllers\JobController::class, [ 'except' => ['show'] ])
     ->middleware('permission:master.jobs.index|master.jobs.create|master.jobs.edit|master.jobs.delete');
 
@@ -72,7 +74,10 @@ Route::group(['middleware' => ['auth']], function () {
     Route::group(['prefix' => '/transactions/registration-mechanics','middleware' => ['permission:transaction.registrations.index']], function() {
         Route::get('/{event}',  [ \App\Http\Controllers\Transaction\RegistrationMechanicController::class, 'index' ]);
         Route::get('/{event}/import',  [ \App\Http\Controllers\Transaction\RegistrationMechanicController::class, 'import' ]);
+        Route::get('/{event}/create',  [ \App\Http\Controllers\Transaction\RegistrationMechanicController::class, 'create' ]);
         Route::post('/{event}/import',  [ \App\Http\Controllers\Transaction\RegistrationMechanicController::class, 'doImport' ]);
+        Route::post('/{event}/store',  [ \App\Http\Controllers\Transaction\RegistrationMechanicController::class, 'store' ]);
+        Route::patch('/{event}/change-status/{id}',  [ \App\Http\Controllers\Transaction\RegistrationMechanicController::class, 'updateIsScan' ]);
         Route::get('/{event}/show/{id}',  [ \App\Http\Controllers\Transaction\RegistrationMechanicController::class, 'show' ]);
         Route::delete('/{event}/delete/{id}',  [ \App\Http\Controllers\Transaction\RegistrationMechanicController::class, 'destroy' ]);
         Route::delete('/{event}/delete-not-scan', [\App\Http\Controllers\Transaction\RegistrationMechanicController::class, 'destroyAllNotScan']);

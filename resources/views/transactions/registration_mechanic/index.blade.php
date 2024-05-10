@@ -88,10 +88,12 @@
                                 @method('DELETE')
                             </form>
                             <button class="btn btn-danger btn-delete-all-not-scan">Hapus Semua</button>
-                            <a href="/trash/registration-mechanics/{{ request()->event }}" class="btn btn-primary"
+                            <a href="/trash/registration-mechanics/{{ request()->event }}" class="btn btn-warning"
                                 style="margin-left: 5px;">Sampah</a>
                             <a href="/transactions/registration-mechanics/{{ request()->event }}/import"
                                 class="btn btn-secondary" style="margin-left: 5px;">Import</a>
+                            <a href="/transactions/registration-mechanics/{{ request()->event }}/create"
+                                class="btn btn-primary" style="margin-left: 5px;">Tambah</a>
                         </div>
                     </div>
                     <div class="row">
@@ -141,13 +143,13 @@
                                             <h6 class="fw-semibold mb-0">Nomer Registrasi</h6>
                                         </th>
                                         <th class="border-bottom-0 pb-0">
-                                            <h6 class="fw-semibold mb-0">Email</h6>
-                                        </th>
-                                        <th class="border-bottom-0 pb-0">
                                             <h6 class="fw-semibold mb-0">Nama Lengkap</h6>
                                         </th>
                                         <th class="border-bottom-0 pb-0">
                                             <h6 class="fw-semibold mb-0">Nama Bengkel</h6>
+                                        </th>
+                                        <th class="border-bottom-0 pb-0">
+                                            <h6 class="fw-semibold mb-0">VIP</h6>
                                         </th>
                                         <th class="border-bottom-0 pb-0">
                                             <h6 class="fw-semibold mb-0">Alamat</h6>
@@ -161,9 +163,9 @@
                                         <th class="border-bottom-0 pb-0">
                                             <h6 class="fw-semibold mb-0">Tanggal Scan</h6>
                                         </th>
-                                        <th class="border-bottom-0 pb-0">
+                                        {{-- <th class="border-bottom-0 pb-0">
                                             <h6 class="fw-semibold mb-0">Tgl Buat</h6>
-                                        </th>
+                                        </th> --}}
                                         <th class="border-bottom-0 pb-0">
                                             <h6 class="fw-semibold mb-0">Action</h6>
                                         </th>
@@ -185,14 +187,18 @@
                                                 <td class="border-bottom-0 pb-0">
                                                     <a class="mb-0 fw-normal"
                                                         href="/transactions/registration-mechanics/{{ $registration->event_slug }}/show/{{ $registration->id }}">
-                                                        {{ $registration->user->email }}
+                                                        {{ $registration->fullname }}
                                                     </a>
                                                 </td>
                                                 <td class="border-bottom-0 pb-0">
-                                                    <p class="mb-0 fw-normal">{{ $registration->fullname }}</p>
+                                                    <p class="mb-0 fw-normal">{{ $registration->workshop_name }}</p>
                                                 </td>
                                                 <td class="border-bottom-0 pb-0">
-                                                    <p class="mb-0 fw-normal">{{ $registration->workshop_name }}</p>
+                                                    @if ($registration->is_vip)
+                                                        <span class="badge bg-success rounded-3 fw-semibold">Ya</span>
+                                                    @else
+                                                        <span class="badge bg-success rounded-3 fw-semibold">Tidak</span>
+                                                    @endif
                                                 </td>
                                                 <td class="border-bottom-0 pb-0">
                                                     <p class="mb-0 fw-normal">{{ $registration->address }}</p>
@@ -216,7 +222,7 @@
                                                 <td class="border-bottom-0 pb-0">
                                                     <p class="mb-0 fw-normal">{{ $registration->scan_date ?? '-' }}</p>
                                                 </td>
-                                                <td class="border-bottom-0 pb-0">
+                                                {{-- <td class="border-bottom-0 pb-0">
                                                     <div class="d-flex flex-column">
                                                         <p class="mb-0">
                                                             {{ \Carbon\Carbon::parse($registration->created_at)->locale('id')->translatedFormat('l, d F Y') }}
@@ -225,7 +231,7 @@
                                                             {{ substr(substr($registration->created_at, -8), 0, 5) }}
                                                         </p>
                                                     </div>
-                                                </td>
+                                                </td> --}}
                                                 <td class="border-bottom-0 pb-0">
                                                     <div class="d-flex align-items-center gap-2">
                                                         <button class="btn btn-danger m-1 btn-delete"
@@ -234,6 +240,12 @@
                                                             {{ $registration->is_scan ? 'disabled' : '' }}>
                                                             <i class="ti ti-trash"></i>
                                                         </button>
+                                                        <button class="btn btn-warning m-1 btn-change-status"
+                                                            data-id="{{ $registration->id }}"
+                                                            data-name="{{ $registration->fullname }}"
+                                                            {{ $registration->is_scan ? 'disabled' : '' }}>
+                                                            <i class="ti ti-refresh"></i>
+                                                        </button>
 
                                                         <form
                                                             id="form-delete-registration-mechanics-{{ $registration->id }}"
@@ -241,6 +253,14 @@
                                                             action=" {{ url('/transactions/registration-mechanics/' . $registration->event_slug . '/delete/' . $registration->id) }}">
                                                             @csrf
                                                             @method('DELETE')
+                                                        </form>
+
+                                                        <form
+                                                            id="form-change-status-registration-mechanics-{{ $registration->id }}"
+                                                            method="POST"
+                                                            action=" {{ url('/transactions/registration-mechanics/' . $registration->event_slug . '/change-status/' . $registration->id) }}">
+                                                            @csrf
+                                                            @method('PATCH')
                                                         </form>
                                                     </div>
                                                 </td>
@@ -300,6 +320,26 @@
             }).then((result) => {
                 if (result.isConfirmed) {
                     $('#form-delete-registration-mechanics-' + id).submit()
+                }
+            })
+
+        })
+
+        $('.btn-change-status').on('click', function() {
+            const id = $(this).attr('data-id')
+            const name = $(this).attr('data-name')
+
+            Swal.fire({
+                title: "Yakin Ubah Status Data Registrasi ?",
+                text: name,
+                type: "warning",
+                showCancelButton: !0,
+                confirmButtonColor: "#DD6B55",
+                confirmButtonText: "Yes",
+                closeOnConfirm: !1
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    $('#form-change-status-registration-mechanics-' + id).submit()
                 }
             })
 
