@@ -41,6 +41,9 @@
                                                 Email</option>
                                             <option value="no_hp" {{ request()->filter === 'no_hp' ? 'selected' : '' }}>No.
                                                 HP/Telp</option>
+                                            <option value="workshop_name"
+                                                {{ request()->filter === 'workshop_name' ? 'selected' : '' }}>Bengkel
+                                            </option>
                                         </select>
                                     </div>
                                 </div>
