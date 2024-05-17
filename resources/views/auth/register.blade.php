@@ -39,7 +39,7 @@
                 <span class="text-danger">{{ $message }}</span>
             @enderror
         </div>
-        <div class="mb-3" style="display: none;">
+        <div class="mb-3" style="{{ request()->has('event') ? 'display: none;' : '' }}">
             <label for="event" class="form-label">Pilih Event</label>
             <select class="form-control" name="event" id="event">
                 <option value="" selected>Pilih Event</option>
