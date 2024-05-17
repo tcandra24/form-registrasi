@@ -7,11 +7,18 @@
 @section('content')
     <div class="card">
         <div class="card-body">
+            <div class="row mb-3">
+                <div class="col-lg-2 d-flex align-items-stretch">
+                    <a href="/transactions/registration-mechanics/{{ request()->event }}" class="btn btn-primary">
+                        <i class="ti ti-arrow-narrow-left"></i> Kembali
+                    </a>
+                </div>
+            </div>
             <h5 class="card-title fw-semibold mb-4">Input Data Registrasi</h5>
             @if (Session::has('success'))
                 <div class="alert alert-success alert-dismissible fade show m-2">
-                    <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="2" fill="none"
-                        stroke-linecap="round" stroke-linejoin="round" class="me-2">
+                    <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="2"
+                        fill="none" stroke-linecap="round" stroke-linejoin="round" class="me-2">
                         <polyline points="9 11 12 14 22 4"></polyline>
                         <path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"></path>
                     </svg>

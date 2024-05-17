@@ -22,6 +22,7 @@ class User extends Authenticatable
         'name',
         'email',
         'no_hp',
+        'is_display',
         'password',
         'event_id',
     ];
@@ -58,6 +59,11 @@ class User extends Authenticatable
     public function registrations()
     {
         return $this->hasMany(Registration::class);
+    }
+
+    public function registrationsMechanicByCreateBy()
+    {
+        return $this->hasMany(RegistrationMechanic::class, 'created_by', 'id');
     }
 
     public function getNameAttribute($value)

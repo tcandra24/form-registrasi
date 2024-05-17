@@ -24,6 +24,15 @@
                         <span class="hide-menu">Dashboard</span>
                     </a>
                 </li>
+                <li class="sidebar-item {{ Request::segment(1) === 'show-on-monitor' ? 'selected' : '' }}">
+                    <a class="sidebar-link {{ Request::segment(1) === 'show-on-monitor' ? 'active' : '' }}"
+                        href="/show-on-monitor" aria-expanded="false">
+                        <span>
+                            <i class="ti ti-device-desktop"></i>
+                        </span>
+                        <span class="hide-menu">Tampil di Monitor</span>
+                    </a>
+                </li>
                 @hasrole('admin')
                     @if (auth()->user()->can('master.events.index') ||
                             auth()->user()->can('master.jobs.index') ||
@@ -107,7 +116,7 @@
                                 </a>
                             </li>
                         @endcan
-                        <li class="sidebar-item {{ Request::segment(1) === 'registrations' ? 'selected' : '' }}">
+                        {{-- <li class="sidebar-item {{ Request::segment(1) === 'registrations' ? 'selected' : '' }}">
                             <a class="sidebar-link {{ Request::segment(1) === 'registrations' ? 'active' : '' }}"
                                 href="/registrations/import" aria-expanded="false">
                                 <span>
@@ -115,7 +124,7 @@
                                 </span>
                                 <span class="hide-menu">Import</span>
                             </a>
-                        </li>
+                        </li> --}}
                     @endif
                     @if (auth()->user()->can('report.registrations.index'))
                         <li class="nav-small-cap">

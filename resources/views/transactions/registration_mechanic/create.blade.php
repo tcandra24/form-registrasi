@@ -18,6 +18,13 @@
 @section('content')
     <div class="card">
         <div class="card-body">
+            <div class="row mb-3">
+                <div class="col-lg-2 d-flex align-items-stretch">
+                    <a href="/transactions/registration-mechanics/{{ request()->event }}" class="btn btn-primary">
+                        <i class="ti ti-arrow-narrow-left"></i> Kembali
+                    </a>
+                </div>
+            </div>
             <h5 class="card-title fw-semibold mb-4">Input Data</h5>
             <p class="mt-0"><i>*Menu ini hanya untuk registrasi ditempat dan diinputkan manual oleh admin</i></p>
             @if (Session::has('error'))

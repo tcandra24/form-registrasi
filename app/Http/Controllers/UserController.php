@@ -73,11 +73,14 @@ class UserController extends Controller
         ]);
 
         try {
+            $isDisplay = (int)$request->is_display;
+
             if($request->password == '') {
                 $user->update([
                     'name' => $request->name,
                     'email' => $request->email,
                     'no_hp' => '',
+                    'is_display' => $isDisplay,
                 ]);
             } else {
                 $user->update([
@@ -85,6 +88,7 @@ class UserController extends Controller
                     'email' => $request->email,
                     'password' => Hash::make($request->password),
                     'no_hp' => '',
+                    'is_display' => $isDisplay,
                 ]);
             }
 

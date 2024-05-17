@@ -4,8 +4,10 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Events\UpdateRegisterData;
 
 use App\Models\Registration;
+use App\Models\RegistrationMechanic;
 use Carbon\Carbon;
 
 class ScanController extends Controller
@@ -14,7 +16,15 @@ class ScanController extends Controller
     {
         try {
             $token = $request->token;
-            $registration = Registration::select('is_scan')->where('token', $token);
+            // $event = $request->event;
+
+            // if($event === 'mechanic-gathering') {
+            //     $registration = RegistrationMechanic::where('token', $token);
+            // } else {
+            //     $registration = Registration::where('token', $token);
+            // }
+            $registration = RegistrationMechanic::where('token', $token);
+
             if (!$registration->exists()) {
                 throw new \Exception('Token tidak ditemukan');
             }
@@ -27,6 +37,8 @@ class ScanController extends Controller
                 'is_scan' => true,
                 'scan_date' => Carbon::now()
             ]);
+
+            event(new UpdateRegisterData('scan-auto', $registration->first()));
 
             return response()->json([
                 'success' => true,
@@ -44,7 +56,16 @@ class ScanController extends Controller
     {
         try {
             $noRegistration = $request->noRegistration;
-            $registration = Registration::select('is_scan')->where('registration_number', $noRegistration);
+            // $event = $request->event;
+
+            // if($event === 'mechanic-gathering') {
+            //     $registration = RegistrationMechanic::where('registration_number', $noRegistration);
+            // } else {
+            //     $registration = Registration::where('registration_number', $noRegistration);
+            // }
+
+            $registration = RegistrationMechanic::where('registration_number', $noRegistration);
+
             if (!$registration->exists()) {
                 throw new \Exception('Nomer Registrasi tidak ditemukan');
             }
@@ -57,6 +78,8 @@ class ScanController extends Controller
                 'is_scan' => true,
                 'scan_date' => Carbon::now()
             ]);
+
+            event(new UpdateRegisterData('scan-manual', $registration->first()));
 
             return response()->json([
                 'success' => true,

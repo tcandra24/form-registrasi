@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
-// use App\Events\UpdateRegisterData;
+use App\Events\UpdateRegisterData;
 
 use App\Models\RegistrationMechanic;
 
@@ -77,7 +77,7 @@ class RegistrationMechanicController extends Controller
                 'token' => $token
             ]);
 
-            // event(new UpdateRegisterData($registration));
+            event(new UpdateRegisterData('input-manual', $registration));
 
             return redirect()->to('/transactions/registration-mechanics/' . request()->event)->with('success', 'Pendaftaran Berhasil Disimpan');
         } catch (\Exception $e) {

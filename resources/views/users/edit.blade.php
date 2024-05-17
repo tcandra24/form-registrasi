@@ -102,6 +102,22 @@
                         </div>
                     </div>
                 </div>
+                <div class="row">
+                    <div class="col-lg-6 d-flex align-items-stretch">
+                        <div class="mb-3 w-100">
+                            <div class="d-flex" style="gap: 15px;">
+                                <div class="form-check">
+                                    <input class="form-check-input" name="is_display" value="1" type="checkbox"
+                                        aria-describedby="term-condition" {{ $user->is_display == 1 ? 'checked' : '' }}>
+                                    <label for="term-condition" class="form-label">Di Tampilkan</label>
+                                </div>
+                            </div>
+                            @error('is_display')
+                                <span class="text-danger">{{ $message }}</span>
+                            @enderror
+                        </div>
+                    </div>
+                </div>
 
                 <button type="submit" class="btn btn-primary">Submit</button>
                 <button type="reset" class="btn btn-danger">Reset</button>

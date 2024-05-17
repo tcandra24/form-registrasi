@@ -83,6 +83,9 @@
                                             <h6 class="fw-semibold mb-0">Role</h6>
                                         </th>
                                         <th class="border-bottom-0">
+                                            <h6 class="fw-semibold mb-0">Ditampilkan di Monitor</h6>
+                                        </th>
+                                        <th class="border-bottom-0">
                                             <h6 class="fw-semibold mb-0">Aksi</h6>
                                         </th>
                                     </tr>
@@ -110,6 +113,13 @@
                                                             @endforeach
                                                         </div>
                                                     </div>
+                                                </td>
+                                                <td class="border-bottom-0">
+                                                    @if ($user->is_display)
+                                                        <span class="badge bg-success rounded-3 fw-semibold">Ya</span>
+                                                    @else
+                                                        <span class="badge bg-success rounded-3 fw-semibold">Tidak</span>
+                                                    @endif
                                                 </td>
                                                 <td class="border-bottom-0">
                                                     <div class="d-flex align-items-center gap-2">

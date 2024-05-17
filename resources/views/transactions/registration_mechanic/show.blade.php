@@ -11,6 +11,13 @@
 @section('content')
     <div class="card">
         <div class="card-body">
+            <div class="row mb-3">
+                <div class="col-lg-2 d-flex align-items-stretch">
+                    <a href="/transactions/registration-mechanics/{{ request()->event }}" class="btn btn-primary">
+                        <i class="ti ti-arrow-narrow-left"></i> Kembali
+                    </a>
+                </div>
+            </div>
             <div class="d-block w-100 my-4">
                 <div class="d-flex justify-content-center">
                     <div class="d-flex flex-column">
