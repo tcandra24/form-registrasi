@@ -53,6 +53,9 @@
                                         <h6 class="fw-semibold mb-0">Nama</h6>
                                     </th>
                                     <th class="border-bottom-0 pb-0">
+                                        <h6 class="fw-semibold mb-0">Event</h6>
+                                    </th>
+                                    <th class="border-bottom-0 pb-0">
                                         <h6 class="fw-semibold mb-0">Awal</h6>
                                     </th>
                                     <th class="border-bottom-0 pb-0">
@@ -81,6 +84,9 @@
                                             </td>
                                             <td class="border-bottom-0 pb-0">
                                                 <p class="mb-0 fw-normal">{{ $shift->name }}</p>
+                                            </td>
+                                            <td class="border-bottom-0 pb-0">
+                                                <p class="mb-0 fw-normal">{{ $shift->event->name }}</p>
                                             </td>
                                             <td class="border-bottom-0 pb-0">
                                                 <p class="mb-0 fw-normal">{{ $shift->start }}</p>
@@ -131,7 +137,7 @@
                                     @endforeach
                                 @else
                                     <tr>
-                                        <td colspan="8">
+                                        <td colspan="9">
                                             <div class="alert alert-info text-center" role="alert">
                                                 Shift Masih Kosong
                                             </div>

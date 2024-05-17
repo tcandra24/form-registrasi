@@ -21,6 +21,7 @@ class CreateRegistrationsTable extends Migration
             $table->string('vehicle_type');
             $table->string('license_plate');
             $table->boolean('is_scan')->default(false);
+            $table->boolean('is_vip')->default(false);
             $table->dateTime('scan_date')->nullable();
             $table->unsignedBigInteger('job_id');
             $table->unsignedBigInteger('shift_id');

@@ -24,6 +24,8 @@ class Registration extends Model
         'user_id',
         'manufacture_id',
         'event_slug',
+        'is_scan',
+        'is_vip',
         'token'
     ];
 

@@ -23,6 +23,11 @@ class Event extends Model
         return $this->hasMany(Registration::class, 'event_slug', 'slug');
     }
 
+    public function shifts()
+    {
+        return $this->hasMany(Shift::class, 'event_id', 'id');
+    }
+
     public function getNameAttribute($value)
     {
         return ucwords($value);

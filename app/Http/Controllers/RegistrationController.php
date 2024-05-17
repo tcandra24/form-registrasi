@@ -20,11 +20,6 @@ use App\Models\Registration AS RegistrationModel;
 
 class RegistrationController extends Controller
 {
-    // public function __construct()
-    // {
-    //     $this->middleware(['role:user', 'permission:registrations.index']);
-    // }
-
     public function index()
     {
         $registration = RegistrationModel::where('user_id', Auth::user()->id)->first();
@@ -35,7 +30,7 @@ class RegistrationController extends Controller
 
         $jobs = Job::where('is_active', true)->get();
         $services = Service::where('is_active', true)->get();
-        $shifts = Shift::where('is_active', true)->withCount('registration')->get();
+        $shifts = Shift::where('is_active', true)->where('event_id', Auth::user()->event_id)->withCount('registration')->get();
         $manufactures = Manufacture::where('is_active', true)->get();
 
         return view('registrations.index', [
@@ -79,6 +74,8 @@ class RegistrationController extends Controller
             $registration_max = RegistrationModel::withTrashed()->where('event_slug', Auth::user()->event->slug)->max('registration_number') + 1;
             $registration_number = str_pad($registration_max, 5, '0', STR_PAD_LEFT);
 
+            $isVip = (int)$request->is_vip;
+
             $registration = RegistrationModel::create([
                 'fullname' => $request->fullname,
                 'registration_number' => $registration_number,
@@ -90,6 +87,7 @@ class RegistrationController extends Controller
                 'user_id' => Auth::user()->id,
                 'manufacture_id' => $request->manufacture,
                 'event_slug' => Auth::user()->event->slug,
+                'is_vip' => $isVip,
                 'token' => $token
             ]);
 

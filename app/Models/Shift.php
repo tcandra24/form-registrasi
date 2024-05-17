@@ -14,12 +14,18 @@ class Shift extends Model
         'start',
         'end',
         'quota',
+        'event_id',
         'is_active'
     ];
 
     public function registration()
     {
         return $this->hasMany(Registration::class);
+    }
+
+    public function event()
+    {
+        return $this->belongsTo(Event::class);
     }
 
     public function getNameAttribute($value)
