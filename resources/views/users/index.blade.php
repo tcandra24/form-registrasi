@@ -123,7 +123,7 @@
                                                 </td>
                                                 <td class="border-bottom-0">
                                                     <div class="d-flex align-items-center gap-2">
-                                                        @if (in_array('admin', $user->roles->pluck('name')->toArray()))
+                                                        @if (!in_array('user', $user->roles->pluck('name')->toArray()))
                                                             @can('setting.users.edit')
                                                                 <a href="/users/{{ $user->id }}/edit"
                                                                     class="btn btn-success m-1">
