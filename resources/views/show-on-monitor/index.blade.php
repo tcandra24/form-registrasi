@@ -286,7 +286,7 @@
                 } else {
                     setTimeout(() => {
                         location.reload()
-                    }, 5000);
+                    }, 2000);
                 }
             } else if (object.mode === 'scan-manual' || object.mode === 'scan-auto') {
                 if (isVip(object)) {
@@ -294,7 +294,7 @@
                 } else {
                     setTimeout(() => {
                         location.reload()
-                    }, 5000);
+                    }, 2000);
                 }
             }
         }
