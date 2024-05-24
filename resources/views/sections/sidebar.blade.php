@@ -33,7 +33,7 @@
                         <span class="hide-menu">Tampil di Monitor</span>
                     </a>
                 </li>
-                @hasrole('admin')
+                @hasrole(['admin', 'admin registrasi'])
                     @if (auth()->user()->can('master.events.index') ||
                             auth()->user()->can('master.jobs.index') ||
                             auth()->user()->can('master.manufactures.index') ||
