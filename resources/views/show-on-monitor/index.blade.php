@@ -96,7 +96,7 @@
             </div>
         </div>
     </div> --}}
-    <div class="row" id="welcome-board-scan">
+    <div class="row" id="welcome-board-scan" style="display: none">
         <div class="col-lg-12 d-flex align-items-stretch">
             <div class="card w-100" style="background: #e4e409;">
                 <div class="card-body p-4">
