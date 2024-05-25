@@ -307,7 +307,7 @@
                     owner_by = object.data.updated_by
                 }
 
-                if (object.data.is_vip === 1) {
+                if (object.data.is_vip == 1) {
                     $('#welcome-card-' + owner_by).css('background', '#e4e409')
                 }
 
