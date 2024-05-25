@@ -36,7 +36,8 @@
                                         <label for="filter" class="form-label">Filter</label>
                                         <select name="filter" class="form-control" id="filter"
                                             aria-describedby="filter">
-                                            <option value="fullname" selected>Nama</option>
+                                            <option value="registration_number" selected>Nomer Registrasi</option>
+                                            <option value="fullname">Nama</option>
                                             <option value="email" {{ request()->filter === 'email' ? 'selected' : '' }}>
                                                 Email</option>
                                             <option value="no_hp" {{ request()->filter === 'no_hp' ? 'selected' : '' }}>No.

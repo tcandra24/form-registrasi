@@ -96,12 +96,17 @@
             </div>
         </div>
     </div> --}}
-    <div class="row">
-        {{-- <div class="col-lg-12 d-flex align-items-stretch position-fixed z-3">
-            <div class="card vw-100 ">
-                asfsfasf
+    <div class="row" id="welcome-board-scan">
+        <div class="col-lg-12 d-flex align-items-stretch">
+            <div class="card w-100" style="background: #e4e409;">
+                <div class="card-body p-4">
+                    <h1 class="text-center fw-bolder" id="welcome-board-scan-message" style="font-size: 6rem">
+                    </h1>
+                </div>
             </div>
-        </div> --}}
+        </div>
+    </div>
+    <div class="row">
         @foreach ($usersShowRegistrations as $user)
             <div class="col-lg-4 d-flex align-items-stretch">
                 <div class="card w-100 vh-100" id="welcome-card-{{ $user->id }}">
@@ -109,9 +114,9 @@
                         <div class="mb-4">
                             <h1 class="fw-semibold">Admin: {{ $user->name }}</h1>
                         </div>
-                        <h1 class="text-center fw-bolder" id="welcome-board-{{ $user->id }}" style="font-size: 5rem">
+                        <h1 class="text-center fw-bolder" id="welcome-board-{{ $user->id }}" style="font-size: 6rem">
                         </h1>
-                        <h2 class="text-center fw-bolder mt-5" style="font-size: 4rem"></h2>
+                        <h2 class="text-center fw-bolder mt-5" style="font-size: 5rem"></h2>
                         {{-- @if (count($user->registrationsMechanicByCreateBy) > 0)
                             <ul class="timeline-widget mb-0 position-relative">
                                 @foreach ($user->registrationsMechanicByCreateBy as $key => $registration)
@@ -286,23 +291,33 @@
         }
 
         function renderMessage(object) {
-            let owner_by = ''
-            if (object.mode === 'input-manual') {
-                owner_by = object.data.created_by
-            } else if (object.mode === 'change-status-manual') {
-                owner_by = object.data.updated_by
+            if (object.mode === 'scan-manual' || object.mode === 'scan-auto') {
+                $('#welcome-board-scan').css('display', 'block')
+                $('#welcome-board-scan-message').text('Selamat Datang ' + object.data.fullname)
+
+                setTimeout(() => {
+                    $('#welcome-board-scan').css('display', 'none')
+                    $('#welcome-board-scan-message').text('')
+                }, 5000);
+            } else {
+                let owner_by = ''
+                if (object.mode === 'input-manual') {
+                    owner_by = object.data.created_by
+                } else if (object.mode === 'change-status-manual') {
+                    owner_by = object.data.updated_by
+                }
+
+                if (object.data.is_vip === 1) {
+                    $('#welcome-card-' + owner_by).css('background', '#e4e409')
+                }
+
+                $('#welcome-board-' + owner_by).text('Selamat Datang ' + object.data.fullname)
+
+                setTimeout(() => {
+                    $('#welcome-card-' + owner_by).css('background', 'unset')
+                    $('#welcome-board-' + owner_by).text('')
+                }, 5000);
             }
-
-            if (object.data.is_vip === 1) {
-                $('#welcome-card-' + owner_by).css('background', '#e4e409')
-            }
-
-            $('#welcome-board-' + owner_by).text('Selamat Datang ' + object.data.fullname)
-
-            setTimeout(() => {
-                $('#welcome-card-' + owner_by).css('background', 'unset')
-                $('#welcome-board-' + owner_by).text('')
-            }, 5000);
         }
 
         /*function renderMessage(object) {
