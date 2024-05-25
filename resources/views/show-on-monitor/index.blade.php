@@ -5,7 +5,7 @@
 @endsection
 
 @section('content')
-    <div class="row">
+    {{-- <div class="row">
         <div class="col-lg-12 d-flex align-items-stretch">
             <div class="alert alert-primary w-100" role="alert">
                 <h1 class="fw-normal mb-0 display-2">
@@ -13,8 +13,8 @@
                 </h1>
             </div>
         </div>
-    </div>
-    <div class="row">
+    </div> --}}
+    {{-- <div class="row">
         <div class="col-lg-3">
             <div class="card">
                 <div class="card-body">
@@ -95,16 +95,24 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div> --}}
     <div class="row">
+        {{-- <div class="col-lg-12 d-flex align-items-stretch position-fixed z-3">
+            <div class="card vw-100 ">
+                asfsfasf
+            </div>
+        </div> --}}
         @foreach ($usersShowRegistrations as $user)
             <div class="col-lg-4 d-flex align-items-stretch">
-                <div class="card w-100">
+                <div class="card w-100 vh-100" id="welcome-card-{{ $user->id }}">
                     <div class="card-body p-4">
                         <div class="mb-4">
-                            <h2 class="fw-semibold">Admin: {{ $user->name }}</h2>
+                            <h1 class="fw-semibold">Admin: {{ $user->name }}</h1>
                         </div>
-                        @if (count($user->registrationsMechanicByCreateBy) > 0)
+                        <h1 class="text-center fw-bolder" id="welcome-board-{{ $user->id }}" style="font-size: 5rem">
+                        </h1>
+                        <h2 class="text-center fw-bolder mt-5" style="font-size: 4rem"></h2>
+                        {{-- @if (count($user->registrationsMechanicByCreateBy) > 0)
                             <ul class="timeline-widget mb-0 position-relative">
                                 @foreach ($user->registrationsMechanicByCreateBy as $key => $registration)
                                     <li class="timeline-item d-flex position-relative overflow-hidden">
@@ -135,13 +143,13 @@
                             <div class="alert alert-warning w-100 text-center" role="alert">
                                 Data Registrasi Masih Kosong
                             </div>
-                        @endif
+                        @endif --}}
                     </div>
                 </div>
             </div>
         @endforeach
     </div>
-    <div class="row">
+    {{-- <div class="row">
         <div class="col-lg-6 d-flex align-items-stretch">
             <div class="card w-100">
                 <div class="card-body p-4">
@@ -246,7 +254,7 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div> --}}
 @endsection
 
 @section('script')
@@ -278,6 +286,26 @@
         }
 
         function renderMessage(object) {
+            let owner_by = ''
+            if (object.mode === 'input-manual') {
+                owner_by = object.data.created_by
+            } else if (object.mode === 'change-status-manual') {
+                owner_by = object.data.updated_by
+            }
+
+            if (object.data.is_vip === 1) {
+                $('#welcome-card-' + owner_by).css('background', '#e4e409')
+            }
+
+            $('#welcome-board-' + owner_by).text('Selamat Datang ' + object.data.fullname)
+
+            setTimeout(() => {
+                $('#welcome-card-' + owner_by).css('background', 'unset')
+                $('#welcome-board-' + owner_by).text('')
+            }, 5000);
+        }
+
+        /*function renderMessage(object) {
             $('#notification-message').text(object.data.fullname)
 
             if (object.mode === 'input-manual') {
@@ -314,6 +342,6 @@
 
         function isVip(object) {
             return object.data.is_vip === 1 ? true : false
-        }
+        }*/
     </script>
 @endsection

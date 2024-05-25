@@ -24,6 +24,8 @@ class RegistrationMechanic extends Model
         'is_scan',
         'is_vip',
         'token',
+        'created_by',
+        'updated_by',
     ];
 
     protected static function boot()

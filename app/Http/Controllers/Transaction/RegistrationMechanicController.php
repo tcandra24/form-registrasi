@@ -143,7 +143,12 @@ class RegistrationMechanicController extends Controller
             RegistrationMechanic::where('event_slug', $event)->where('id', $id)->update([
                 'is_scan' => true,
                 'scan_date' => Carbon::now(),
+                'updated_by' => auth()->user()->id,
             ]);
+
+            $registration = RegistrationMechanic::where('event_slug', $event)->where('id', $id)->first();
+
+            event(new UpdateRegisterData('change-status-manual', $registration));
 
             return redirect()->to('/transactions/registration-mechanics/' . $event)->with('success', 'Data Registrasi Berhasil Diubah');
         } catch (\Exception $e) {

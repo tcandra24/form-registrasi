@@ -178,6 +178,7 @@ return [
         SimpleSoftwareIO\QrCode\QrCodeServiceProvider::class,
         Spatie\Permission\PermissionServiceProvider::class,
         Maatwebsite\Excel\ExcelServiceProvider::class,
+        Milon\Barcode\BarcodeServiceProvider::class,
     ],
 
     /*
@@ -235,6 +236,8 @@ return [
         'Socialite' => Laravel\Socialite\Facades\Socialite::class,
         'QrCode' => SimpleSoftwareIO\QrCode\Facades\QrCode::class,
         'Excel' => Maatwebsite\Excel\Facades\Excel::class,
+        'DNS1D' => Milon\Barcode\Facades\DNS1DFacade::class,
+        'DNS2D' => Milon\Barcode\Facades\DNS2DFacade::class,
     ],
 
 ];
