@@ -114,7 +114,7 @@
                         <div class="mb-4">
                             <h1 class="fw-semibold">Admin: {{ $user->name }}</h1>
                         </div>
-                        <h1 class="text-center fw-bolder" id="welcome-board-{{ $user->id }}" style="font-size: 6rem">
+                        <h1 class="text-center fw-bolder" id="welcome-board-{{ $user->id }}" style="font-size: 5rem">
                         </h1>
                         <h2 class="text-center fw-bolder mt-5" style="font-size: 5rem"></h2>
                         {{-- @if (count($user->registrationsMechanicByCreateBy) > 0)
@@ -297,13 +297,15 @@
 
                 if (object.data.is_vip == 1) {
                     $('#welcome-card-scan').css('background', '#e4e409')
+                } else {
+                    $('#welcome-card-scan').css('background', 'unset')
                 }
 
-                setTimeout(() => {
-                    $('#welcome-card-scan').css('background', 'unset')
-                    $('#welcome-board-scan').css('display', 'none')
-                    $('#welcome-board-scan-message').text('')
-                }, 5000);
+                // setTimeout(() => {
+                //     $('#welcome-card-scan').css('background', 'unset')
+                //     $('#welcome-board-scan').css('display', 'none')
+                //     $('#welcome-board-scan-message').text('')
+                // }, 5000);
             } else {
                 let owner_by = ''
                 if (object.mode === 'input-manual') {
@@ -314,14 +316,16 @@
 
                 if (object.data.is_vip == 1) {
                     $('#welcome-card-' + owner_by).css('background', '#e4e409')
+                } else {
+                    $('#welcome-card-' + owner_by).css('background', 'unset')
                 }
 
                 $('#welcome-board-' + owner_by).text('Selamat Datang ' + object.data.fullname)
 
-                setTimeout(() => {
-                    $('#welcome-card-' + owner_by).css('background', 'unset')
-                    $('#welcome-board-' + owner_by).text('')
-                }, 5000);
+                // setTimeout(() => {
+                //     $('#welcome-card-' + owner_by).css('background', 'unset')
+                //     $('#welcome-board-' + owner_by).text('')
+                // }, 5000);
             }
         }
 
