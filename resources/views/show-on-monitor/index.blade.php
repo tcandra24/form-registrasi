@@ -112,7 +112,7 @@
                 <div class="card w-100 vh-100" id="welcome-card-{{ $user->id }}">
                     <div class="card-body p-4">
                         <div class="mb-4">
-                            <h1 class="fw-semibold">Admin: {{ $user->name }}</h1>
+                            <h4 class="fw-semibold">Admin: {{ $user->name }}</h4>
                         </div>
 
                         <div class="text-center" id="welcome-board-container-{{ $user->id }}" style="display: none;">
