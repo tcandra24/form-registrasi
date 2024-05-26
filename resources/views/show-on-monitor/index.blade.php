@@ -114,8 +114,13 @@
                         <div class="mb-4">
                             <h1 class="fw-semibold">Admin: {{ $user->name }}</h1>
                         </div>
-                        <h1 class="text-center fw-bolder" id="welcome-board-{{ $user->id }}" style="font-size: 5rem">
-                        </h1>
+
+                        <div class="text-center" id="welcome-board-container-{{ $user->id }}" style="display: none;">
+                            <h2 style="font-size: 3rem">Selamat Datang</h2>
+                            <h1 class="text-center fw-bolder" id="welcome-board-{{ $user->id }}"
+                                style="font-size: 5rem">
+                            </h1>
+                        </div>
                         <h2 class="text-center fw-bolder mt-5" style="font-size: 5rem"></h2>
                         {{-- @if (count($user->registrationsMechanicByCreateBy) > 0)
                             <ul class="timeline-widget mb-0 position-relative">
@@ -319,8 +324,8 @@
                 } else {
                     $('#welcome-card-' + owner_by).css('background', 'unset')
                 }
-
-                $('#welcome-board-' + owner_by).text('Selamat Datang ' + object.data.fullname)
+                $('#welcome-board-container-' + owner_by).css('display', 'block')
+                $('#welcome-board-' + owner_by).text(object.data.fullname)
 
                 // setTimeout(() => {
                 //     $('#welcome-card-' + owner_by).css('background', 'unset')
