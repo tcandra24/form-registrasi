@@ -23,7 +23,7 @@
             <tr>
                 <td>{{ $loop->iteration }}</td>
                 <td>{{ $registration->registration_number }}</td>
-                <td>{{ $registration->user->email }}</td>
+                <td>{{ $registration->user ? $registration->user->email : '-' }}</td>
                 <td>{{ $registration->fullname }}</td>
                 <td>{{ $registration->workshop_name }}</td>
                 <td>{{ $registration->address }}</td>
