@@ -20,6 +20,7 @@
             <th scope="col">Tanggal Scan</th>
             <th scope="col">Pekerjaan</th>
             <th scope="col">Token</th>
+            <th scope="col">Image</th>
         </tr>
     </thead>
     <tbody>
@@ -52,6 +53,7 @@
             <td>{{ $registration->scan_date ?? '-' }}</td>
             <td>{{ $registration->job->name }}</td>
             <td>{{ $registration->token }}</td>
+            <td>{{ asset('/storage/qr-codes/qr-code-' . $registration->token . '.svg') }}</td>
         </tr>
         @endforeach
     </tbody>
