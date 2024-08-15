@@ -20,4 +20,17 @@ class RegistrationController extends Controller
 
         return response()->download(Storage::path('public/qr-codes/') . $fileName, $fileName);
     }
+
+    public function show($token)
+    {
+        if(!RegistrationModel::where('token', $token)->exists()){
+            abort(404);
+        }
+
+        $registration = RegistrationModel::where('token', $token)->first();
+
+        return view('qr-code.show', [
+            'registration' => $registration,
+        ]);
+    }
 }
