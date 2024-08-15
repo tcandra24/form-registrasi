@@ -54,7 +54,7 @@
             <td>{{ $registration->job->name }}</td>
             <td>{{ $registration->token }}</td>
             <td>
-                <img src="{{ asset('/storage/qr-codes/qr-code-' . $registration->token . '.svg') }}" />
+                {{ asset('/storage/qr-codes/qr-code-' . $registration->token . '.svg') }}
             </td>
         </tr>
         @endforeach
