@@ -10,8 +10,5 @@
         <img class="card-img-top " src="{{ asset('storage/qr-codes/qr-code-' . $registration->token . '.svg') }}"
             alt="{{ $registration->registration_number }}">
         {{-- <i class="card-text mt-2">Silahkan ke bagian panitia untuk melakukan scan qr code ini</i> --}}
-        <div class="mt-5" style="display: flex; justify-content: center;">
-            {!! DNS1D::getBarcodeSVG($registration->registration_number, 'EAN13', 3, 60) !!}
-        </div>
     </div>
 @endsection
