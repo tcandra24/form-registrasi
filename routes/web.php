@@ -16,7 +16,7 @@ use App\Mail\SendEmailFromRegistration;
 */
 
 Route::get('/link/{slug}', [App\Http\Controllers\LinkController::class, 'show']);
-Route::get('/qr-code/show/{token}', [\App\Http\Controllers\QrCode\RegistrationMechanicController::class, 'show']);
+Route::get('/qr-code/show/{token}', [\App\Http\Controllers\QrCode\RegistrationController::class, 'show']);
 
 Route::group(['middleware' => ['guest']], function () {
     Route::get('/', function(){
