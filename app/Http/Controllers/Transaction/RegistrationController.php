@@ -105,7 +105,7 @@ class RegistrationController extends Controller
 
             $registration->services()->attach($services);
 
-            return redirect()->to('/transactions/registration-mechanics/' . request()->event)->with('success', 'Pendaftaran Berhasil Disimpan');
+            return redirect()->to('/transactions/registrations/' . request()->event)->with('success', 'Pendaftaran Berhasil Disimpan');
         } catch (\Exception $e) {
             return back()->with('error', $e->getMessage());
         }
