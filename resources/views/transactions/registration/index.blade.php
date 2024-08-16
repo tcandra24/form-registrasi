@@ -106,6 +106,8 @@
                             <button class="btn btn-danger btn-delete-all-not-scan">Hapus Semua</button>
                             <a href="/trash/registrations/{{ request()->event }}" class="btn btn-primary"
                                 style="margin-left: 5px;">Sampah</a>
+                            <a href="/transactions/registrations/{{ request()->event }}/create"
+                                class="btn btn-primary" style="margin-left: 5px;">Tambah</a>
                         </div>
                     </div>
                     <div class="row">
