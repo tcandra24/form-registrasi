@@ -68,6 +68,7 @@ Route::group(['middleware' => ['auth']], function () {
     Route::group(['prefix' => '/transactions/registrations','middleware' => ['permission:transaction.registrations.index']], function() {
         Route::get('/{event}',  [ \App\Http\Controllers\Transaction\RegistrationController::class, 'index' ]);
         Route::get('/{event}/show/{id}',  [ \App\Http\Controllers\Transaction\RegistrationController::class, 'show' ]);
+         Route::get('/{event}/create',  [ \App\Http\Controllers\Transaction\RegistrationController::class, 'create' ]);
          Route::post('/{event}/store',  [ \App\Http\Controllers\Transaction\RegistrationController::class, 'store' ]);
         Route::patch('/{event}/change-status/{id}',  [ \App\Http\Controllers\Transaction\RegistrationController::class, 'updateIsScan' ]);
         Route::delete('/{event}/delete/{id}',  [ \App\Http\Controllers\Transaction\RegistrationController::class, 'destroy' ]);
