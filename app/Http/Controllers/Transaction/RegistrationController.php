@@ -47,7 +47,7 @@ class RegistrationController extends Controller
     {
         $jobs = Job::where('is_active', true)->get();
         $services = Service::where('is_active', true)->get();
-        $shifts = Shift::where('is_active', true)->where('event_id', Auth::user()->event_id)->withCount('registration')->get();
+        $shifts = Shift::where('is_active', true)->withCount('registration')->get();
         $manufactures = Manufacture::where('is_active', true)->get();
 
         return view('transactions.registration.create', [
