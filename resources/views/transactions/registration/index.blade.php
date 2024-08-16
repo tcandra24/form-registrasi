@@ -289,11 +289,25 @@
                                                             <i class="ti ti-trash"></i>
                                                         </button>
 
+                                                        <button class="btn btn-warning m-1 btn-change-status"
+                                                            data-id="{{ $registration->id }}"
+                                                            data-name="{{ $registration->fullname }}"
+                                                            {{ $registration->is_scan ? 'disabled' : '' }}>
+                                                            <i class="ti ti-refresh"></i>
+                                                        </button>
+
                                                         <form id="form-delete-registration-{{ $registration->id }}"
                                                             method="POST"
                                                             action=" {{ url('/transactions/registrations/' . $registration->event_slug . '/delete/' . $registration->id) }}">
                                                             @csrf
                                                             @method('DELETE')
+                                                        </form>
+
+                                                        <form id="form-change-status-registration-{{ $registration->id }}"
+                                                            method="POST"
+                                                            action=" {{ url('/transactions/registration/' . $registration->event_slug . '/change-status/' . $registration->id) }}">
+                                                            @csrf
+                                                            @method('PATCH')
                                                         </form>
                                                     </div>
                                                 </td>
@@ -353,6 +367,26 @@
             }).then((result) => {
                 if (result.isConfirmed) {
                     $('#form-delete-registration-' + id).submit()
+                }
+            })
+
+        })
+
+        $('.btn-change-status').on('click', function() {
+            const id = $(this).attr('data-id')
+            const name = $(this).attr('data-name')
+
+            Swal.fire({
+                title: "Yakin Ubah Status Data Registrasi ?",
+                text: name,
+                type: "warning",
+                showCancelButton: !0,
+                confirmButtonColor: "#DD6B55",
+                confirmButtonText: "Yes",
+                closeOnConfirm: !1
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    $('#form-change-status-registration-' + id).submit()
                 }
             })
 
