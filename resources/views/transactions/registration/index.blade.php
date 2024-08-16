@@ -213,7 +213,7 @@
                                                 <td class="border-bottom-0 pb-0">
                                                     <a class="mb-0 fw-normal"
                                                         href="/transactions/registrations/{{ $registration->event_slug }}/show/{{ $registration->id }}">
-                                                        {{ $registration?->user->email }}
+                                                        {{ $registration->user?->email }}
                                                     </a>
                                                 </td>
                                                 <td class="border-bottom-0 pb-0">
