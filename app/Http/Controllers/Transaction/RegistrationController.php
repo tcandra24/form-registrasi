@@ -86,8 +86,6 @@ class RegistrationController extends Controller
             $registration_max = Registration::withTrashed()->where('event_slug', $request->event)->max('registration_number') + 1;
             $registration_number = str_pad($registration_max, 5, '0', STR_PAD_LEFT);
 
-            $isVip = (int)$request->is_vip;
-
             $registration = Registration::create([
                 'fullname' => $request->fullname,
                 'registration_number' => $registration_number,
@@ -99,7 +97,6 @@ class RegistrationController extends Controller
                 'user_id' => 0,
                 'manufacture_id' => $request->manufacture,
                 'event_slug' => $request->event,
-                'is_vip' => $isVip,
                 'is_scan' => true,
                 'token' => $token
             ]);
