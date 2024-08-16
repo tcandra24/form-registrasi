@@ -94,7 +94,6 @@ class RegistrationController extends Controller
                 'license_plate' => $request->license_plate,
                 'job_id' => $request->job,
                 'shift_id' => $request->shift,
-                'user_id' => 0,
                 'manufacture_id' => $request->manufacture,
                 'event_slug' => $request->event,
                 'is_scan' => true,
