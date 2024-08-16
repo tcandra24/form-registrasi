@@ -62,4 +62,18 @@ class RegistrationController extends Controller
             return redirect()->to('/transactions/registrations/' . $event)->with('error', $e->getMessage());
         }
     }
+
+    public function updateIsScan($event, $id)
+    {
+        try {
+            Registration::where('event_slug', $event)->where('id', $id)->update([
+                'is_scan' => true,
+                'scan_date' => Carbon::now(),
+            ]);
+
+            return redirect()->to('/transactions/registrations/' . $event)->with('success', 'Data Registrasi Berhasil Diubah');
+        } catch (\Exception $e) {
+            return redirect()->to('/transactions/registrations/' . $event)->with('error', $e->getMessage());
+        }
+    }
 }
