@@ -305,7 +305,7 @@
 
                                                         <form id="form-change-status-registration-{{ $registration->id }}"
                                                             method="POST"
-                                                            action=" {{ url('/transactions/registration/' . $registration->event_slug . '/change-status/' . $registration->id) }}">
+                                                            action=" {{ url('/transactions/registrations/' . $registration->event_slug . '/change-status/' . $registration->id) }}">
                                                             @csrf
                                                             @method('PATCH')
                                                         </form>
