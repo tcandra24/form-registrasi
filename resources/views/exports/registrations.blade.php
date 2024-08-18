@@ -28,7 +28,7 @@
         <tr>
             <td>{{ $loop->iteration }}</td>
             <td>{{ $registration->registration_number }}</td>
-            <td>{{ $registration->user->email }}</td>
+            <td>{{ $registration->user ? $registration->user->email : '-' }}</td>
             <td>{{ $registration->fullname }}</td>
             <td>
                 @foreach($registration->services AS $service)
