@@ -9,10 +9,14 @@ class SocialAccount extends Model
 {
     use HasFactory;
 
-    protected $guarded = [];
+    protected $fillable = [
+        'participant_id',
+        'provider_id',
+        'provider_name'
+    ];
 
-    public function user()
+    public function participant()
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(Participant::class);
     }
 }

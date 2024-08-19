@@ -17,15 +17,11 @@ class CreateUsersTable extends Migration
             $table->id();
             $table->string('name');
             $table->string('email')->unique();
-            $table->string('no_hp')->unique();
             $table->boolean('is_display')->default(false);
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
-            $table->unsignedBigInteger('event_id')->nullable();
             $table->rememberToken();
             $table->timestamps();
-
-            $table->foreign('event_id')->references('id')->on('events');
         });
     }
 

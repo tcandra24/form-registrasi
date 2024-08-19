@@ -10,22 +10,32 @@ class Event extends Model
     use HasFactory;
 
     protected $fillable = [
-        'name', 'description', 'slug', 'link', 'short_link', 'bitly_id', 'image', 'is_active'
+        'name', 'description', 'slug', 'link', 'short_link', 'bitly_id', 'image', 'is_active', 'model_path'
     ];
 
-    public function users()
+    public function registration()
     {
-        return $this->hasMany(User::class, 'event_id', 'id');
+        return $this->hasMany(Registration::class, 'event_id', 'id');
     }
 
-    public function registrations()
+    public function registrationMechanic()
     {
-        return $this->hasMany(Registration::class, 'event_slug', 'slug');
+        return $this->hasMany(RegistrationMechanic::class, 'event_id', 'id');
     }
+
+    // public function registrations()
+    // {
+    //     return $this->hasMany(Registration::class, 'event_slug', 'slug');
+    // }
 
     public function shifts()
     {
         return $this->hasMany(Shift::class, 'event_id', 'id');
+    }
+
+    public function forms()
+    {
+        return $this->belongsToMany(FormField::class, 'form_event');
     }
 
     public function getNameAttribute($value)

@@ -25,16 +25,18 @@ class CreateRegistrationsTable extends Migration
             $table->dateTime('scan_date')->nullable();
             $table->unsignedBigInteger('job_id');
             $table->unsignedBigInteger('shift_id');
-            $table->unsignedBigInteger('user_id');
+            $table->unsignedBigInteger('participant_id');
+            $table->unsignedBigInteger('event_id');
             $table->unsignedBigInteger('manufacture_id');
-            $table->string('event_slug');
             $table->string('token');
+            $table->softDeletes();
             $table->timestamps();
 
             $table->foreign('job_id')->references('id')->on('jobs');
             $table->foreign('shift_id')->references('id')->on('shifts');
-            $table->foreign('user_id')->references('id')->on('users');
+            $table->foreign('participant_id')->references('id')->on('participants');
             $table->foreign('manufacture_id')->references('id')->on('manufactures');
+            $table->foreign('event_id')->references('id')->on('events');
         });
     }
 

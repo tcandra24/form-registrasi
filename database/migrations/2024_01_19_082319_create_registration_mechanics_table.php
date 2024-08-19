@@ -20,15 +20,17 @@ class CreateRegistrationMechanicsTable extends Migration
             $table->string('no_hp');
             $table->string('workshop_name');
             $table->text('address');
-            $table->unsignedBigInteger('user_id');
+            $table->unsignedBigInteger('participant_id');
+            $table->unsignedBigInteger('event_id');
             $table->boolean('is_scan')->default(false);
             $table->boolean('is_vip')->default(false);
             $table->dateTime('scan_date')->nullable();
-            $table->string('event_slug');
             $table->string('token');
+            $table->softDeletes();
             $table->timestamps();
 
-            $table->foreign('user_id')->references('id')->on('users');
+            $table->foreign('participant_id')->references('id')->on('participants');
+            $table->foreign('event_id')->references('id')->on('events');
         });
     }
 

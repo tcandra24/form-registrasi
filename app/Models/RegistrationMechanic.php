@@ -19,45 +19,34 @@ class RegistrationMechanic extends Model
         'no_hp',
         'workshop_name',
         'address',
-        'user_id',
+        'participant_id',
+        'event_id',
         'event_slug',
         'is_scan',
         'is_vip',
         'token',
-        'created_by',
-        'updated_by',
     ];
 
-    protected static function boot()
+    protected $with = ['event', 'participant'];
+
+    public function participant()
     {
-        parent::boot();
-
-        // updating created_by and updated_by when model is created
-        static::creating(function ($model) {
-            if (!$model->isDirty('created_by')) {
-                $model->created_by = auth()->user()->id;
-            }
-            if (!$model->isDirty('updated_by')) {
-                $model->updated_by = auth()->user()->id;
-            }
-        });
-
-        // updating updated_by when model is updated
-        static::updating(function ($model) {
-            if (!$model->isDirty('updated_by')) {
-                $model->updated_by = auth()->user()->id;
-            }
-        });
+        return $this->belongsTo(Participant::class);
     }
 
-    public function user()
+    public function event()
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(Event::class);
     }
 
     public function getFullnameAttribute($value)
     {
         return ucwords($value);
+    }
+
+    public function getIsScanAttribute($value)
+    {
+        return $value ? 'Sudah Scan' : 'Belum Scan';
     }
 
     public function setFullnameAttribute($value)

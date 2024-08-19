@@ -21,10 +21,8 @@ class User extends Authenticatable
     protected $fillable = [
         'name',
         'email',
-        'no_hp',
         'is_display',
         'password',
-        'event_id',
     ];
 
     /**
@@ -46,25 +44,10 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-    public function socialAccounts()
-    {
-        return $this->hasMany(SocialAccount::class);
-    }
-
-    public function event()
-    {
-        return $this->belongsTo(Event::class, 'event_id', 'id');
-    }
-
-    public function registrations()
-    {
-        return $this->hasMany(Registration::class);
-    }
-
-    public function registrationsMechanicByCreateBy()
-    {
-        return $this->hasMany(RegistrationMechanic::class, 'created_by', 'id');
-    }
+    // public function registrationsMechanicByCreateBy()
+    // {
+    //     return $this->hasMany(RegistrationMechanic::class, 'created_by', 'id');
+    // }
 
     public function getNameAttribute($value)
     {

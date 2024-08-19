@@ -21,13 +21,16 @@ class Registration extends Model
         'license_plate',
         'job_id',
         'shift_id',
-        'user_id',
+        'participant_id',
+        'event_id',
         'manufacture_id',
         'event_slug',
         'is_scan',
         'is_vip',
         'token'
     ];
+
+    protected $with = ['shift', 'job', 'manufacture', 'services'];
 
     public function shift()
     {
@@ -44,9 +47,9 @@ class Registration extends Model
         return $this->belongsTo(Manufacture::class);
     }
 
-    public function user()
+    public function participant()
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(Participant::class);
     }
 
     public function services()
@@ -54,9 +57,19 @@ class Registration extends Model
         return $this->belongsToMany(Service::class, 'registration_service');
     }
 
+    public function event()
+    {
+        return $this->belongsTo(Event::class);
+    }
+
     public function getFullnameAttribute($value)
     {
         return ucwords($value);
+    }
+
+    public function getIsScanAttribute($value)
+    {
+        return $value ? 'Sudah Scan' : 'Belum Scan';
     }
 
     public function setFullnameAttribute($value)
