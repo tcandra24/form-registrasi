@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Admin\Master;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Event\StoreRequest;
+use App\Http\Requests\Event\UpdateRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
@@ -27,22 +29,8 @@ class EventController extends Controller
         return view('admin.masters.events.create', [ 'formFields' => $formFields ]);
     }
 
-    public function store(Request $request)
+    public function store(StoreRequest $request)
     {
-        $request->validate([
-            'name' => 'required',
-            'description' => 'required',
-            'image' => 'required',
-            'fields' => 'required',
-            'model_path' => 'required',
-        ], [
-            'name.required' => 'Nama wajib diisi',
-            'description.required' => 'Keterangan wajib diisi',
-            'image.required' => 'Gambar wajib diisi',
-            'fields.required' => 'Form Field harus diisi',
-            'model_path.required' => 'Model harus diisi',
-        ]);
-
         try {
             $image = $request->file('image');
             $image->storeAs('public/images/events', $image->hashName());
@@ -84,41 +72,28 @@ class EventController extends Controller
         }
     }
 
-    public function update(Request $request, Event $event)
+    public function update(UpdateRequest $request, Event $event)
     {
-        $request->validate([
-            'name' => 'required',
-            'description' => 'required',
-            'fields' => 'required',
-            'model_path' => 'required',
-        ], [
-            'name.required' => 'Nama wajib diisi',
-            'description.required' => 'Keterangan wajib diisi',
-            'fields.required' => 'Form Field harus diisi',
-            'model_path.required' => 'Model harus diisi',
-        ]);
-
         try {
             $isActive = $request->is_active ? true : false;
             $slug = Str::slug($request->name);
 
-            if($event->bitly_id){
-                Bitly::deleteShortLink($event->bitly_id);
-            }
-
-            [ 'id' => $id, 'link' => $link ] = Bitly::createShortLink([
-                'link' => url('/') . '/link/' . $slug,
-                'title' => ucwords(strtoupper($request->name)),
-            ]);
-
             if($request->file('image')) {
+                if($event->bitly_id){
+                    Bitly::deleteShortLink($event->bitly_id);
+                }
+
+                [ 'id' => $id, 'link' => $link ] = Bitly::createShortLink([
+                    'link' => url('/') . '/link/' . $slug,
+                    'title' => ucwords(strtoupper($request->name)),
+                ]);
+
                 if(Storage::disk('local')->exists('public/images/events/'. basename($event->name))){
                     Storage::disk('local')->delete('public/images/events/'. basename($event->image));
                 }
 
                 $image = $request->file('image');
                 $image->storeAs('public/images/events', $image->hashName());
-
 
                 $event->update([
                     'name' => $request->name,
@@ -137,8 +112,6 @@ class EventController extends Controller
                     'description' => $request->description,
                     'is_active' => $isActive,
                     'link' => $request->link,
-                    'short_link' => $link,
-                    'bitly_id' => $id,
                     'slug' => $slug,
                     'model_path' => $request->model_path,
                 ]);
