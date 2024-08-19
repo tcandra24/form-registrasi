@@ -78,7 +78,38 @@ class EventController extends Controller
             $isActive = $request->is_active ? true : false;
             $slug = Str::slug($request->name);
 
+            $arrayRequest = [];
+
             if($request->file('image')) {
+                if(Storage::disk('local')->exists('public/images/events/'. basename($event->name))){
+                    Storage::disk('local')->delete('public/images/events/'. basename($event->image));
+                }
+
+                $image = $request->file('image');
+                $image->storeAs('public/images/events', $image->hashName());
+
+                $arrayRequest = [
+                    'name' => $request->name,
+                    'description' => $request->description,
+                    'image' => $image->hashName(),
+                    'is_active' => $isActive,
+                    'link' => $request->link,
+                    'slug' => $slug,
+                    'model_path' => $request->model_path,
+                ];
+
+            } else {
+                $arrayRequest = [
+                    'name' => $request->name,
+                    'description' => $request->description,
+                    'is_active' => $isActive,
+                    'link' => $request->link,
+                    'slug' => $slug,
+                    'model_path' => $request->model_path,
+                ];
+            }
+
+            if($event->name !== $request->name){
                 if($event->bitly_id){
                     Bitly::deleteShortLink($event->bitly_id);
                 }
@@ -88,34 +119,11 @@ class EventController extends Controller
                     'title' => ucwords(strtoupper($request->name)),
                 ]);
 
-                if(Storage::disk('local')->exists('public/images/events/'. basename($event->name))){
-                    Storage::disk('local')->delete('public/images/events/'. basename($event->image));
-                }
-
-                $image = $request->file('image');
-                $image->storeAs('public/images/events', $image->hashName());
-
-                $event->update([
-                    'name' => $request->name,
-                    'description' => $request->description,
-                    'image' => $image->hashName(),
-                    'is_active' => $isActive,
-                    'link' => $request->link,
-                    'short_link' => $link,
-                    'bitly_id' => $id,
-                    'slug' => $slug,
-                    'model_path' => $request->model_path,
-                ]);
-            } else {
-                $event->update([
-                    'name' => $request->name,
-                    'description' => $request->description,
-                    'is_active' => $isActive,
-                    'link' => $request->link,
-                    'slug' => $slug,
-                    'model_path' => $request->model_path,
-                ]);
+                $arrayRequest['short_link'] = $link;
+                $arrayRequest['bitly_id'] = $id;
             }
+
+            $event->update($arrayRequest);
 
             $event->forms()->sync($request->fields);
 
