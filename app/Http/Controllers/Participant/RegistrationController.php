@@ -20,14 +20,20 @@ class RegistrationController extends Controller
     public function create($event_id)
     {
         $event = Event::with('forms')->where('id', $event_id)->first();
-        $forms = $event->forms->map(function($form) {
+        $forms = $event->forms->map(function($form) use ($event_id) {
             $objectStd = new \stdClass();
             $objectStd->id = $form->id;
             $objectStd->name = $form->name;
             $objectStd->label = $form->label;
             $objectStd->type = $form->type;
-            $objectStd->model = $form->model_path ? $form->model_path::where('is_active', true)->orderBy('name')->get() : null;
             $objectStd->multiple = $form->multiple;
+
+            if($form->relation_method_name === 'shift') {
+                $objectStd->model = $form->model_path::where('is_active', true)->where('event_id', $event_id)->orderBy('name')->get();
+            }else{
+                $objectStd->model = $form->model_path ? $form->model_path::where('is_active', true)->orderBy('name')->get() : null;
+            }
+
 
             return $objectStd;
         });
