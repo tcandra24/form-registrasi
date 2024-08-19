@@ -45,9 +45,9 @@ class QrCodeController extends Controller
         $fields = collect([]);
         $objectStd = new \stdClass();
 
-        $objectStd->title = 'Nomer Registrasi';
-        $objectStd->value = $no_registration;
-        $fields->push($objectStd);
+        // $objectStd->title = 'Nomer Registrasi';
+        // $objectStd->value = $no_registration;
+        // $fields->push($objectStd);
 
         foreach($forms as $form){
             $value = null;
