@@ -26,7 +26,7 @@ class RegistrationController extends Controller
             $objectStd->name = $form->name;
             $objectStd->label = $form->label;
             $objectStd->type = $form->type;
-            $objectStd->model = $form->model_path ? $form->model_path::where('is_active', true)->get() : null;
+            $objectStd->model = $form->model_path ? $form->model_path::where('is_active', true)->orderBy('name')->get() : null;
             $objectStd->multiple = $form->multiple;
 
             return $objectStd;
