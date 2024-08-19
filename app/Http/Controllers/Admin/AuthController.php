@@ -31,7 +31,7 @@ class AuthController extends Controller
             }
 
             $request->session()->regenerate();
-            return redirect()->intended('/admin/dashboard');
+            return redirect()->intended()->route('dashboard.index');
         } catch (\Exception $e) {
             return back()->with('login-error', $e->getMessage());
         }
@@ -43,6 +43,6 @@ class AuthController extends Controller
         $request->session()->invalidate();
         $request->session()->regenerateToken();
 
-        return redirect('/admin/login');
+        return redirect()->route('login');
     }
 }

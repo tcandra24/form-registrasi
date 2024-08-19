@@ -46,7 +46,7 @@
                         <table class="table text-nowrap mb-0 align-middle">
                             <thead class="text-dark fs-4">
                                 <tr>
-                                    <th class="border-bottom-0 pb-0"">
+                                    <th class="border-bottom-0 pb-0">
                                         <h6 class="fw-semibold mb-0">No</h6>
                                     </th>
                                     <th class="border-bottom-0 pb-0">
@@ -59,13 +59,7 @@
                                         <h6 class="fw-semibold mb-0">Form</h6>
                                     </th>
                                     <th class="border-bottom-0 pb-0">
-                                        <h6 class="fw-semibold mb-0">Keterangan</h6>
-                                    </th>
-                                    <th class="border-bottom-0 pb-0">
                                         <h6 class="fw-semibold mb-0">Status</h6>
-                                    </th>
-                                    <th class="border-bottom-0 pb-0">
-                                        <h6 class="fw-semibold mb-0">Model</h6>
                                     </th>
                                     <th class="border-bottom-0 pb-0">
                                         <h6 class="fw-semibold mb-0">Action</h6>
@@ -81,7 +75,7 @@
                                             </td>
                                             <td class="border-bottom-0 pb-0">
                                                 <a href="{{ $event->image }}" target="_blank">
-                                                    <img class="img-thumbnail rounded w-50" loading="lazy"
+                                                    <img class="img-thumbnail rounded" loading="lazy"
                                                         src="{{ $event->image }}" alt="{{ $event->name }}">
                                                 </a>
                                             </td>
@@ -100,17 +94,11 @@
                                                 </div>
                                             </td>
                                             <td class="border-bottom-0 pb-0">
-                                                <p class="mb-0 fw-normal">{{ $event->description }}</p>
-                                            </td>
-                                            <td class="border-bottom-0 pb-0">
                                                 @if ($event->is_active)
                                                     <span class="badge bg-primary rounded-3 fw-semibold">Aktif</span>
                                                 @else
                                                     <span class="badge bg-danger rounded-3 fw-semibold">Tidak Aktif</span>
                                                 @endif
-                                            </td>
-                                            <td class="border-bottom-0 pb-0">
-                                                <p class="mb-0 fw-normal">{{ $event->model_path }}</p>
                                             </td>
                                             <td class="border-bottom-0 pb-0">
                                                 <div class="d-flex align-items-center gap-2">

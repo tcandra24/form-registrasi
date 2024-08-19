@@ -17,7 +17,6 @@ class UtilityController extends Controller
             $query->where('multiple', false)->orderBy('id');
         }])->where('id', $event_id)->first();
 
-        // ------------------------------------------------------------------------------------------
         $allForm = $event->forms->map(function($item){
             return [
                 'name' => str_replace('[]', '', $item->name),
@@ -60,7 +59,6 @@ class UtilityController extends Controller
         })
         ->where('fullname', '<>', '')
         ->where('event_id', $event_id)->get();
-        // ------------------------------------------------------------------------------------------
 
         return Excel::download(new RegistrationExport($registrations, $objectFields), 'registrations-' . $event->slug .'.xlsx');
     }
