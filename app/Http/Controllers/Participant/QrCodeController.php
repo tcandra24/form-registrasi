@@ -43,11 +43,6 @@ class QrCodeController extends Controller
         $registration = app($event->model_path)->where('registration_number', $no_registration)->first();
 
         $fields = collect([]);
-        $objectStd = new \stdClass();
-
-        // $objectStd->title = 'Nomer Registrasi';
-        // $objectStd->value = $no_registration;
-        // $fields->push($objectStd);
 
         foreach($forms as $form){
             $value = null;
@@ -61,6 +56,7 @@ class QrCodeController extends Controller
                 $value = $registration->{$form->name};
             }
 
+            $objectStd = new \stdClass();
             $objectStd->title = $form->label;
             $objectStd->value = $value;
 
