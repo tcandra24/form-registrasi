@@ -43,7 +43,8 @@
                 </label>
             </div>
         </div>
-        <button type="submit" class="btn btn-primary w-100 py-8 fs-4 mb-2 rounded-2">Login</button>
+        <button type="submit" class="btn btn-primary w-100 py-8 fs-4 rounded-2">Login</button>
+        <p class="text-center my-2">Atau</p>
         <a href="{{ route('login.provider', 'google') }}" class="btn btn-secondary w-100 py-8 fs-4 mb-2 rounded-2">
             Google
         </a>
