@@ -23,8 +23,10 @@
                                     <div class="d-flex flex-column">
                                         <img src="{{ asset('/storage/qr-codes/qr-code-' . $token . '.svg') }}"
                                             width="300" height="300" alt="">
-                                        <a href="/qr-code/registrations/download" target="_blank" rel=”nofollow”
-                                            class="btn btn-primary mt-3">Download</a>
+                                        <a href="{{ route('download.qr-code.participant', ['event_id' => $event->id, 'no_registration' => $no_registration]) }}"
+                                            target="_blank" rel=”nofollow” class="btn btn-primary mt-3">
+                                            Download
+                                        </a>
                                     </div>
                                 </div>
                             </div>

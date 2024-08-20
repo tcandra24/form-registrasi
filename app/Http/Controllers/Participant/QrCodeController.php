@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 
 use App\Models\Event;
 use App\Models\FormField;
+use Illuminate\Support\Facades\Storage;
 
 class QrCodeController extends Controller
 {
@@ -69,6 +70,23 @@ class QrCodeController extends Controller
             $fields->push($objectStd);
         }
 
-        return view('participant.qr-code.show', ['event' => $event, 'fields' => $fields, 'token' => $registration->token]);
+        return view('participant.qr-code.show', [
+            'event' => $event,
+            'fields' => $fields,
+            'token' => $registration->token,
+            'no_registration' => $registration->registration_number
+        ]);
+    }
+
+    public function download($event_id, $no_registration)
+    {
+        $event = Event::where('id', $event_id)->first();
+
+        $registration = app($event->model_path)
+            ->where('registration_number', $no_registration)
+            ->first();
+        $fileName = 'qr-code-' . $registration->token . '.svg';
+
+        return response()->download(Storage::path('public/qr-codes/') . $fileName, $fileName);
     }
 }

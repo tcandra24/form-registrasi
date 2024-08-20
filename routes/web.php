@@ -40,6 +40,7 @@ Route::group(['middleware' => ['auth:participant']], function () {
 
     Route::get('/qr-code', [\App\Http\Controllers\Participant\QrCodeController::class, 'index'])->name('index.qr-code.participant');
     Route::get('/qr-code/show/{event_id}/{no_registration}', [\App\Http\Controllers\Participant\QrCodeController::class, 'show'])->name('show.qr-code.participant');
+    Route::get('/qr-code/download/{event_id}/{no_registration}', [\App\Http\Controllers\Participant\QrCodeController::class, 'download'])->name('download.qr-code.participant');
 
     Route::get('/term-condition', [ \App\Http\Controllers\Participant\TermConditionController::class, 'index'])->name('term-condition');
 
