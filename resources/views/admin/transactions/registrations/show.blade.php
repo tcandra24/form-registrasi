@@ -178,12 +178,25 @@
                                                             data-name="{{ $registration->fullname }}">
                                                             <i class="ti ti-trash"></i>
                                                         </button>
+                                                        <button class="btn btn-warning m-1 btn-update"
+                                                            data-id="{{ $registration->id }}"
+                                                            data-name="{{ $registration->fullname }}"
+                                                            {{ $registration->is_scan === 'Sudah Scan' ? 'disabled' : '' }}>
+                                                            <i class="ti ti-refresh"></i>
+                                                        </button>
 
                                                         <form id="form-delete-registration-{{ $registration->id }}"
                                                             method="POST"
                                                             action=" {{ route('transaction.registrations.delete', ['event_id' => $event, 'registration_number' => $registration->registration_number]) }}">
                                                             @csrf
                                                             @method('DELETE')
+                                                        </form>
+
+                                                        <form id="form-update-registration-{{ $registration->id }}"
+                                                            method="POST"
+                                                            action=" {{ route('transaction.registrations.update', ['event_id' => $event, 'registration_number' => $registration->registration_number]) }}">
+                                                            @csrf
+                                                            @method('PATCH')
                                                         </form>
                                                     </div>
                                                 </td>
@@ -242,13 +255,15 @@
                     $('#form-delete-registration-' + id).submit()
                 }
             })
-
         })
 
-        $('.btn-delete-all-not-scan').on('click', function() {
+        $('.btn-update').on('click', function() {
+            const id = $(this).attr('data-id')
+            const name = $(this).attr('data-name')
+
             Swal.fire({
-                title: 'Yakin Hapus Data ?',
-                text: 'Data Registrasi yang Tidak di Scan Akan Dihapus',
+                title: "Yakin Ubah Status Data Registrasi ?",
+                text: name,
                 type: "warning",
                 showCancelButton: !0,
                 confirmButtonColor: "#DD6B55",
@@ -256,10 +271,9 @@
                 closeOnConfirm: !1
             }).then((result) => {
                 if (result.isConfirmed) {
-                    $('#form-delete-not-scan').submit()
+                    $('#form-update-registration-' + id).submit()
                 }
             })
-
         })
     </script>
 @endsection

@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Admin\Transaction;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
+use Carbon\Carbon;
 
 use App\Models\Event;
 
@@ -31,12 +31,6 @@ class RegistrationController extends Controller
                 ];
             });
 
-            $fields = [...$allForm->map(function($item){
-                return $item['name'];
-            })];
-
-            array_push($fields, 'is_scan');
-
             $objectFields = [...$allForm->map(function($item){
                 return [
                     'name' => $item['name'],
@@ -55,7 +49,13 @@ class RegistrationController extends Controller
                 'is_multiple' => false,
             ]);
 
-            array_unshift($fields, 'registration_number');
+            array_unshift($objectFields, [
+                'name' => 'registration_number',
+                'label' => 'Nomer Registrasi',
+                'model_path' => null,
+                'relation_method_name' => null,
+                'is_multiple' => false,
+            ]);
 
             $registrations = app($event->model_path)->select('*')->when(request()->search, function($query){
                 if (request()->filter === 'email') {
@@ -89,9 +89,27 @@ class RegistrationController extends Controller
             $registration = app($event->model_path)->where('event_id', $event_id)->where('registration_number', $registration_number);
             $registration->delete();
 
-            return redirect()->route('transaction.registrations.show', $event)->with('success', 'Data Registrasi Berhasil Dihapus');
+            return redirect()->route('transaction.registrations.show', $event_id)->with('success', 'Data Registrasi Berhasil Dihapus');
         } catch (\Exception $e) {
-            return redirect()->route('transaction.registrations.show', $event)->with('error', $e->getMessage());
+            return redirect()->route('transaction.registrations.show', $event_id)->with('error', $e->getMessage());
+        }
+    }
+
+    public function update($event_id, $registration_number)
+    {
+        try {
+            $event = Event::where('id', $event_id)->first();
+
+            app($event->model_path)->where('event_id', $event->id)
+            ->where('registration_number', $registration_number)
+            ->update([
+                'is_scan' => true,
+                'scan_date' => Carbon::now(),
+            ]);
+
+            return redirect()->route('transaction.registrations.show', $event_id)->with('success', 'Data Registrasi Berhasil Diubah');
+        } catch (\Exception $e) {
+            return redirect()->route('transaction.registrations.show', $event_id)->with('error', $e->getMessage());
         }
     }
 }

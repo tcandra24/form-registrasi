@@ -91,6 +91,7 @@ Route::prefix('admin')->group(function() {
             ]);
 
             Route::delete('/registration/{event_id}/{registration_number}', [ \App\Http\Controllers\Admin\Transaction\RegistrationController::class, 'destroy' ])->name('transaction.registrations.delete');
+            Route::patch('/registration/{event_id}/{registration_number}', [ \App\Http\Controllers\Admin\Transaction\RegistrationController::class, 'update' ])->name('transaction.registrations.update');
 
             Route::get('/trash/{event_id}', [ \App\Http\Controllers\Admin\Transaction\TrashController::class, 'show' ])->name('transaction.trash.show');
             Route::post('/trash/{event_id}/{registration_number}', [ \App\Http\Controllers\Admin\Transaction\TrashController::class, 'restore' ])->name('transaction.trash.restore');

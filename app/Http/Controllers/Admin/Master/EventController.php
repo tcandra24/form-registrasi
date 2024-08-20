@@ -75,10 +75,8 @@ class EventController extends Controller
     public function update(UpdateRequest $request, Event $event)
     {
         try {
-            $isActive = $request->is_active ? true : false;
-            $slug = Str::slug($request->name);
-
             $arrayRequest = [];
+            $isActive = $request->is_active ? true : false;
 
             if($request->file('image')) {
                 if(Storage::disk('local')->exists('public/images/events/'. basename($event->name))){
@@ -94,7 +92,6 @@ class EventController extends Controller
                     'image' => $image->hashName(),
                     'is_active' => $isActive,
                     'link' => $request->link,
-                    'slug' => $slug,
                     'model_path' => $request->model_path,
                 ];
 
@@ -104,12 +101,13 @@ class EventController extends Controller
                     'description' => $request->description,
                     'is_active' => $isActive,
                     'link' => $request->link,
-                    'slug' => $slug,
                     'model_path' => $request->model_path,
                 ];
             }
 
             if($event->name !== $request->name){
+                $slug = Str::slug($request->name);
+
                 if($event->bitly_id){
                     Bitly::deleteShortLink($event->bitly_id);
                 }
@@ -121,6 +119,7 @@ class EventController extends Controller
 
                 $arrayRequest['short_link'] = $link;
                 $arrayRequest['bitly_id'] = $id;
+                $arrayRequest['slug'] = $slug;
             }
 
             $event->update($arrayRequest);
