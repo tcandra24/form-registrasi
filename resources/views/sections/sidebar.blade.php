@@ -15,8 +15,8 @@
                     <i class="ti ti-dots nav-small-cap-icon fs-4"></i>
                     <span class="hide-menu">Home</span>
                 </li>
-                <li class="sidebar-item {{ Request::segment(1) === 'dashboard' ? 'selected' : '' }}">
-                    <a class="sidebar-link {{ Request::segment(1) === 'dashboard' ? 'active' : '' }}"
+                <li class="sidebar-item {{ request()->is('admin/dashboard') ? 'selected' : '' }}">
+                    <a class="sidebar-link {{ request()->is('admin/dashboard') ? 'active' : '' }}"
                         href="{{ route('dashboard.index') }}" aria-expanded="false">
                         <span>
                             <i class="ti ti-layout-dashboard"></i>
@@ -24,15 +24,6 @@
                         <span class="hide-menu">Dashboard</span>
                     </a>
                 </li>
-                {{-- <li class="sidebar-item {{ Request::segment(1) === 'show-on-monitor' ? 'selected' : '' }}">
-                    <a class="sidebar-link {{ Request::segment(1) === 'show-on-monitor' ? 'active' : '' }}"
-                        href="/show-on-monitor" aria-expanded="false">
-                        <span>
-                            <i class="ti ti-device-desktop"></i>
-                        </span>
-                        <span class="hide-menu">Tampil di Monitor</span>
-                    </a>
-                </li> --}}
                 @if (auth()->user()->can('master.events.index') ||
                         auth()->user()->can('master.jobs.index') ||
                         auth()->user()->can('master.manufactures.index') ||
@@ -43,8 +34,8 @@
                         <span class="hide-menu">Master</span>
                     </li>
                     @can('master.events.index')
-                        <li class="sidebar-item {{ Request::segment(1) === 'events' ? 'selected' : '' }}">
-                            <a class="sidebar-link {{ Request::segment(1) === 'events' ? 'active' : '' }}"
+                        <li class="sidebar-item {{ request()->is('admin/master/events/*') ? 'selected' : '' }}">
+                            <a class="sidebar-link {{ request()->is('admin/master/events/*') ? 'active' : '' }}"
                                 href="{{ route('events.index') }}" aria-expanded="false">
                                 <span>
                                     <i class="ti ti-calendar-event"></i>
@@ -54,8 +45,8 @@
                         </li>
                     @endcan
                     @can('master.jobs.index')
-                        <li class="sidebar-item {{ Request::segment(1) === 'jobs' ? 'selected' : '' }}">
-                            <a class="sidebar-link {{ Request::segment(1) === 'jobs' ? 'active' : '' }}"
+                        <li class="sidebar-item {{ request()->is('admin/master/jobs/*') ? 'selected' : '' }}">
+                            <a class="sidebar-link {{ request()->is('admin/master/jobs/*') ? 'active' : '' }}"
                                 href="{{ route('jobs.index') }}" aria-expanded="false">
                                 <span>
                                     <i class="ti ti-briefcase"></i>
@@ -65,8 +56,8 @@
                         </li>
                     @endcan
                     @can('master.manufactures.index')
-                        <li class="sidebar-item {{ Request::segment(1) === 'manufactures' ? 'selected' : '' }}">
-                            <a class="sidebar-link {{ Request::segment(1) === 'manufactures' ? 'active' : '' }}"
+                        <li class="sidebar-item {{ request()->is('admin/master/manufactures/*') ? 'selected' : '' }}">
+                            <a class="sidebar-link {{ request()->is('admin/master/manufactures/*') ? 'active' : '' }}"
                                 href="{{ route('manufactures.index') }}" aria-expanded="false">
                                 <span>
                                     <i class="ti ti-building-factory-2"></i>
@@ -76,8 +67,8 @@
                         </li>
                     @endcan
                     @can('master.services.index')
-                        <li class="sidebar-item {{ Request::segment(1) === 'services' ? 'selected' : '' }}">
-                            <a class="sidebar-link {{ Request::segment(1) === 'services' ? 'active' : '' }}"
+                        <li class="sidebar-item {{ request()->is('admin/master/services/*') ? 'selected' : '' }}">
+                            <a class="sidebar-link {{ request()->is('admin/master/services/*') ? 'active' : '' }}"
                                 href="{{ route('services.index') }}" aria-expanded="false">
                                 <span>
                                     <i class="ti ti-tool"></i>
@@ -87,8 +78,8 @@
                         </li>
                     @endcan
                     @can('master.shifts.index')
-                        <li class="sidebar-item {{ Request::segment(1) === 'shifts' ? 'selected' : '' }}">
-                            <a class="sidebar-link {{ Request::segment(1) === 'shifts' ? 'active' : '' }}"
+                        <li class="sidebar-item {{ request()->is('admin/master/shifts/*') ? 'selected' : '' }}">
+                            <a class="sidebar-link {{ request()->is('admin/master/shifts/*') ? 'active' : '' }}"
                                 href="{{ route('shifts.index') }}" aria-expanded="false">
                                 <span>
                                     <i class="ti ti-alarm"></i>
@@ -105,8 +96,8 @@
                     </li>
                     @can('transaction.registrations.index')
                         <li
-                            class="sidebar-item {{ Request::segment(1) === 'transaction' || Request::segment(1) === 'registrations' ? 'selected' : '' }}">
-                            <a class="sidebar-link {{ Request::segment(1) === 'transaction' || Request::segment(1) === 'registrations' ? 'active' : '' }}"
+                            class="sidebar-item {{ request()->is('admin/transaction/registrations/*') ? 'selected' : '' }}">
+                            <a class="sidebar-link {{ request()->is('admin/transaction/registrations/*') ? 'active' : '' }}"
                                 href="{{ route('transaction.registrations.index') }}" aria-expanded="false">
                                 <span>
                                     <i class="ti ti-server"></i>
@@ -116,9 +107,8 @@
                         </li>
                     @endcan
                     @can('transaction.participants.index')
-                        <li
-                            class="sidebar-item {{ Request::segment(1) === 'transaction' || Request::segment(1) === 'participants' ? 'selected' : '' }}">
-                            <a class="sidebar-link {{ Request::segment(1) === 'transaction' || Request::segment(1) === 'participants' ? 'active' : '' }}"
+                        <li class="sidebar-item {{ request()->is('admin/transaction/participants/*') ? 'selected' : '' }}">
+                            <a class="sidebar-link {{ request()->is('admin/transaction/participants/*') ? 'active' : '' }}"
                                 href="{{ route('transaction.participants.index') }}" aria-expanded="false">
                                 <span>
                                     <i class="ti ti-users"></i>
@@ -134,9 +124,8 @@
                         <span class="hide-menu">Laporan</span>
                     </li>
                     @can('report.registrations.index')
-                        <li
-                            class="sidebar-item {{ Request::segment(1) === 'reports' || Request::segment(1) === 'report' ? 'selected' : '' }}">
-                            <a class="sidebar-link {{ Request::segment(1) === 'reports' || Request::segment(1) === 'report' ? 'active' : '' }}"
+                        <li class="sidebar-item {{ request()->is('admin/report/registrations/*') ? 'selected' : '' }}">
+                            <a class="sidebar-link {{ request()->is('admin/report/registrations/*') ? 'active' : '' }}"
                                 href="{{ route('report.registrations.index') }}" aria-expanded="false">
                                 <span>
                                     <i class="ti ti-file"></i>
@@ -155,8 +144,8 @@
                         <span class="hide-menu">Pengaturan</span>
                     </li>
                     @can('setting.form_fields.index')
-                        <li class="sidebar-item {{ Request::segment(1) === 'form-fields' ? 'selected' : '' }}">
-                            <a class="sidebar-link {{ Request::segment(1) === 'form-fields' ? 'active' : '' }}"
+                        <li class="sidebar-item {{ request()->is('admin/setting/form-fields/*') ? 'selected' : '' }}">
+                            <a class="sidebar-link {{ request()->is('admin/setting/form-fields/*') ? 'active' : '' }}"
                                 href="{{ route('form-fields.index') }}" aria-expanded="false">
                                 <span>
                                     <i class="ti ti-forms"></i>
@@ -166,8 +155,8 @@
                         </li>
                     @endcan
                     @can('setting.permissions.index')
-                        <li class="sidebar-item {{ Request::segment(1) === 'permissions' ? 'selected' : '' }}">
-                            <a class="sidebar-link {{ Request::segment(1) === 'permissions' ? 'active' : '' }}"
+                        <li class="sidebar-item {{ request()->is('admin/setting/permissions/*') ? 'selected' : '' }}">
+                            <a class="sidebar-link {{ request()->is('admin/setting/permissions/*') ? 'active' : '' }}"
                                 href="{{ route('permissions.index') }}" aria-expanded="false">
                                 <span>
                                     <i class="ti ti-door"></i>
@@ -177,8 +166,8 @@
                         </li>
                     @endcan
                     @can('setting.roles.index')
-                        <li class="sidebar-item {{ Request::segment(1) === 'roles' ? 'selected' : '' }}">
-                            <a class="sidebar-link {{ Request::segment(1) === 'roles' ? 'active' : '' }}"
+                        <li class="sidebar-item {{ request()->is('admin/setting/roles/*') ? 'selected' : '' }}">
+                            <a class="sidebar-link {{ request()->is('admin/setting/roles/*') ? 'active' : '' }}"
                                 href="{{ route('roles.index') }}" aria-expanded="false">
                                 <span>
                                     <i class="ti ti-settings"></i>
@@ -188,8 +177,8 @@
                         </li>
                     @endcan
                     @can('setting.users.index')
-                        <li class="sidebar-item {{ Request::segment(1) === 'users' ? 'selected' : '' }}">
-                            <a class="sidebar-link {{ Request::segment(1) === 'users' ? 'active' : '' }}"
+                        <li class="sidebar-item {{ request()->is('admin/setting/users/*') ? 'selected' : '' }}">
+                            <a class="sidebar-link {{ request()->is('admin/setting/users/*') ? 'active' : '' }}"
                                 href="{{ route('users.index') }}" aria-expanded="false">
                                 <span>
                                     <i class="ti ti-user"></i>
