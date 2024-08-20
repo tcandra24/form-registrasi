@@ -7,11 +7,13 @@
     <title>Login Form Pendaftaran</title>
     <link rel="shortcut icon" type="image/png" href="{{ asset('assets/images/logos/favicon.png') }}" />
     <link href="{{ asset('assets/css/styles.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('assets/css/custom.css') }}" rel="stylesheet">
 
     @yield('page-style')
 </head>
 
 <body>
+    <div class="preloader"></div>
     <div class="page-wrapper" id="main-wrapper">
         <nav class="navbar navbar-expand-lg px-2">
             <a class="navbar-brand text-nowrap logo-img" href="{{ route('participant.index') }}">
@@ -47,6 +49,7 @@
 
     <script src="{{ asset('assets/libs/jquery/dist/jquery.min.js') }}"></script>
     <script src="{{ asset('assets/libs/bootstrap/dist/js/bootstrap.bundle.min.js') }}"></script>
+    <script src="{{ asset('assets/js/global.js') }}"></script>
 
     @yield('script')
 

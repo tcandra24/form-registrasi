@@ -55,7 +55,7 @@
                                         @endif
                                         <a
                                             href=" {{ $event->is_registered ? 'javascript:void(0)' : route('create.registrations.participant', $event->id) }}">
-                                            <img src="{{ $event->image }}" class="card-img-top rounded-0"
+                                            <img data-src="{{ $event->image }}" class="card-img-top rounded-0 lazy"
                                                 alt="{{ $event->slug }}">
                                         </a>
                                     </div>
@@ -71,4 +71,18 @@
             </div>
         </div>
     </div>
+@endsection
+
+@section('script')
+    <script src="{{ asset('assets/libs/lazy/jquery.lazy.min.js') }}"></script>
+    <script src="{{ asset('assets/libs/lazy/jquery.lazy.plugins.min.js') }}"></script>
+
+    <script>
+        $('.lazy').lazy({
+            scrollDirection: 'vertical',
+            effect: "fadeIn",
+            effectTime: 500,
+            threshold: 0
+        });
+    </script>
 @endsection

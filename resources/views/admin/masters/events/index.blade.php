@@ -75,8 +75,8 @@
                                             </td>
                                             <td class="border-bottom-0 pb-0">
                                                 <a href="{{ $event->image }}" target="_blank">
-                                                    <img class="img-thumbnail rounded" loading="lazy"
-                                                        src="{{ $event->image }}" alt="{{ $event->name }}">
+                                                    <img class="img-thumbnail rounded lazy" data-src="{{ $event->image }}"
+                                                        alt="{{ $event->name }}">
                                                 </a>
                                             </td>
                                             <td class="border-bottom-0 pb-0">
@@ -149,6 +149,8 @@
 @section('script')
     <script src="{{ asset('assets/libs/jquery/dist/jquery.min.js') }}"></script>
     <script src="{{ asset('assets/libs/bootstrap/dist/js/bootstrap.bundle.min.js') }}"></script>
+    <script src="{{ asset('assets/libs/lazy/jquery.lazy.min.js') }}"></script>
+    <script src="{{ asset('assets/libs/lazy/jquery.lazy.plugins.min.js') }}"></script>
     <script src="{{ asset('assets/js/sidebarmenu.js') }}"></script>
     <script src="{{ asset('assets/js/app.min.js') }}"></script>
 
@@ -186,5 +188,12 @@
 
             navigator.clipboard.writeText(link);
         })
+
+        $('.lazy').lazy({
+            scrollDirection: 'vertical',
+            effect: "fadeIn",
+            effectTime: 1000,
+            threshold: 0
+        });
     </script>
 @endsection

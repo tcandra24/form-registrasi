@@ -16,12 +16,13 @@
                                 <div class="card overflow-hidden rounded-2">
                                     <div class="position-relative">
                                         <a href="{{ route('transaction.registrations.show', $event->id) }}">
-                                            <img src="{{ $event->image }}" class="card-img-top rounded-0"
+                                            <img data-src="{{ $event->image }}" class="card-img-top rounded-0 lazy"
                                                 alt="{{ $event->slug }}">
                                         </a>
                                     </div>
                                     <div class="card-body pt-3 p-4">
                                         <h6 class="fw-semibold fs-4">{{ $event->name }}</h6>
+                                        <p>{{ $event->description }}</p>
                                     </div>
                                 </div>
                             </div>
@@ -36,6 +37,17 @@
 @section('script')
     <script src="{{ asset('assets/libs/jquery/dist/jquery.min.js') }}"></script>
     <script src="{{ asset('assets/libs/bootstrap/dist/js/bootstrap.bundle.min.js') }}"></script>
+    <script src="{{ asset('assets/libs/lazy/jquery.lazy.min.js') }}"></script>
+    <script src="{{ asset('assets/libs/lazy/jquery.lazy.plugins.min.js') }}"></script>
     <script src="{{ asset('assets/js/sidebarmenu.js') }}"></script>
     <script src="{{ asset('assets/js/app.min.js') }}"></script>
+
+    <script>
+        $('.lazy').lazy({
+            scrollDirection: 'vertical',
+            effect: "fadeIn",
+            effectTime: 1000,
+            threshold: 0
+        });
+    </script>
 @endsection

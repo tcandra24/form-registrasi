@@ -44,8 +44,9 @@
             </div>
         </div>
         <button type="submit" class="btn btn-primary w-100 py-8 fs-4 mb-2 rounded-2">Login</button>
-        <a href="{{ route('login.provider', 'google') }}"
-            class="btn btn-secondary w-100 py-8 fs-4 mb-2 rounded-2">Google</a>
+        <a href="{{ route('login.provider', 'google') }}" class="btn btn-secondary w-100 py-8 fs-4 mb-2 rounded-2">
+            Google
+        </a>
         <div class="d-flex align-items-center justify-content-center">
             <p class="fs-4 mb-0 fw-bold">Belum punya akun?</p>
             <a class="text-primary fw-bold ms-2" href="{{ route('register.participant') }}">Buat akun</a>
