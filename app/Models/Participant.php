@@ -29,4 +29,14 @@ class Participant extends Authenticatable
     {
         return $this->hasMany(RegistrationMechanic::class);
     }
+
+    public function getNameAttribute($value)
+    {
+        return ucwords(strtolower($value));
+    }
+
+    public function setNameAttribute($value)
+    {
+        $this->attributes['name'] = strtolower($value);
+    }
 }
