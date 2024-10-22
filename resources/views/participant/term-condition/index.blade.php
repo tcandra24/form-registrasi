@@ -1,4 +1,4 @@
-@extends('layouts/dashboard')
+@extends('layouts.participant')
 
 @section('title')
     Syarat & Ketentuan
