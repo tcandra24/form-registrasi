@@ -69,6 +69,19 @@
                                 </div>
                             @endforeach
                         </div>
+                        <div class="row">
+                            <div class="col-lg-6 d-flex align-items-stretch">
+                                <div class="mb-3 w-100">
+                                    <div class="form-check">
+                                        <input class="form-check-input" name="term-condition" type="checkbox"
+                                            id="term-condition" aria-describedby="term-condition">
+                                        <label for="term-condition" class="form-label">Saya telah menyetujui <a
+                                                href="{{ route('term-condition') }}" class="text-primary">Syarat &
+                                                Ketentuan</a></label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                         <button type="submit" class="btn btn-primary btn-submit">Submit</button>
                         <button type="reset" class="btn btn-danger">Reset</button>
                     </form>
@@ -84,6 +97,15 @@
     <script>
         $('.select2-elements').select2({
             theme: 'bootstrap-5'
+        })
+
+        $('.btn-submit').attr('disabled', true)
+        $('#term-condition').on('change', function() {
+            if ($(this).is(':checked')) {
+                $('.btn-submit').attr('disabled', false)
+            } else {
+                $('.btn-submit').attr('disabled', true)
+            }
         })
     </script>
 @endsection
