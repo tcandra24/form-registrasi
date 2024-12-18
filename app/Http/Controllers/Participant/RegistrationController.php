@@ -68,12 +68,12 @@ class RegistrationController extends Controller
         $request->validate($rules, $ruleMessage);
 
         try {
-            $shift = Shift::select('name', 'quota')->withCount('registration')->where('id', $request->shift_id)->first();
-            if(($shift->quota - $shift->registration_count) === 0){
-                return redirect()
-                    ->route('create.registrations.participant', $request->event_id)
-                    ->with('error', 'Kuota shift ' . $shift->name . ' sudah penuh');
-            }
+            // $shift = Shift::select('name', 'quota')->withCount('registration')->where('id', $request->shift_id)->first();
+            // if(($shift->quota - $shift->registration_count) === 0){
+            //     return redirect()
+            //         ->route('create.registrations.participant', $request->event_id)
+            //         ->with('error', 'Kuota shift ' . $shift->name . ' sudah penuh');
+            // }
 
             $participant = Auth::guard('participant')->user();
             $token = hash_hmac('sha256', Crypt::encryptString(Str::uuid() . Carbon::now()->getTimestampMs() . $participant->name), $participant->id . $participant->name);
